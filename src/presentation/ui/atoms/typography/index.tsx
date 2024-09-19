@@ -6,7 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const typographyVariants = cva(
-  '',
+  'text-foreground leading-7',
   {
     variants: {
       variant: {
