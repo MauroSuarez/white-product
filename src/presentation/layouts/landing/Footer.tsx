@@ -21,7 +21,7 @@ const Footer = () => {
     }
   ];
   return (
-    <footer className='w-full h-auto flex justify-center items-center py-8 flex-wrap'>
+    <footer className='w-full h-auto flex justify-center items-center py-12 flex-wrap'>
       <div className="flex w-4/5 border-b border-neutral-600 h-[500px]">
         <div className="w-full grid grid-cols-3 gap-4 grid-rows-1">
           <div className="grid grid-cols-1 grid-rows-3 gap-4 flex justify-around">
@@ -64,7 +64,7 @@ const Footer = () => {
       <div className="flex w-4/5 mt-4 h-20 items-center">
         <div className="grid grid-cols-3 grid-rows-1 gap-4 w-full">
           <div className="grid col-span-1">
-            <div className="px-2 text-foreground">
+            <div className="px-0 text-foreground">
               &copy; {currentYear} Todos los derechos reservados
             </div>
           </div>

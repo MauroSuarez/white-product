@@ -10,7 +10,7 @@ export default function LandingModule() {
   return (
 		<section className="flex w-full h-auto min-h-[1050px] justify-center items-start flex-wrap content-start bg-background">
 			{/* Background Navbar */}
-			<div className="relative flex w-full h-[700px] border-b border-neutral-200">
+			<div className="relative flex w-full h-[700px] border-b border-neutral-200 dark:border-0">
 				<Image
 					src={MapIcon}
 					alt=""
@@ -18,8 +18,8 @@ export default function LandingModule() {
 					style={{ objectFit: "cover", opacity: 0.5 }}
 					className='blur'
     		/>
-				<div className="absolute left-10 bottom-20 flex w-full justify-start">
-					<div className="flex w-full justify-start flex-wrap">
+				<div className="absolute bottom-20 flex w-full justify-start">
+					<div className="flex ml-20 w-full justify-start flex-wrap">
 						<div className='flex w-1/2'>
 							<Typography component="h1" variant={'h1'} className="text-card-foreground uppercase">
 								Principales carácteristicas
@@ -30,7 +30,7 @@ export default function LandingModule() {
 								Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum Lorem ipsum  Lorem ipsum 
 							</Typography>
 						</div>
-						<div className='flex w-2/4 h-40 rounded-lg mt-8 p-6 bg-card-foreground'>
+						<div className='flex w-2/4 h-40 rounded-lg mt-8 p-6 bg-background border border-neutral-200'>
 							<div className="grid grid-cols-5 grid-rows-5 gap-4 h-full">
 								<div className="col-span-4 h-full">
 									<Typography component="p" variant={'muted'} className="uppercase">
@@ -48,11 +48,11 @@ export default function LandingModule() {
 				</div>
 			</div>
 			{/* Block Features */}
-			<div className="flex w-full h-[750px] bg-neutral-100 p-10">
-				<div className="relative w-full h-[600px] bg-primary border border-neutral-200 rounded-[16px] flex flex-col flex-nowrap px-6 pt-6">
+			<div className="flex w-full h-[750px] bg-neutral-100 dark:bg-background p-10">
+				<div className="relative w-full h-[600px] bg-primary dark:bg-background border border-neutral-200 rounded-[16px] flex flex-col flex-nowrap px-6 pt-6">
 					<div className="flex justify-center items-center h-60 flex-wrap mt-8">
 						<div className="flex w-full justify-center">
-							<Typography component="h1" variant={'h1'} className="text-primary-foreground uppercase">
+							<Typography component="h1" variant={'h1'} className="text-primary-foreground dark:text-foreground uppercase">
 								Principales carácteristicas
 							</Typography>
 						</div>
@@ -64,24 +64,24 @@ export default function LandingModule() {
 					</div>
 					<div className="flex justify-center items-center h-full">
 						<div className="absolute -bottom-20 grid grid-cols-3 grid-rows-1 gap-12 flex w-full px-8 h-[400px]">
-							<div className="bg-card flex rounded-[16px] p-6 shadow-md"></div>
-							<div className="bg-card flex rounded-[16px] p-6 shadow-md"></div>
-							<div className="bg-card flex rounded-[16px] p-6 shadow-md"></div>
+							<div className="bg-card flex rounded-[16px] p-6 shadow-md dark:border dark:border-neutral-200"></div>
+							<div className="bg-card flex rounded-[16px] p-6 shadow-md dark:border dark:border-neutral-200"></div>
+							<div className="bg-card flex rounded-[16px] p-6 shadow-md dark:border dark:border-neutral-200"></div>
 						</div>
 					</div>
 				</div>
 			</div>
 			{/* Block Summary description */}
-			<div className="flex w-full h-[700px] bg-neutral-100 p-10">
+			<div className="flex w-full h-[700px] bg-neutral-100 dark:bg-background p-10">
 				<div className="flex w-full grid grid-cols-2 grid-rows-1 gap-8 px-2">
 					<div className="w-full flex-wrap py-8 px-8">
 						<div className="flex h-auto w-4/5 py-8">
-							<Typography component="h1" variant={'h1'} className="text-secondary-foreground dark:text-card capitalize text-left">
+							<Typography component="h1" variant={'h1'} className="text-secondary-foreground dark:text-foreground capitalize text-left">
 								Let`s start Sending your package
 							</Typography>
 						</div>
 						<div className="flex h-auto w-4/5">
-							<Typography component="p" variant={'muted'} className="text-secondary-foreground dark:text-card text-left text-md leading-7">
+							<Typography component="p" variant={'muted'} className="text-secondary-foreground dark:text-foreground text-left text-md leading-7">
 								Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum Lorem ipsum  Lorem ipsum ffadsf Lorem ipsum Lorem ipsum
 							</Typography>
 						</div>
@@ -90,7 +90,7 @@ export default function LandingModule() {
 								<div key={key} className="flex h-auto w-full py-4 flex-nowrap">
 									<div className='flex pr-4 w-auto h-20 items-center'>
 										<div
-											className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-background text-lg font-semibold text-secondary-foreground md:h-8 md:w-8 md:text-base"
+											className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-background dark:bg-foreground text-lg font-semibold text-secondary-foreground dark:text-background md:h-8 md:w-8 md:text-base"
 										>
 											<GearIcon className="h-4 w-4 transition-all group-hover:scale-110" />
 											{/* <span className="sr-only">Acme Inc</span> */}
@@ -98,12 +98,12 @@ export default function LandingModule() {
 									</div>
 									<div className='flex px4 w-full flex-wrap'>
 										<div className='w-full flex items-end'>
-											<Typography component="h3" variant={'h3'} className="text-foreground dark:text-card capitalize text-left">
+											<Typography component="h3" variant={'h3'} className="text-foreground dark:text-foreground capitalize text-left">
 												Let`s start Sending your package
 											</Typography>
 										</div>
 										<div className='w-full flex items-center'>
-											<Typography component="p" variant={'muted'} className="text-foreground dark:text-card text-left text-md leading-7">
+											<Typography component="p" variant={'muted'} className="text-foreground dark:text-foreground text-left text-md leading-7">
 												Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum Lorem ipsum 
 											</Typography>
 										</div>
@@ -113,7 +113,7 @@ export default function LandingModule() {
 						</div>
 					</div>
 					<div className="flex items-end justify-center">
-						<div className='bg-card w-3/5 flex h-80 rounded-[16px] relative'>
+						<div className='bg-card dark:border dark:border-neutral-600 w-3/5 flex h-80 rounded-[16px] relative'>
 							<Image
 								priority
 								src={MobileIcon}
@@ -124,10 +124,9 @@ export default function LandingModule() {
 						</div>
 					</div>
 				</div>
-
 			</div>
-			{/* Block Sumary description */}
-			<div className="flex w-full h-[800px] bg-neutral-100 p-10 items-center">
+			{/* Block Summary description */}
+			<div className="flex w-full h-[800px] bg-neutral-100 dark:bg-background p-10 items-center">
 				<div className='flex w-full border h-80 bg-background rounded-[16px] p-8'>
 					<div className="flex w-full grid grid-cols-2 grid-rows-1 gap-8 px-2">
 						<div className='h-full w-full flex relative'>

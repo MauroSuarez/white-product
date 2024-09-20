@@ -1,3 +1,5 @@
+import AppModule from '@/presentation/modules/app'
+
 export default function App() {
-  return <div>APP</div>
+  return <AppModule />;
 }
