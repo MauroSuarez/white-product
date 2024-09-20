@@ -1,6 +1,5 @@
 'use client'
 
-
 import { Button } from "@/presentation/ui/atoms/button";
 import { Typography } from "@/presentation/ui/atoms/typography";
 
@@ -9,9 +8,9 @@ import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon  } from '@radix-ui/react-icons'
 import { FormSignIn } from "./Form";
 
-const getProductByIdData = (params: { id: string }) => {
-  return fetch(`/api/es/auth/signin`).then(res => res.json())
-}
+// const getProductByIdData = (params: { id: string }) => {
+//   return fetch(`/api/auth/signin`).then(res => res.json())
+// }
 
 export default function SignInModule() {
   // const productDetail = getProductByIdData({ id: 'Hola mauro' })
@@ -21,9 +20,9 @@ export default function SignInModule() {
       <div className="w-full flex h-20 justify-end items-center px-4">
         <Button variant='link' className="" onClick={() => (theme == "dark" ? setTheme("light") : setTheme("dark"))}>
           {theme === "light" ? (
-            <div className="text-white"><MoonIcon /></div>
+            <div className="text-foreground"><MoonIcon /></div>
           ) : (
-            <div className="text-white"><SunIcon /></div>
+            <div className="text-foreground"><SunIcon /></div>
           )}
         </Button>
         <Button>

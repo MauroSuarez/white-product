@@ -7,10 +7,10 @@ export default function LandingLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <main className="relative h-full w-full">
       <Navbar />
       {children}
       <Footer />
-    </>
+    </main>
   );
 }

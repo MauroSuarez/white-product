@@ -3,7 +3,7 @@
 import type { NextFetchEvent, NextRequest } from 'next/server';
 import { MiddlewareFactory } from './stackMiddleware';
 
-const prefixes = ['/'];
+// const prefixes = ['/'];
 
 export const withAuthMiddleware: MiddlewareFactory = (next) => {
   return async (request: NextRequest, _event: NextFetchEvent) => {

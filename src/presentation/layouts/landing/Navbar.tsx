@@ -1,14 +1,14 @@
 'use client'
 
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 import { useState, useEffect } from "react";
+import { CubeIcon, SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
-import { MoonIcon, SunIcon  } from '@radix-ui/react-icons'
 import { Button } from "@/presentation/ui/atoms/button";
 
 const Navbar = () => {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   // const searchParams = useSearchParams()
   // console.log(pathname, searchParams.get('hola'), 'a VER')
@@ -28,57 +28,65 @@ const Navbar = () => {
     }
   }, []);
 
+  const classSticky = 'fixed top-0 w-full border-b';
+
   return (
-    <header className={`${sticky ? 'fixed bg-primary opacity-90 shadow-lg' : 'bg-[transparent]'} top-0 w-full z-50`}>
-      <nav className="">
-        <div className="max-w-7xl mx-auto py-10">
-          <div className="flex mx-auto w-5/6">
-            <div className="flex items-center w-full gap-16">
-              <div className="w-auto">
-                <Link
-                  href="/"
-                  className="flex gap-1 font-bold text-gray-700 items-center"
-                >
-                  <span>Paper.io</span>
-                </Link>
-              </div>
-              <div className="lg:flex gap-8 w-3/5">
-                <Link href={`${pathname}/hola`} className="">
-                  Home
-                </Link>
-                <a href="#">Benefits</a>
-                <a href="#">Our Classes</a>
-                <a href="#">Contact Us</a>
-              </div>
-              <div>
-                <Button variant='link' className="" onClick={() => (theme == "dark" ? setTheme("light") : setTheme("dark"))}>
-                  {theme === "light" ? (
-                    <MoonIcon />
-                  ) : (
-                    <SunIcon />
-                  )}
-                </Button>
-              </div>
-              <div className="flex justify-end w-1/5">
-                <Link
-                  href={`${pathname}/contact-us`}
-                >
-                  <Button variant='outline' className="px-8">
-                    Acerca de
-                  </Button>
-                </Link>
-                <Link
-                  href={`${pathname}/auth/signin`}
-                >
-                  <Button variant='outline' className="px-8">
-                    Empezar
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+    <header className={`${sticky ? classSticky : 'absolute rounded-lg top-20 left-1/2 w-4/5 transform -translate-x-1/2 -translate-y-1/2 border'} h-[80px] flex items-center gap-4 px-4 md:px-6 bg-background z-50`}>
+      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+        <Link
+          href="#"
+          className="flex items-center gap-2 text-lg font-semibold md:text-base"
+        >
+          <CubeIcon className="h-6 w-6" />
+          <span className="sr-only">Acme Inc</span>
+        </Link>
+        <Link
+          href="#"
+          className="text-muted-foreground transition-colors hover:text-primary"
+        >
+          Dashboard
+        </Link>
+        <Link
+          href="#"
+          className="text-muted-foreground transition-colors hover:text-primary"
+        >
+          Orders
+        </Link>
+        <Link
+          href="#"
+          className="text-muted-foreground transition-colors hover:text-primary"
+        >
+          Products
+        </Link>
+        <Link
+          href="#"
+          className="text-muted-foreground transition-colors hover:text-primary"
+        >
+          Customers
+        </Link>
+        <Link
+          href="#"
+          className="text-muted-foreground transition-colors hover:text-primary"
+        >
+          Settings
+        </Link>
       </nav>
+      <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+        <div className="ml-auto flex-1 sm:flex-initial">
+          <Button variant='link' className="" onClick={() => (theme == "dark" ? setTheme("light") : setTheme("dark"))}>
+            {theme === "light" ? (
+              <div className="text-foreground"><MoonIcon /></div>
+            ) : (
+              <div className="text-foreground"><SunIcon /></div>
+            )}
+          </Button>
+        </div>
+        <Button variant="secondary" size="lg" >
+          <Link href={'/auth/signin'}>
+            Empezar
+          </Link>
+        </Button>
+      </div>
     </header>
   );
 }

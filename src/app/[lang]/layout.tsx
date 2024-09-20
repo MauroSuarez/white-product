@@ -26,7 +26,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-  params: { lang: any }
+  params: { lang: 'es'| 'en' }
 }>) {
   return (
     <html lang={lang}>

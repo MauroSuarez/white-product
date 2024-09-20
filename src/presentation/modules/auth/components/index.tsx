@@ -17,7 +17,7 @@ const SocialAuthBlock = () => {
           <Separator className="bg-neutral-600" />
         </div>
       </div>
-      <Button type="submit" variant={'secondary'} className="w-full py-6">
+      <Button type="submit" variant={'outline'} className="w-full py-6">
         <GitHubLogoIcon className="mr-2 h-4 w-4" /> Iniciar con github
       </Button>
     </>

@@ -6,7 +6,8 @@ import { stackMiddleware } from './middlewares/stackMiddleware';
 // See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    '/((?!api|_next|fonts|icons|images|js|[\\w-]+\\.\\w+).*)',
+    // '/((?!api|_next|fonts|icons|images|js|[\\w-]+\\.\\w+).*)',
+    '/((?!_next|fonts|icons|images|js|[\\w-]+\\.\\w+).*)',
   ],
 };
 

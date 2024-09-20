@@ -1,9 +1,9 @@
-import { getToken } from 'next-auth/jwt';
-import { NextResponse } from 'next/server';
+// import { getToken } from 'next-auth/jwt';
+// import { NextResponse } from 'next/server';
 import type { NextFetchEvent, NextRequest } from 'next/server';
 import { MiddlewareFactory } from './stackMiddleware';
 
-const prefixes = ['/'];
+// const prefixes = ['/'];
 
 export const withCookieMiddleware: MiddlewareFactory = (next) => {
   return async (request: NextRequest, _event: NextFetchEvent) => {

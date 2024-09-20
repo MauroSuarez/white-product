@@ -11,7 +11,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/presentation/ui/atoms/dialog";
 
 export default function SignUpModule() {

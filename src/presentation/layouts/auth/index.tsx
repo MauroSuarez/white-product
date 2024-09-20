@@ -12,7 +12,8 @@ export default function AuthLayout({
           lg:col-span-3
           md:col-span-2
           col-span-0
-          bg-primary
+          bg-neutral-900
+          dark:bg-neutral-800
         "></div>
         <div className="lg:col-span-2 md:col-span-3 col-span-1 bg-background">
           {children}
