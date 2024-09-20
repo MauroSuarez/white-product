@@ -8,12 +8,12 @@ import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon  } from '@radix-ui/react-icons'
 import { FormSignIn } from "./Form";
 
-const getProductByIdData = (params: { id: string }) => {
-  return fetch(`/api/auth/signin`).then(res => res.json())
-}
+// const getProductByIdData = (params: { id: string }) => {
+//   return fetch(`/api/auth/signin`).then(res => res.json())
+// }
 
 export default function SignInModule() {
-  const productDetail = getProductByIdData({ id: 'Hola mauro' })
+  // const productDetail = getProductByIdData({ id: 'Hola mauro' })
   const { theme, setTheme } = useTheme();
   return (
     <section className="h-full">

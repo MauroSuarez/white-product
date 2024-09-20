@@ -3,11 +3,11 @@
 import * as React from "react";
 import { ThemeProvider } from "next-themes";
 
-type Props = {
+type ThemeAppProps = {
   children?: React.ReactNode;
 };
 
-export function ThemeAppProvider({ children }: { children: React.ReactNode }) {
+export function ThemeAppProvider({ children }: ThemeAppProps) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       {children}

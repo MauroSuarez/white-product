@@ -1,14 +1,14 @@
 'use client'
 
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 import { useState, useEffect } from "react";
-import { AvatarIcon, CubeIcon, MagnifyingGlassIcon, GearIcon, SunIcon, MoonIcon } from "@radix-ui/react-icons";
+import { CubeIcon, SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 import { Button } from "@/presentation/ui/atoms/button";
 
 const Navbar = () => {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   // const searchParams = useSearchParams()
   // console.log(pathname, searchParams.get('hola'), 'a VER')
@@ -42,31 +42,31 @@ const Navbar = () => {
         </Link>
         <Link
           href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className="text-muted-foreground transition-colors hover:text-primary"
         >
           Dashboard
         </Link>
         <Link
           href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className="text-muted-foreground transition-colors hover:text-primary"
         >
           Orders
         </Link>
         <Link
           href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className="text-muted-foreground transition-colors hover:text-primary"
         >
           Products
         </Link>
         <Link
           href="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className="text-muted-foreground transition-colors hover:text-primary"
         >
           Customers
         </Link>
         <Link
           href="#"
-          className="text-foreground transition-colors hover:text-foreground"
+          className="text-muted-foreground transition-colors hover:text-primary"
         >
           Settings
         </Link>

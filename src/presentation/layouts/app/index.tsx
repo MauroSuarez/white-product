@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image"
 import { useTheme } from "next-themes";
-import { LayersIcon, HamburgerMenuIcon, MagnifyingGlassIcon, GearIcon, SunIcon, MoonIcon, ChevronRightIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
+import { LayersIcon, HamburgerMenuIcon, MagnifyingGlassIcon, GearIcon, SunIcon, MoonIcon } from "@radix-ui/react-icons";
 import { Input } from "@/presentation/ui/atoms/input";
 import { Button } from "@/presentation/ui/atoms/button";
 import { Breadcrumbs } from './Breadcrumbs';
@@ -64,7 +64,7 @@ export default function AppLayout({
               className="overflow-hidden rounded-full"
             >
               <Image
-                src="/placeholder-user.jpg"
+                src=""
                 width={36}
                 height={36}
                 alt="Avatar"

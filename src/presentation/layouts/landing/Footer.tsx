@@ -25,8 +25,8 @@ const Footer = () => {
       <div className="flex w-4/5 border-b border-neutral-600 h-[500px]">
         <div className="w-full grid grid-cols-3 gap-4 grid-rows-1">
           <div className="grid grid-cols-1 grid-rows-3 gap-4 flex justify-around">
-            {[...new Array(3)].map((_, key) => (
-              <div className="flex h-20 underline">text</div>
+            {[...new Array(3)].map((key) => (
+              <div key={key} className="flex h-20 underline">text</div>
             ))}
             <div className="flex h-20">
               <Button variant='outline'>
@@ -45,15 +45,15 @@ const Footer = () => {
           </div>
           <div className="">
             <div className="grid grid-cols-1 grid-rows-3 gap-4 flex justify-around">
-              {[...new Array(8)].map((_, key) => (
-                <div className="flex h-10 underline">text</div>
+              {[...new Array(8)].map((key) => (
+                <div key={key} className="flex h-10 underline">text</div>
               ))}
             </div>
           </div>
           <div className="">
             <div className="grid grid-cols-1 grid-rows-3 gap-4 flex justify-around">
-              {[...new Array(8)].map((_, key) => (
-                <div className="flex h-10 underline">
+              {[...new Array(8)].map((key) => (
+                <div key={key} className="flex h-10 underline">
                   text
                 </div>
               ))}
