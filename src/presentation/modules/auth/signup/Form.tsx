@@ -10,12 +10,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/presentation/ui/molecules/form";
-import { Input } from "@/presentation/ui/atoms/input";
+} from "@/presentation/ui/molecules/form"
+import { Input } from "@/presentation/ui/atoms/input"
 import { toast } from "@/presentation/hooks/useToast"
-import { Button } from "@/presentation/ui/atoms/button";
-import { Checkbox } from "@/presentation/ui/atoms/checkbox";
-import { SocialAuthBlock } from "../components/index";
+import { Button } from "@/presentation/ui/atoms/button"
+import { Checkbox } from "@/presentation/ui/atoms/checkbox"
+import { SocialAuthBlock } from "../components/index"
+import { supabase } from '@/infraestructure/db/supabase'
 
 const FormSchema = z.object({
   firstName: z.string().min(2, {
@@ -47,15 +48,24 @@ const FormSignUp = () => {
     },
   })
  
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+  async function onSubmit(form: z.infer<typeof FormSchema>) {
+    const { data, error } = await supabase.auth.signUp({
+      email: form.email,
+      password: form.password, 
+      options: {
+        data: { display_name: `${form.lastName}, ${form.firstName}` }, // 🔥 Esto guarda en metadata
+      },
     })
+    if (error) {
+      toast({
+        title: "Ocurrio un error",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{error.message}</code>
+          </pre>
+        ),
+      })
+    }
   }
   return (
     <>
@@ -158,7 +168,7 @@ const FormSignUp = () => {
       </Form>
       <SocialAuthBlock />
     </>
-  );
+  )
 }
 
 export { FormSignUp }
