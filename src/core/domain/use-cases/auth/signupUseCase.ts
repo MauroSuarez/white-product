@@ -1,9 +1,10 @@
-import { IUserRepository } from "../../interfaces/userRepository"
 
+import { IAuthRepository } from "../../interfaces/authRepository"
+import { ISignUp } from "../../interfaces/auth"
 
-export const createSignUpUseCase = (userRepo: IUserRepository) => {
-  return async (email: string, password: string, displayName: string, idRole: number) => {
-    const user = await userRepo.signUp(email, password, displayName, idRole)
+export const createSignUpUseCase = (authRepo: IAuthRepository) => {
+  return async (dataUser: ISignUp) => {
+    const user = await authRepo.signUp(dataUser)
     return user
   }
 }

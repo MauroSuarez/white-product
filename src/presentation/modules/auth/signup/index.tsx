@@ -18,9 +18,9 @@ export default function SignUpModule() {
   return (
     <section className="h-full">
       <div className="w-full flex h-20 justify-end items-center px-4">
-        <Button>
-          <Link href={'/es/auth/signin'}>Ya tengo cuenta</Link>
-        </Button>
+        <Link href={'/es/auth/signin'}>
+          <Button>Ya tengo cuenta</Button>
+        </Link>
       </div>
       <div className="w-full flex h-fit justify-center items-center my-2 flex-wrap py-2 px-12">
         <div className="flex w-full h-10 justify-center items-center">

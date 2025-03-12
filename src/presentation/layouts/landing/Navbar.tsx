@@ -81,11 +81,11 @@ const Navbar = () => {
             )}
           </Button>
         </div>
-        <Button variant="default" size="lg" >
-          <Link href={'/auth/signin'}>
+        <Link href={'/auth/signin'}>
+          <Button variant="default" size="lg">
             Empezar
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </div>
     </header>
   )

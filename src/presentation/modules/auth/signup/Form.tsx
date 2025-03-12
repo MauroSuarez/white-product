@@ -22,9 +22,10 @@ const authController = new AuthController()
 
 const FormSignUp = () => {
   const form = useForm<SignUpDTO>({
-    resolver: zodResolver(authSchema.signup),
+    // resolver: zodResolver(authSchema.signup),
     defaultValues: {
       email: "",
+      roleId: 2
     },
   })
 
@@ -58,7 +59,7 @@ const FormSignUp = () => {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Apellido</FormLabel>
                     <FormControl>
                       <Input className="py-6" placeholder="Apellido" {...field} />
                     </FormControl>

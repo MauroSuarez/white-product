@@ -1,16 +1,35 @@
-"use client"
+// import React, { createContext } from 'react'
+// import { useInitMock, useGetProfile, useSetFlowName } from "hooks"
+// import { Profile } from 'interfaces/Profile'
+// // import { Grid } from '@mui/material'
+// // import { Breadcrumbs } from 'components'
 
-import * as React from "react"
-import { ThemeProvider } from "next-themes"
+// interface AppContextProps {
+//   profile: Profile
+//   setProfile(profile: Profile): void
+// }
 
-type AppProps = {
-  children?: React.ReactNode
-}
+// interface AppProviderProps {
+//   children: React.ReactNode
+// }
 
-export function ThemeAppProvider({ children }: AppProps) {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      {children}
-    </ThemeProvider>
-  )
-}
+// const AppContext = createContext<AppContextProps>({} as AppContextProps)
+
+// function AppProvider({ children }: AppProviderProps): JSX.Element {
+//   useSetFlowName()
+//   useInitMock()
+//   const { profile, setProfile } = useGetProfile()
+//   return (
+//     <AppContext.Provider
+//       value={{
+//         profile: profile as Profile,
+//         setProfile
+//       }}
+//     >
+//       {children}
+//     </AppContext.Provider>
+//   )
+// }
+
+// export { AppContext }
+// export default AppProvider

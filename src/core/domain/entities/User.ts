@@ -1,6 +1,10 @@
 export interface User {
   id: string
   email: string
-  displayName?: string
-  idRole: number
+  firstName?: string
+  lastName?: string
+  userName?: string
+  roleId: number
+  avatar?: string
+  createdAt?: string
 }

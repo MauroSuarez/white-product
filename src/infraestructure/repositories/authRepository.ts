@@ -1,21 +1,56 @@
 import { db } from '@/infraestructure/db'
-import { IUserRepository } from '@/core/domain/interfaces/userRepository'
+import { IAuthRepository } from '@/core/domain/interfaces/authRepository'
+import { ISignIn, ISignUp } from '@/core/domain/interfaces/auth'
 
-const AuthRepository: IUserRepository = {
-  async signUp(email, password, displayName, idRole) {
+const AuthRepository: IAuthRepository = {
+  async signUp(dataUser: ISignUp) {
     const { data, error } = await db.auth.signUp({
-      email,
-      password,
+      email: dataUser.email,
+      password: dataUser.password,
       options: {
-        data: { display_name: displayName, id_role: idRole },
+        data: {
+          first_name: dataUser.firstName,
+          last_name: dataUser.lastName,
+          id_role: dataUser.roleId,
+          terms: dataUser.terms,
+          username: dataUser.userName,
+          avatar: ''
+        },
       },
     })
     if (error || !data.user) throw new Error(error?.message ?? 'Signup failed')
 
     return {
       id: data.user.id,
-      email: data.user.email ?? '',
-      displayName: data.user.user_metadata?.display_name,
+      email: data.user.email!,
+      firstName: data.user.user_metadata?.first_name_name,
+      lastName: data.user.user_metadata?.last_name,
+      roleId: data.user.user_metadata.id_role,
+      avatar: data.user.user_metadata?.avatar,
+      userName: data.user.user_metadata?.userName,
+      createdAt: data.user.created_at
+    }
+  },
+
+  async signIn(credentials: ISignIn) {
+    const { data, error } = await db.auth.signInWithPassword({
+      email: credentials.email,
+      password: credentials.password,
+    })
+
+    if (error) {
+      throw error;
+    }
+
+    return {
+      id: data.user.id,
+      email: data.user.email!,
+      firstName: data.user.user_metadata?.first_name_name,
+      lastName: data.user.user_metadata?.last_name,
+      roleId: data.user.user_metadata.id_role,
+      avatar: data.user.user_metadata?.avatar,
+      userName: data.user.user_metadata?.userName,
+      createdAt: data.user.created_at
     }
   },
 
@@ -26,9 +61,13 @@ const AuthRepository: IUserRepository = {
 
     return {
       id: data.user.id,
-      email: data.user.email ?? '',
-      displayName: data.user.user_metadata?.display_name,
-      idRole: data.user.user_metadata.id_role
+      email: data.user.email!,
+      firstName: data.user.user_metadata?.first_name_name,
+      lastName: data.user.user_metadata?.last_name,
+      roleId: data.user.user_metadata.id_role,
+      avatar: data.user.user_metadata?.avatar,
+      userName: data.user.user_metadata?.userName,
+      createdAt: data.user.created_at
     }
   }
 }

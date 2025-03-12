@@ -25,9 +25,9 @@ export default function SignInModule() {
             <div className="text-foreground"><SunIcon /></div>
           )}
         </Button>
-        <Button>
-          <Link href={'/es/auth/signup'}>Registrarse</Link>
-        </Button>
+        <Link href={'/es/auth/signup'}>
+          <Button>Registrarse</Button>
+        </Link>
       </div>
       
       <div className="w-full flex h-fit justify-center items-center my-10 flex-wrap py-8 px-12">

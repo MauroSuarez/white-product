@@ -1,6 +1,7 @@
 import { createSignUpUseCase } from "@/core/domain/use-cases/auth/signupUseCase"
 import { AuthRepository } from "@/infraestructure/repositories/authRepository"
 import { authSchema, SignUpDTO } from "../validators/authSchema"
+import { AuthService } from "@/infraestructure/services/authService"
 
 export class AuthController {
   private signUpUseCase = createSignUpUseCase(AuthRepository)
@@ -13,8 +14,20 @@ export class AuthController {
     }
 
     try {
-      const displayName = `${data.lastName}, ${data.firstName}`
-      const user = await this.signUpUseCase(data.email, data.password, displayName, 2)
+      const userName = `${data.lastName}, ${data.firstName}`
+      const user = await this.signUpUseCase({
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        userName,
+        roleId: data.roleId,
+        terms: data.terms
+      })
+
+      if(user) {
+        AuthService.setUser(user)
+      }
 
       return { success: true, user }
     } catch (error: any) {
