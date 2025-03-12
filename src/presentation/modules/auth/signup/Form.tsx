@@ -1,8 +1,6 @@
 'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
+import { signupUseCase } from "@/core/domain/use-cases/auth/signupUseCase"
 import {
   Form,
   FormControl,
@@ -16,57 +14,10 @@ import { toast } from "@/presentation/hooks/useToast"
 import { Button } from "@/presentation/ui/atoms/button"
 import { Checkbox } from "@/presentation/ui/atoms/checkbox"
 import { SocialAuthBlock } from "../components/index"
-import { supabase } from '@/infraestructure/db/supabase'
-
-const FormSchema = z.object({
-  firstName: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  lastName: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  email: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  password: z.string().min(8, {
-    message: ''
-  }),
-  confirmPassword: z.string().min(8, {
-    message: ''
-  }),
-  terms: z.boolean()
-}).refine((data) => data.password === data.confirmPassword, {
-  message: 'Las contraseñas deben ser iguales',
-  path: ["confirm"],
-})
 
 const FormSignUp = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      email: "",
-    },
-  })
- 
-  async function onSubmit(form: z.infer<typeof FormSchema>) {
-    const { data, error } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password, 
-      options: {
-        data: { display_name: `${form.lastName}, ${form.firstName}` }, // 🔥 Esto guarda en metadata
-      },
-    })
-    if (error) {
-      toast({
-        title: "Ocurrio un error",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{error.message}</code>
-          </pre>
-        ),
-      })
-    }
-  }
+  const { formSignup: form, onSubmitSignup: onSubmit } = signupUseCase()
+  
   return (
     <>
       <Form {...form}>

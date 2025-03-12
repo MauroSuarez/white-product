@@ -1,7 +1,7 @@
-import { withAuthMiddleware } from "./middlewares/withAuthMiddleware";
-import { withCookieMiddleware } from "./middlewares/withCookieMiddleware";
-import { withI18nMiddleware } from "./middlewares/withI18nMiddleware";
-import { stackMiddleware } from './middlewares/stackMiddleware';
+import { withAuthMiddleware } from "./application/middlewares/withAuthMiddleware";
+import { withCookieMiddleware } from "./application/middlewares/withCookieMiddleware";
+import { withI18nMiddleware } from "./application/middlewares/withI18nMiddleware";
+import { stackMiddleware } from './application/middlewares/stackMiddleware';
 
 // See "Matching Paths" below to learn more
 export const config = {

@@ -2,7 +2,7 @@ import * as React from "react"
 import * as Icons from "@radix-ui/react-icons";
 import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/presentation/utils/uiHelpers"
 
 const iconsVariants = cva(
   "",

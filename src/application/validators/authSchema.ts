@@ -1,0 +1,27 @@
+import { z } from "zod"
+
+export const signupSchema = z.object({
+  firstName: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  lastName: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  email: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  password: z.string().min(8, {
+    message: ''
+  }),
+  confirmPassword: z.string().min(8, {
+    message: ''
+  }),
+  terms: z.boolean()
+}).refine((data) => data.password === data.confirmPassword, {
+  message: 'Las contraseñas deben ser iguales',
+  path: ["confirm"],
+})
+
+export const authSchema = {
+  signup: signupSchema
+}
