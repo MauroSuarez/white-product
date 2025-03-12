@@ -1,8 +1,8 @@
 'use client'
 
-import { Breadcrumbs } from './Breadcrumbs';
-import { Aside } from './Aside';
-import { Header } from "./Header";
+import { Breadcrumbs } from './Breadcrumbs'
+import { Aside } from './Aside'
+import { Header } from "./Header"
 
 export default function AppLayout({
   children

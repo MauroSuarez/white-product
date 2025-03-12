@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "next/link"
 
 const Navbar = () => {
   return (
@@ -12,7 +12,7 @@ const Navbar = () => {
       <Link href="#">Notificaciones</Link>
       <Link href="#">Soporte</Link>
     </nav>
-  );
+  )
 }
 
 export { Navbar }

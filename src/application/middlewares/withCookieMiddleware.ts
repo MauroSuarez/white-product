@@ -1,36 +1,36 @@
-// import { getToken } from 'next-auth/jwt';
-// import { NextResponse } from 'next/server';
-import type { NextFetchEvent, NextRequest } from 'next/server';
-import { MiddlewareFactory } from './stackMiddleware';
+// import { getToken } from 'next-auth/jwt'
+// import { NextResponse } from 'next/server'
+import type { NextFetchEvent, NextRequest } from 'next/server'
+import { MiddlewareFactory } from './stackMiddleware'
 
-// const prefixes = ['/'];
+// const prefixes = ['/']
 
 export const withCookieMiddleware: MiddlewareFactory = (next) => {
   return async (request: NextRequest, _event: NextFetchEvent) => {
-    // const { pathname } = request.nextUrl;
+    // const { pathname } = request.nextUrl
 
     // if (!prefixes.some((prefix) => pathname.startsWith(prefix))) {
-    //   return next(request, _event);
+    //   return next(request, _event)
     // }
 
-    // const hasAccessToken = request.cookies.has(AUTHCOOKIES.ACCESS_TOKEN);
+    // const hasAccessToken = request.cookies.has(AUTHCOOKIES.ACCESS_TOKEN)
 
     // if (!hasAccessToken) {
-    //   const url = new URL(`/`, request.url);
-    //   return NextResponse.redirect(url);
+    //   const url = new URL(`/`, request.url)
+    //   return NextResponse.redirect(url)
     // }
 
     // const accessToken =
-    //   request.cookies.get(AUTHCOOKIES.ACCESS_TOKEN)?.value || '';
+    //   request.cookies.get(AUTHCOOKIES.ACCESS_TOKEN)?.value || ''
 
-    // const customer = await getCustomer(accessToken);
+    // const customer = await getCustomer(accessToken)
 
     // if (!customer) {
-    //   const url = new URL(/, request.url);
-    //   return NextResponse.redirect(url);
+    //   const url = new URL(/, request.url)
+    //   return NextResponse.redirect(url)
     // }
     // console.log('withCookieMiddleware')
 
-    return next(request, _event);
-  };
+    return next(request, _event)
+  }
 }

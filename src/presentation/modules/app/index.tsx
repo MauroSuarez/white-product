@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/presentation/ui/atoms/card";
+} from "@/presentation/ui/atoms/card"
 
 export default function AppModule() {
   return (
@@ -27,5 +27,5 @@ export default function AppModule() {
         </CardFooter>
       </Card>
     </div>
-  );
+  )
 }

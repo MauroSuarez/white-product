@@ -1,14 +1,14 @@
-import React from 'react';
-import Link from "next/link";
+import React from 'react'
+import Link from "next/link"
 import { LinkedInLogoIcon, InstagramLogoIcon, TwitterLogoIcon  } from '@radix-ui/react-icons'
-import { Button } from "@/presentation/ui/atoms/button";
+import { Button } from "@/presentation/ui/atoms/button"
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
   const linksTerms = [
     { label: 'Terminos y condiciones', href: '/' },
     { label: 'Privacidad', href: '/' },
-  ];
+  ]
   const socialIcons = [
     {
       icon: <LinkedInLogoIcon width="25" height="25" />
@@ -19,7 +19,7 @@ const Footer = () => {
     {
       icon: <TwitterLogoIcon width="25" height="25" />
     }
-  ];
+  ]
   return (
     <footer className='w-full h-auto flex justify-center items-center py-12 flex-wrap'>
       <div className="flex w-4/5 border-b h-[500px]">
@@ -65,7 +65,7 @@ const Footer = () => {
         <div className="grid grid-cols-3 grid-rows-1 gap-4 w-full">
           <div className="grid col-span-1">
             <div className="px-0 text-foreground">
-              &copy; {currentYear} Todos los derechos reservados
+              &copy {currentYear} Todos los derechos reservados
             </div>
           </div>
           <div className="grid col-span-2">
@@ -94,7 +94,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
 export { Footer }

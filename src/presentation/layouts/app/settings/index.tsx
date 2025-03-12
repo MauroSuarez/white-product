@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { Navbar } from "./Navbar";
+import Link from "next/link"
+import { Navbar } from "./Navbar"
 
 export default function SettingLayout({
   children
@@ -16,5 +16,5 @@ export default function SettingLayout({
         </div>
       </div>
     </main>
-  );
+  )
 }

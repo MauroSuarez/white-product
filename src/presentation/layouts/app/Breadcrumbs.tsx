@@ -1,15 +1,15 @@
 'use client'
 
-import React from 'react';
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { BREADCRUMBS_LABEL } from "@/config/constants";
-import { Icon } from '@/presentation/ui/atoms/icon';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/presentation/ui/atoms/breadcrumbs";
+import React from 'react'
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { BREADCRUMBS_LABEL } from "@/config/constants"
+import { Icon } from '@/presentation/ui/atoms/icon'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/presentation/ui/atoms/breadcrumbs"
 
 const Breadcrumbs = () => {
-  const pathname = usePathname();
-  const splitPath = pathname.split('/').filter((path) => path && path !== 'es');
+  const pathname = usePathname()
+  const splitPath = pathname.split('/').filter((path) => path && path !== 'es')
   const pathItems = splitPath
                       .map((path, i) => {
                         return {
@@ -17,7 +17,7 @@ const Breadcrumbs = () => {
                           name: path,
                           path: i === 0 ? `/${path}` : splitPath.slice(1, i + 1).join('/'),
                         }
-                      });
+                      })
   return (
     <div className="flex w-full h-12 justify-start items-center px-8">
       <Breadcrumb>
@@ -43,7 +43,7 @@ const Breadcrumbs = () => {
         </BreadcrumbList>
       </Breadcrumb>
     </div>
-  );
+  )
 }
 
-export { Breadcrumbs };
+export { Breadcrumbs }

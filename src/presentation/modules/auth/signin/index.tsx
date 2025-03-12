@@ -1,12 +1,12 @@
 'use client'
 
-import { Button } from "@/presentation/ui/atoms/button";
-import { Typography } from "@/presentation/ui/atoms/typography";
+import { Button } from "@/presentation/ui/atoms/button"
+import { Typography } from "@/presentation/ui/atoms/typography"
 
-import Link from "next/link";
-import { useTheme } from "next-themes";
+import Link from "next/link"
+import { useTheme } from "next-themes"
 import { MoonIcon, SunIcon  } from '@radix-ui/react-icons'
-import { FormSignIn } from "./Form";
+import { FormSignIn } from "./Form"
 
 // const getProductByIdData = (params: { id: string }) => {
 //   return fetch(`/api/auth/signin`).then(res => res.json())
@@ -14,7 +14,7 @@ import { FormSignIn } from "./Form";
 
 export default function SignInModule() {
   // const productDetail = getProductByIdData({ id: 'Hola mauro' })
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
   return (
     <section className="h-full">
       <div className="w-full flex h-20 justify-end items-center px-4">
@@ -44,5 +44,5 @@ export default function SignInModule() {
         <FormSignIn />
       </div>
     </section>
-  );
+  )
 }

@@ -33,13 +33,13 @@ const typographyVariants = cva(
 
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLParagraphElement>, VariantProps<typeof typographyVariants> {
-  component?: 'h1' | 'h2' | 'h3' | 'h4' | 'p';
+  component?: 'h1' | 'h2' | 'h3' | 'h4' | 'p'
 }
 
 const Typography = React.forwardRef<HTMLParagraphElement, TypographyProps>(
   ({ className, component = 'p', variant, size, ...props }, ref) => {
 
-    const Comp = component;
+    const Comp = component
 
     return (
       <Comp
@@ -47,7 +47,7 @@ const Typography = React.forwardRef<HTMLParagraphElement, TypographyProps>(
         ref={ref}
         {...props}
       />
-    );
+    )
   }
 )
 

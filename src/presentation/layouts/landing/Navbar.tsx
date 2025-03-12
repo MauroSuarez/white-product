@@ -1,34 +1,34 @@
 'use client'
 
-import Link from "next/link";
-// import { usePathname } from 'next/navigation';
-import { useState, useEffect } from "react";
-import { CubeIcon, SunIcon, MoonIcon } from "@radix-ui/react-icons";
-import { useTheme } from "next-themes";
-import { Button } from "@/presentation/ui/atoms/button";
+import Link from "next/link"
+// import { usePathname } from 'next/navigation'
+import { useState, useEffect } from "react"
+import { CubeIcon, SunIcon, MoonIcon } from "@radix-ui/react-icons"
+import { useTheme } from "next-themes"
+import { Button } from "@/presentation/ui/atoms/button"
 
 const Navbar = () => {
-  // const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
+  // const pathname = usePathname()
+  const { theme, setTheme } = useTheme()
   // const searchParams = useSearchParams()
   // console.log(pathname, searchParams.get('hola'), 'a VER')
-  const [sticky, setSticky] = useState<boolean>(false);
+  const [sticky, setSticky] = useState<boolean>(false)
 
   const scrollHeader = () => {
     if(window.scrollY >= 20)
-      setSticky(true);
+      setSticky(true)
     else
       setSticky(false)
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', scrollHeader);
+    window.addEventListener('scroll', scrollHeader)
     return () => {
-      window.removeEventListener('scroll', scrollHeader);
+      window.removeEventListener('scroll', scrollHeader)
     }
-  }, []);
+  }, [])
 
-  const classSticky = 'fixed top-0 w-full border-b';
+  const classSticky = 'fixed top-0 w-full border-b'
 
   return (
     <header className={`${sticky ? classSticky : 'absolute rounded-lg top-20 left-1/2 w-4/5 transform -translate-x-1/2 -translate-y-1/2 border'} border h-[80px] flex items-center gap-4 px-4 md:px-6 bg-background z-50`}>
@@ -88,7 +88,7 @@ const Navbar = () => {
         </Button>
       </div>
     </header>
-  );
+  )
 }
 
 export { Navbar }

@@ -1,7 +1,7 @@
-import { FormForgotPassword } from './Form';
-import { Button } from "@/presentation/ui/atoms/button";
-import { Typography } from "@/presentation/ui/atoms/typography";
-import Link from "next/link";
+import { FormForgotPassword } from './Form'
+import { Button } from "@/presentation/ui/atoms/button"
+import { Typography } from "@/presentation/ui/atoms/typography"
+import Link from "next/link"
 
 export default function ForgotPaswordModule() {
   return (
@@ -25,5 +25,5 @@ export default function ForgotPaswordModule() {
         <FormForgotPassword />
       </div>
     </section>
-  );
+  )
 }

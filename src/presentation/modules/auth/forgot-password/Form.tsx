@@ -10,10 +10,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/presentation/ui/molecules/form";
-import { Input } from "@/presentation/ui/atoms/input";
+} from "@/presentation/ui/molecules/form"
+import { Input } from "@/presentation/ui/atoms/input"
 import { toast } from "@/presentation/hooks/useToast"
-import { Button } from "@/presentation/ui/atoms/button";
+import { Button } from "@/presentation/ui/atoms/button"
 
 const FormSchema = z.object({
   email: z.string().min(2, {
@@ -59,7 +59,7 @@ const FormForgotPassword = () => {
         <Button type="submit" variant={'gradient'} className="w-full py-6">Enviar</Button>
       </form>
     </Form>
-  );
+  )
 }
 
 export { FormForgotPassword }

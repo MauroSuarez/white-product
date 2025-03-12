@@ -1,4 +1,4 @@
-import SettingLayout from "@/presentation/layouts/app/settings";
+import SettingLayout from "@/presentation/layouts/app/settings"
 
 export default function Layout({
   children
@@ -7,5 +7,5 @@ export default function Layout({
     <SettingLayout>
       {children}
     </SettingLayout>
-  );
+  )
 }

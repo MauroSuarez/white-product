@@ -1,5 +1,5 @@
 
-import { Typography } from '@/presentation/ui/atoms/typography';
+import { Typography } from '@/presentation/ui/atoms/typography'
 import { FormConfirm } from './Form'
 
 export default function ConfirmModule() {
@@ -19,5 +19,5 @@ export default function ConfirmModule() {
         <FormConfirm />
       </div>
     </section>
-  );
+  )
 }

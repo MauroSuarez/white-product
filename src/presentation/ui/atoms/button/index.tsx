@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { Spinner } from "@/presentation/ui/atoms/spinner";
+import { Spinner } from "@/presentation/ui/atoms/spinner"
 
 import { cn } from "@/presentation/utils/uiHelpers"
 
@@ -39,9 +39,9 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-  isLoading?: boolean;
-  loadingClassName?: string;
+  asChild?: boolean
+  isLoading?: boolean
+  loadingClassName?: string
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

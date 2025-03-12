@@ -10,13 +10,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/presentation/ui/molecules/form";
-import { Input } from "@/presentation/ui/atoms/input";
+} from "@/presentation/ui/molecules/form"
+import { Input } from "@/presentation/ui/atoms/input"
 import { toast } from "@/presentation/hooks/useToast"
-import { Button } from "@/presentation/ui/atoms/button";
-import Link from "next/link";
-import { Checkbox } from "@/presentation/ui/atoms/checkbox";
-import { SocialAuthBlock } from "../components/index";
+import { Button } from "@/presentation/ui/atoms/button"
+import Link from "next/link"
+import { Checkbox } from "@/presentation/ui/atoms/checkbox"
+import { SocialAuthBlock } from "../components/index"
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -110,7 +110,7 @@ const FormSignIn = () => {
       </Form>
       <SocialAuthBlock />
     </>
-  );
+  )
 }
 
 export { FormSignIn }

@@ -9,15 +9,15 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/presentation/ui/molecules/form";
+} from "@/presentation/ui/molecules/form"
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
   InputOTPSeparator,
-} from "@/presentation/ui/atoms/input-otp";
+} from "@/presentation/ui/atoms/input-otp"
 import { toast } from "@/presentation/hooks/useToast"
-import { Button } from "@/presentation/ui/atoms/button";
+import { Button } from "@/presentation/ui/atoms/button"
 
 const FormSchema = z.object({
   pin: z.string().min(6, {
@@ -77,7 +77,7 @@ const FormConfirm = () => {
         <Button type="submit" variant={'gradient'} className="w-full py-6">Confirmar</Button>
       </form>
     </Form>
-  );
+  )
 }
 
 export { FormConfirm }

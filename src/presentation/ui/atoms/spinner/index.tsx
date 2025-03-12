@@ -1,8 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { cn } from "@/presentation/utils/uiHelpers";
-import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/presentation/utils/uiHelpers"
+import { cva, type VariantProps } from "class-variance-authority"
 
 const spinnerVariants = cva(
   "animate-spin ",
@@ -23,7 +23,7 @@ const spinnerVariants = cva(
 export interface SpinnerProps
   extends React.SVGProps<SVGSVGElement>,
     VariantProps<typeof spinnerVariants> {
-    size?: number;
+    size?: number
 }
 
 const Spinner = React.forwardRef<SVGSVGElement, SpinnerProps>(

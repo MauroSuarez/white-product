@@ -1,10 +1,10 @@
-import Image from 'next/image';
-import { Typography } from "@/presentation/ui/atoms/typography";
-import { GearIcon } from "@radix-ui/react-icons";
-import MobileIcon from "@/presentation/assets/svg/mobile-icon.svg";
-import Mobile2Icon from "@/presentation/assets/svg/mobile-2-icon.svg";
-import MapIcon from "@/presentation/assets/svg/map-icon.svg";
-import { Button } from '@/presentation/ui/atoms/button';
+import Image from 'next/image'
+import { Typography } from "@/presentation/ui/atoms/typography"
+import { GearIcon } from "@radix-ui/react-icons"
+import MobileIcon from "@/presentation/assets/svg/mobile-icon.svg"
+import Mobile2Icon from "@/presentation/assets/svg/mobile-2-icon.svg"
+import MapIcon from "@/presentation/assets/svg/map-icon.svg"
+import { Button } from '@/presentation/ui/atoms/button'
 
 export default function LandingModule() {
   return (
@@ -167,5 +167,5 @@ export default function LandingModule() {
 				</div>
 			</div>
 		</section>
-  );
+  )
 }

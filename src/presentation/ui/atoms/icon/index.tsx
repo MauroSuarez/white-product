@@ -1,5 +1,5 @@
 import * as React from "react"
-import * as Icons from "@radix-ui/react-icons";
+import * as Icons from "@radix-ui/react-icons"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/presentation/utils/uiHelpers"
@@ -34,20 +34,20 @@ const iconsVariants = cva(
   }
 )
 
-export type IconNames = keyof typeof Icons;
+export type IconNames = keyof typeof Icons
 
 export interface IconsProps extends VariantProps<typeof iconsVariants> {
-  name: IconNames;
-  className?: string;
+  name: IconNames
+  className?: string
   onClick?: () => void
 }
 
 const Icon = React.forwardRef<React.ForwardRefExoticComponent<React.RefAttributes<SVGSVGElement>>, IconsProps>(
   ({ className, variant, name, onClick,  ...props }, ref) => {
-    const Comp = Icons[name];
+    const Comp = Icons[name]
 
     if (!Comp) {
-      return null;
+      return null
     }
 
     return (

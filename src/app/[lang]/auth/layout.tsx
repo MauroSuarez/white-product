@@ -1,10 +1,10 @@
-import AuthLayout from "@/presentation/layouts/auth";
-import type { Metadata } from "next";
+import AuthLayout from "@/presentation/layouts/auth"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: 'Iniciar sesión',
   description: 'a ver',
-};
+}
 
 export default function Layout({
   children
@@ -13,5 +13,5 @@ export default function Layout({
     <AuthLayout>
       {children}
     </AuthLayout>
-  );
+  )
 }

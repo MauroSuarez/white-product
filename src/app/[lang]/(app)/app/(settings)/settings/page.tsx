@@ -1,5 +1,5 @@
-import GeneralModule from "@/presentation/modules/app/settings/general";
+import GeneralModule from "@/presentation/modules/app/settings/general"
 
 export default function Settings() {
-  return <GeneralModule />;
+  return <GeneralModule />
 }

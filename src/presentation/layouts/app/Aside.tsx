@@ -1,5 +1,5 @@
-import { Icon } from "@/presentation/ui/atoms/icon";
-import Link from "next/link";
+import { Icon } from "@/presentation/ui/atoms/icon"
+import Link from "next/link"
 
 const Aside = () => {
   return (
@@ -23,7 +23,7 @@ const Aside = () => {
         </Link>
       </nav>
     </aside>
-  );
+  )
 }
 
 export { Aside }

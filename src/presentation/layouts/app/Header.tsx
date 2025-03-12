@@ -1,11 +1,11 @@
-import { useTheme } from "next-themes";
-import { Button } from "@/presentation/ui/atoms/button";
-import { Icon } from "@/presentation/ui/atoms/icon";
-import { Input } from "@/presentation/ui/atoms/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/presentation/ui/atoms/avatar";
+import { useTheme } from "next-themes"
+import { Button } from "@/presentation/ui/atoms/button"
+import { Icon } from "@/presentation/ui/atoms/icon"
+import { Input } from "@/presentation/ui/atoms/input"
+import { Avatar, AvatarFallback, AvatarImage } from "@/presentation/ui/atoms/avatar"
 
 const Header = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <div className="flex w-full pl-4">
@@ -42,7 +42,7 @@ const Header = () => {
         </Button>
       </div>
     </header>
-  );
+  )
 }
 
 export { Header }
