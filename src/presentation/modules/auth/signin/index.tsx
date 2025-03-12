@@ -29,6 +29,7 @@ export default function SignInModule() {
           <Link href={'/es/auth/signup'}>Registrarse</Link>
         </Button>
       </div>
+      
       <div className="w-full flex h-fit justify-center items-center my-10 flex-wrap py-8 px-12">
         <div className="flex w-full h-12 justify-center items-center">
           <Typography component='h3' variant='h3'>

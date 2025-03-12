@@ -40,6 +40,12 @@ const config: Config = {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+				},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
@@ -62,9 +68,18 @@ const config: Config = {
 				"0%,70%,100%": { opacity: "1" },
 				"20%,50%": { opacity: "0" },
 			},
+			"spin": {
+				from: {
+					transform: "rotate(0deg)",
+				},
+				to: {
+					transform: "rotate(360deg)",
+				},
+			},
 		},
 		animation: {
 			"caret-blink": "caret-blink 1.25s ease-out infinite",
+			"spin": "spin 1s infinite",
 		},
   },
   plugins: [require("tailwindcss-animate")],

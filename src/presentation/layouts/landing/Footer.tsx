@@ -22,7 +22,7 @@ const Footer = () => {
   ];
   return (
     <footer className='w-full h-auto flex justify-center items-center py-12 flex-wrap'>
-      <div className="flex w-4/5 border-b border-neutral-600 h-[500px]">
+      <div className="flex w-4/5 border-b h-[500px]">
         <div className="w-full grid grid-cols-3 gap-4 grid-rows-1">
           <div className="grid grid-cols-1 grid-rows-3 gap-4 flex justify-around">
             {[...new Array(3)].map((key) => (
@@ -34,9 +34,9 @@ const Footer = () => {
               </Button>
             </div>
             <div className="flex items-center py-4 h-25">
-              {socialIcons.map((el, idx) => {
+              {socialIcons.map((el, key) => {
                 return (
-                  <div key={idx} className="flex w-auto px-2">
+                  <div key={key} className="flex w-auto px-2 text-primary">
                     {el.icon}
                   </div>
                 )

@@ -47,65 +47,69 @@ const FormSignIn = () => {
     })
   }
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4 mt-8">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input className="py-6" placeholder="shadcn" {...field} />
-              </FormControl>
-              {/* <FormDescription>
-                This is your public display name.
-              </FormDescription> */}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input className="py-6" placeholder="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="w-full flex justify-end items-center justify-between">
-          <div className="flex items-center space-x-2 py-2">
-            <FormField
-              control={form.control}
-              name="remember"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center space-x-3 space-y-0">
-                  <FormControl>
-                    <Checkbox id="terms" className="h-6 w-6" onCheckedChange={field.onChange} />
-                  </FormControl>
-                  <FormLabel htmlFor="terms" className="text-sm font-normal">
-                    Recordarme
-                  </FormLabel>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4 mt-8">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input className="py-6" placeholder="shadcn" {...field} />
+                </FormControl>
+                {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input className="py-6" placeholder="email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="w-full flex justify-end items-center justify-between">
+            <div className="flex items-center space-x-2 py-2">
+              <FormField
+                control={form.control}
+                name="remember"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox id="terms" className="h-6 w-6" onCheckedChange={field.onChange} />
+                    </FormControl>
+                    <FormLabel htmlFor="terms" className="text-sm font-normal">
+                      Recordarme
+                    </FormLabel>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button variant={'link'} className="text-foreground p-0">
+              <Link href={'/es/auth/forgot-password'}>
+                Olvide mi contraseña?
+              </Link>
+            </Button>
           </div>
-          <Button variant={'link'} className="text-foreground p-0">
-            <Link href={'/es/auth/forgot-password'}>
-              Olvide mi contraseña?
-            </Link>
+          <Button type="submit" variant={'gradient'} className="w-full py-6">
+            Ingresar
           </Button>
-        </div>
-        <Button type="submit" className="w-full py-6">Ingresar</Button>
-        <SocialAuthBlock />
-      </form>
-    </Form>
+        </form>
+      </Form>
+      <SocialAuthBlock />
+    </>
   );
 }
 

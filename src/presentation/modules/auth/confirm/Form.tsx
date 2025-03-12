@@ -74,7 +74,7 @@ const FormConfirm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full py-6">Confirmar</Button>
+        <Button type="submit" variant={'gradient'} className="w-full py-6">Confirmar</Button>
       </form>
     </Form>
   );

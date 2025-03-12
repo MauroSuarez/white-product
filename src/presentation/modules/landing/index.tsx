@@ -10,7 +10,7 @@ export default function LandingModule() {
   return (
 		<section className="flex w-full h-auto min-h-[1050px] justify-center items-start flex-wrap content-start bg-background">
 			{/* Background Navbar */}
-			<div className="relative flex w-full h-[700px] border-b border-neutral-200 dark:border-0">
+			<div className="relative flex w-full h-[700px] border-b border-border dark:border-0">
 				<Image
 					src={MapIcon}
 					alt=""
@@ -30,7 +30,7 @@ export default function LandingModule() {
 								Lorem ipsum Lorem ipsum  Lorem ipsum Lorem ipsum Lorem ipsum  Lorem ipsum 
 							</Typography>
 						</div>
-						<div className='flex w-2/4 h-40 rounded-lg mt-8 p-6 bg-background border border-neutral-200'>
+						<div className='flex w-2/4 h-40 rounded-lg mt-8 p-6 bg-background border'>
 							<div className="grid grid-cols-5 grid-rows-5 gap-4 h-full">
 								<div className="col-span-4 h-full">
 									<Typography component="p" variant={'muted'} className="uppercase">
@@ -38,7 +38,7 @@ export default function LandingModule() {
 									</Typography>
 								</div>
 								<div className="row-span-5 col-start-5 h-full flex items-end justify-end">
-									<Button variant={'secondary'}>
+									<Button variant={'default'}>
 										Empezar
 									</Button>
 								</div>
@@ -49,10 +49,10 @@ export default function LandingModule() {
 			</div>
 			{/* Block Features */}
 			<div className="flex w-full h-[750px] bg-neutral-100 dark:bg-background p-10">
-				<div className="relative w-full h-[600px] bg-primary dark:bg-background border border-neutral-200 rounded-[16px] flex flex-col flex-nowrap px-6 pt-6">
+				<div className="relative w-full h-[600px] bg-background dark:bg-background border rounded-[16px] flex flex-col flex-nowrap px-6 pt-6">
 					<div className="flex justify-center items-center h-60 flex-wrap mt-8">
 						<div className="flex w-full justify-center">
-							<Typography component="h1" variant={'h1'} className="text-primary-foreground dark:text-foreground uppercase">
+							<Typography component="h1" variant={'h1'} className="text-primary dark:text-foreground uppercase">
 								Principales carácteristicas
 							</Typography>
 						</div>
@@ -64,9 +64,9 @@ export default function LandingModule() {
 					</div>
 					<div className="flex justify-center items-center h-full">
 						<div className="absolute -bottom-20 grid grid-cols-3 grid-rows-1 gap-12 flex w-full px-8 h-[400px]">
-							<div className="bg-card flex rounded-[16px] p-6 shadow-md dark:border dark:border-neutral-200"></div>
-							<div className="bg-card flex rounded-[16px] p-6 shadow-md dark:border dark:border-neutral-200"></div>
-							<div className="bg-card flex rounded-[16px] p-6 shadow-md dark:border dark:border-neutral-200"></div>
+							<div className="bg-card flex rounded-[16px] p-6 shadow-md border"></div>
+							<div className="bg-card flex rounded-[16px] p-6 shadow-md border"></div>
+							<div className="bg-card flex rounded-[16px] p-6 shadow-md border"></div>
 						</div>
 					</div>
 				</div>
@@ -76,7 +76,7 @@ export default function LandingModule() {
 				<div className="flex w-full grid grid-cols-2 grid-rows-1 gap-8 px-2">
 					<div className="w-full flex-wrap py-8 px-8">
 						<div className="flex h-auto w-4/5 py-8">
-							<Typography component="h1" variant={'h1'} className="text-secondary-foreground dark:text-foreground capitalize text-left">
+							<Typography component="h1" variant={'h1'} className="text-primary capitalize text-left">
 								Let`s start Sending your package
 							</Typography>
 						</div>
@@ -113,7 +113,7 @@ export default function LandingModule() {
 						</div>
 					</div>
 					<div className="flex items-end justify-center">
-						<div className='bg-card dark:border dark:border-neutral-600 w-3/5 flex h-80 rounded-[16px] relative'>
+						<div className='bg-card border border-primary w-3/5 flex h-80 rounded-[16px] relative'>
 							<Image
 								priority
 								src={MobileIcon}
@@ -131,24 +131,24 @@ export default function LandingModule() {
 					<div className="flex w-full grid grid-cols-2 grid-rows-1 gap-8 px-2">
 						<div className='h-full w-full flex relative'>
 							<Image
-									priority
-									src={Mobile2Icon}
-									className='absolute -rotate-6 top-10 left-40 transform -translate-x-1/2 -translate-y-1/2'
-									alt=""
-									height={550}
+								priority
+								src={Mobile2Icon}
+								className='absolute -rotate-6 top-10 left-40 transform -translate-x-1/2 -translate-y-1/2'
+								alt=""
+								height={550}
 								/>
-								<Image
-									priority
-									src={Mobile2Icon}
-									className='absolute top-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
-									alt=""
-									height={550}
-								/>
+							<Image
+								priority
+								src={Mobile2Icon}
+								className='absolute top-40 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
+								alt=""
+								height={550}
+							/>
 						</div>
 						<div className='h-full w-full flex'>
 							<div className="grid grid-cols-1 grid-rows-3 py-8 gap-4 w-full">
 									<div className="flex w-1/2 justify-start items-center">
-										<Typography component="h3" variant={'h3'} className="text-foreground capitalize text-left">
+										<Typography component="h3" variant={'h3'} className="text-primary capitalize text-left">
 											Let`s start Sending your package
 										</Typography>
 									</div>

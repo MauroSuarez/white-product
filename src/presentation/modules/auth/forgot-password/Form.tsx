@@ -56,7 +56,7 @@ const FormForgotPassword = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full py-6">Enviar</Button>
+        <Button type="submit" variant={'gradient'} className="w-full py-6">Enviar</Button>
       </form>
     </Form>
   );

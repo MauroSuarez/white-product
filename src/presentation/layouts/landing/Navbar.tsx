@@ -31,7 +31,7 @@ const Navbar = () => {
   const classSticky = 'fixed top-0 w-full border-b';
 
   return (
-    <header className={`${sticky ? classSticky : 'absolute rounded-lg top-20 left-1/2 w-4/5 transform -translate-x-1/2 -translate-y-1/2 border'} h-[80px] flex items-center gap-4 px-4 md:px-6 bg-background z-50`}>
+    <header className={`${sticky ? classSticky : 'absolute rounded-lg top-20 left-1/2 w-4/5 transform -translate-x-1/2 -translate-y-1/2 border'} border h-[80px] flex items-center gap-4 px-4 md:px-6 bg-background z-50`}>
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <Link
           href="#"
@@ -81,7 +81,7 @@ const Navbar = () => {
             )}
           </Button>
         </div>
-        <Button variant="secondary" size="lg" >
+        <Button variant="default" size="lg" >
           <Link href={'/auth/signin'}>
             Empezar
           </Link>
