@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const signupSchema = z.object({
+export const SignUpSchema = z.object({
   firstName: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
@@ -22,6 +22,8 @@ export const signupSchema = z.object({
   path: ["confirm"],
 })
 
+export type SignUpDTO = z.infer<typeof SignUpSchema>
+
 export const authSchema = {
-  signup: signupSchema
+  signup: SignUpSchema
 }

@@ -1,6 +1,9 @@
 'use client'
 
-import { signupUseCase } from "@/core/domain/use-cases/auth/signupUseCase"
+import { useForm } from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { AuthController } from "@/application/controllers/authController"
+import { authSchema, SignUpDTO } from "@/application/validators/authSchema"
 import {
   Form,
   FormControl,
@@ -15,8 +18,19 @@ import { Button } from "@/presentation/ui/atoms/button"
 import { Checkbox } from "@/presentation/ui/atoms/checkbox"
 import { SocialAuthBlock } from "../components/index"
 
+const authController = new AuthController()
+
 const FormSignUp = () => {
-  const { formSignup: form, onSubmitSignup: onSubmit } = signupUseCase()
+  const form = useForm<SignUpDTO>({
+    resolver: zodResolver(authSchema.signup),
+    defaultValues: {
+      email: "",
+    },
+  })
+
+  const onSubmit = async (data: SignUpDTO) => {
+    const result = await authController.handleSignup(data)
+  }
   
   return (
     <>
