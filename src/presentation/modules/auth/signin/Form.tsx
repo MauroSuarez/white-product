@@ -1,5 +1,6 @@
 'use client'
 
+import React, { useState } from 'react'
 import { AuthController } from "@/application/controllers/authController"
 import { authSchema, SignInDTO } from "@/application/validators/authSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -22,16 +23,29 @@ import { SocialAuthBlock } from "../components/index"
 const authController = new AuthController()
 
 const FormSignIn = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
   const form = useForm<SignInDTO>({
-    // resolver: zodResolver(authSchema.signin),
+    resolver: zodResolver(authSchema.signin),
     defaultValues: {
       email: "",
     },
   })
  
   const onSubmit = async (data: SignInDTO) => {
-      const result = await authController.handleSignin(data)
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const { success, error } = await authController.handleSignin(data)
+    } catch (error) {
+      const err = error as Error
+      setError(err.message)
+    } finally {
+      setIsLoading(false)
     }
+  }
   return (
     <>
       <Form {...form}>
@@ -43,11 +57,8 @@ const FormSignIn = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input className="py-6" placeholder="shadcn" {...field} />
+                  <Input className="py-6" placeholder="Ingrese su email" {...field} />
                 </FormControl>
-                {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
@@ -59,7 +70,7 @@ const FormSignIn = () => {
               <FormItem>
                 <FormLabel>Conseseña</FormLabel>
                 <FormControl>
-                  <Input className="py-6" placeholder="***" {...field} />
+                  <Input type="password" className="py-6" placeholder="***" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,7 +100,7 @@ const FormSignIn = () => {
               </Link>
             </Button>
           </div>
-          <Button type="submit" variant={'gradient'} className="w-full py-6">
+          <Button isLoading={isLoading} disabled={isLoading} type="submit" variant={'gradient'} className="w-full py-6">
             Ingresar
           </Button>
         </form>

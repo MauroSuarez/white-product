@@ -1,7 +1,9 @@
 'use client'
 
+import React, { useState } from 'react'
+import { AuthController } from "@/application/controllers/authController"
+import { authSchema, ResetPasswordDTO } from "@/application/validators/authSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
 import { useForm } from "react-hook-form"
 import {
   Form,
@@ -15,30 +17,30 @@ import { Input } from "@/presentation/ui/atoms/input"
 import { toast } from "@/presentation/hooks/useToast"
 import { Button } from "@/presentation/ui/atoms/button"
 
-const FormSchema = z.object({
-  email: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  remember: z.boolean()
-})
+const authController = new AuthController()
 
 const FormForgotPassword = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const form = useForm<ResetPasswordDTO>({
+    resolver: zodResolver(authSchema.resetPassword),
     defaultValues: {
       email: "",
     },
   })
  
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  const onSubmit = async(data: ResetPasswordDTO) => {
+    setIsLoading(true)
+    setError(null)
+    
+    try {
+      const { success, error } = await authController.handleResetPassword(data)
+    } catch (error) {
+      const err = error as Error
+      setError(err.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
   return (
     <Form {...form}>
@@ -56,7 +58,9 @@ const FormForgotPassword = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" variant={'gradient'} className="w-full py-6">Enviar</Button>
+        <Button isLoading={isLoading} disabled={isLoading} type="submit" variant={'gradient'} className="w-full py-6">
+          Enviar
+        </Button>
       </form>
     </Form>
   )

@@ -1,5 +1,6 @@
 'use client'
 
+import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AuthController } from "@/application/controllers/authController"
@@ -21,8 +22,11 @@ import { SocialAuthBlock } from "../components/index"
 const authController = new AuthController()
 
 const FormSignUp = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
   const form = useForm<SignUpDTO>({
-    // resolver: zodResolver(authSchema.signup),
+    resolver: zodResolver(authSchema.signup),
     defaultValues: {
       email: "",
       roleId: 2
@@ -30,7 +34,17 @@ const FormSignUp = () => {
   })
 
   const onSubmit = async (data: SignUpDTO) => {
-    const result = await authController.handleSignup(data)
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const { success, error } = await authController.handleSignup(data)
+    } catch (error) {
+      const err = error as Error
+      setError(err.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
   
   return (
@@ -129,7 +143,7 @@ const FormSignUp = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" variant={'gradient'} className="w-full py-6">Registrame</Button>
+          <Button isLoading={isLoading} disabled={isLoading} type="submit" variant={'gradient'} className="w-full py-6">Registrame</Button>
         </form>
       </Form>
       <SocialAuthBlock />

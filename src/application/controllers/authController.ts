@@ -1,12 +1,14 @@
 import { createSignUpUseCase } from "@/core/domain/use-cases/auth/signupUseCase"
 import { createSignInUseCase } from "@/core/domain/use-cases/auth/signinUseCase"
 import { AuthRepository } from "@/infraestructure/repositories/authRepository"
-import { authSchema, SignInDTO, SignUpDTO } from "../validators/authSchema"
+import { authSchema, ResetPasswordDTO, SignInDTO, SignUpDTO } from "../validators/authSchema"
 import { AuthService } from "@/infraestructure/services/authService"
+import { createResetPasswordUseCase } from "@/core/domain/use-cases/auth/resetPasswordUseCase"
 
 export class AuthController {
   private signUpUseCase = createSignUpUseCase(AuthRepository)
   private signInUseCase = createSignInUseCase(AuthRepository)
+  private resetPassword = createResetPasswordUseCase(AuthRepository)
 
   async handleSignup(data: SignUpDTO) {
     const parse = authSchema.signup.safeParse(data)
@@ -48,6 +50,22 @@ export class AuthController {
       }
 
       return { success: true, user }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  }
+
+  async handleResetPassword(data: ResetPasswordDTO) {
+    const parse = authSchema.resetPassword.safeParse(data)
+
+    if (!parse.success) {
+      return { success: false, error: 'Datos inválidos', issues: parse.error.flatten() }
+    }
+
+    try {
+      const success = await this.resetPassword(data.email)
+
+      return { success }
     } catch (error: any) {
       return { success: false, error: error.message }
     }

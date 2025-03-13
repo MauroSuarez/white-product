@@ -35,13 +35,21 @@ export const SignInSchema = z.object({
   password: z.string().min(8, {
     message: ''
   }),
-  remember: z.boolean()
+  remember: z.boolean().optional()
+})
+
+export const ResetPasswordSchema = z.object({
+  email: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
 })
 
 export type SignUpDTO = z.infer<typeof SignUpSchema>
 export type SignInDTO = z.infer<typeof SignInSchema>
+export type ResetPasswordDTO = z.infer<typeof ResetPasswordSchema>
 
 export const authSchema = {
   signup: SignUpSchema,
   signin: SignInSchema,
+  resetPassword: ResetPasswordSchema,
 }

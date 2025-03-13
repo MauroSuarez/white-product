@@ -1,6 +1,6 @@
 import { db } from '@/infraestructure/db'
 import { IAuthRepository } from '@/core/domain/interfaces/authRepository'
-import { ISignIn, ISignUp } from '@/core/domain/interfaces/auth'
+import { ISignIn, ISignUp } from '@/core/domain/interfaces/Auth'
 
 const AuthRepository: IAuthRepository = {
   async signUp(dataUser: ISignUp) {
@@ -54,6 +54,16 @@ const AuthRepository: IAuthRepository = {
       userName: data.user.user_metadata?.userName,
       createdAt: data.user.created_at
     }
+  },
+
+  async resetPassword(email) {
+    const { error } = await db.auth.resetPasswordForEmail(email)
+
+    if (error) {
+      throw error
+    }
+
+    return { success: true }
   },
 
   async getCurrentUser() {

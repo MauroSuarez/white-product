@@ -1,4 +1,4 @@
-import { ISignIn } from "../../interfaces/auth"
+import { ISignIn } from "../../interfaces/Auth"
 import { IAuthRepository } from "../../interfaces/authRepository"
 
 export const createSignInUseCase = (authRepo: IAuthRepository) => {
