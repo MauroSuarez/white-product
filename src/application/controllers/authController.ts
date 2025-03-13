@@ -1,14 +1,16 @@
 import { createSignUpUseCase } from "@/core/domain/use-cases/auth/signupUseCase"
 import { createSignInUseCase } from "@/core/domain/use-cases/auth/signinUseCase"
+import { createResetPasswordUseCase } from "@/core/domain/use-cases/auth/resetPasswordUseCase"
+import { createSignOutUseCase } from "@/core/domain/use-cases/auth/signOutUseCase"
 import { AuthRepository } from "@/infraestructure/repositories/authRepository"
 import { authSchema, ResetPasswordDTO, SignInDTO, SignUpDTO } from "../validators/authSchema"
 import { AuthService } from "@/infraestructure/services/authService"
-import { createResetPasswordUseCase } from "@/core/domain/use-cases/auth/resetPasswordUseCase"
 
 export class AuthController {
   private signUpUseCase = createSignUpUseCase(AuthRepository)
   private signInUseCase = createSignInUseCase(AuthRepository)
   private resetPassword = createResetPasswordUseCase(AuthRepository)
+  private signOut = createSignOutUseCase(AuthRepository)
 
   async handleSignup(data: SignUpDTO) {
     const parse = authSchema.signup.safeParse(data)
@@ -63,9 +65,21 @@ export class AuthController {
     }
 
     try {
-      const success = await this.resetPassword(data.email)
+      await this.resetPassword(data.email)
 
-      return { success }
+      return { success: true }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
+  }
+
+  async handleLogout() {
+    try {
+      await this.signOut()
+
+      AuthService.clearUser()
+
+      return { success: true }
     } catch (error: any) {
       return { success: false, error: error.message }
     }

@@ -10,7 +10,8 @@ import {
 export default function AppModule() {
   return (
     <div className="flex w-full h-auto bg-transparent rounded-lg">
-      <Card className="w-full h-auto">
+      home
+      {/* <Card className="w-full h-auto">
         <CardHeader>
           <CardTitle>Create project</CardTitle>
           <CardDescription>Deploy your new project in one-click.</CardDescription>
@@ -25,7 +26,7 @@ export default function AppModule() {
         <CardFooter className="flex justify-between">
           FOOTER
         </CardFooter>
-      </Card>
+      </Card> */}
     </div>
   )
 }

@@ -1,10 +1,10 @@
+import { User } from "@supabase/supabase-js"
 import { ISignUp, ISignIn } from "./Auth"
-import { User } from "@/core/domain/entities/User"
 
 export interface IAuthRepository {
   signUp: (user: ISignUp) => Promise<User | null>
   signIn: (credentials: ISignIn) => Promise<User | null>
-  resetPassword: (email: string) => Promise<{ success: boolean }>
+  resetPassword: (email: string) => Promise<void>
   getCurrentUser: () => Promise<User | null>
-  // signOut: () => Promise<void>
+  signOut: () => Promise<void>
 }

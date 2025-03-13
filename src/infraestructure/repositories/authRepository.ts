@@ -21,15 +21,8 @@ const AuthRepository: IAuthRepository = {
     if (error || !data.user) throw new Error(error?.message ?? 'Signup failed')
 
     return {
-      id: data.user.id,
-      email: data.user.email!,
-      firstName: data.user.user_metadata?.first_name_name,
-      lastName: data.user.user_metadata?.last_name,
-      roleId: data.user.user_metadata.id_role,
-      avatar: data.user.user_metadata?.avatar,
-      userName: data.user.user_metadata?.userName,
-      createdAt: data.user.created_at
-    }
+      ...data.user
+      }
   },
 
   async signIn(credentials: ISignIn) {
@@ -37,23 +30,14 @@ const AuthRepository: IAuthRepository = {
       email: credentials.email,
       password: credentials.password,
     })
-    console.log(credentials, error)
+
     if (error) {
       throw error;
     }
 
-    console.log(data, 'USUARIO')
-
     return {
-      id: data.user.id,
-      email: data.user.email!,
-      firstName: data.user.user_metadata?.first_name_name,
-      lastName: data.user.user_metadata?.last_name,
-      roleId: data.user.user_metadata.id_role,
-      avatar: data.user.user_metadata?.avatar,
-      userName: data.user.user_metadata?.userName,
-      createdAt: data.user.created_at
-    }
+      ...data.user
+     }
   },
 
   async resetPassword(email) {
@@ -62,8 +46,6 @@ const AuthRepository: IAuthRepository = {
     if (error) {
       throw error
     }
-
-    return { success: true }
   },
 
   async getCurrentUser() {
@@ -72,14 +54,15 @@ const AuthRepository: IAuthRepository = {
     if (!data.user) return null
 
     return {
-      id: data.user.id,
-      email: data.user.email!,
-      firstName: data.user.user_metadata?.first_name_name,
-      lastName: data.user.user_metadata?.last_name,
-      roleId: data.user.user_metadata.id_role,
-      avatar: data.user.user_metadata?.avatar,
-      userName: data.user.user_metadata?.userName,
-      createdAt: data.user.created_at
+     ...data.user
+    }
+  },
+
+  async signOut() {
+    const { error } = await db.auth.signOut()
+
+    if (error) {
+      throw error
     }
   }
 }
