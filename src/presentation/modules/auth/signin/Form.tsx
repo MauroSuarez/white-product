@@ -1,7 +1,8 @@
 'use client'
 
+import { AuthController } from "@/application/controllers/authController"
+import { authSchema, SignInDTO } from "@/application/validators/authSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
 import { useForm } from "react-hook-form"
 import {
   Form,
@@ -18,44 +19,29 @@ import Link from "next/link"
 import { Checkbox } from "@/presentation/ui/atoms/checkbox"
 import { SocialAuthBlock } from "../components/index"
 
-const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  email: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  remember: z.boolean()
-})
+const authController = new AuthController()
 
 const FormSignIn = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<SignInDTO>({
+    // resolver: zodResolver(authSchema.signin),
     defaultValues: {
-      username: "",
+      email: "",
     },
   })
  
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
-  }
+  const onSubmit = async (data: SignInDTO) => {
+      const result = await authController.handleSignin(data)
+    }
   return (
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4 mt-8">
           <FormField
             control={form.control}
-            name="username"
+            name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input className="py-6" placeholder="shadcn" {...field} />
                 </FormControl>
@@ -68,12 +54,12 @@ const FormSignIn = () => {
           />
           <FormField
             control={form.control}
-            name="email"
+            name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Conseseña</FormLabel>
                 <FormControl>
-                  <Input className="py-6" placeholder="email" {...field} />
+                  <Input className="py-6" placeholder="***" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

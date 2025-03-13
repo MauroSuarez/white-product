@@ -37,10 +37,12 @@ const AuthRepository: IAuthRepository = {
       email: credentials.email,
       password: credentials.password,
     })
-
+    console.log(credentials, error)
     if (error) {
       throw error;
     }
+
+    console.log(data, 'USUARIO')
 
     return {
       id: data.user.id,

@@ -28,8 +28,20 @@ export const SignUpSchema = z.object({
   path: ["confirm"],
 })
 
+export const SignInSchema = z.object({
+  email: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  password: z.string().min(8, {
+    message: ''
+  }),
+  remember: z.boolean()
+})
+
 export type SignUpDTO = z.infer<typeof SignUpSchema>
+export type SignInDTO = z.infer<typeof SignInSchema>
 
 export const authSchema = {
-  signup: SignUpSchema
+  signup: SignUpSchema,
+  signin: SignInSchema,
 }
