@@ -1,7 +1,7 @@
 import { createSignUpUseCase } from "@/core/domain/use-cases/auth/signupUseCase"
 import { createSignInUseCase } from "@/core/domain/use-cases/auth/signinUseCase"
 import { createResetPasswordUseCase } from "@/core/domain/use-cases/auth/resetPasswordUseCase"
-import { createSignOutUseCase } from "@/core/domain/use-cases/auth/signOutUseCase"
+import { createSignOutUseCase } from "@/core/domain/use-cases/auth/signoutUseCase"
 import { AuthRepository } from "@/infraestructure/repositories/authRepository"
 import { authSchema, ResetPasswordDTO, SignInDTO, SignUpDTO } from "../validators/authSchema"
 import { AuthService } from "@/infraestructure/services/authService"
