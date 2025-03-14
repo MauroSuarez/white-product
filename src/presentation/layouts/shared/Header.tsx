@@ -1,3 +1,6 @@
+'use client'
+
+import React, { useState, useEffect } from 'react'
 import { useTheme } from "next-themes"
 import { Button } from "@/presentation/ui/atoms/button"
 import { Icon } from "@/presentation/ui/atoms/icon"
@@ -11,18 +14,42 @@ import {
 } from "@/presentation/ui/atoms/dropdown-menu"
 import { Wrench } from "lucide-react"
 import Link from "next/link"
+import { Typography } from "@/presentation/ui/atoms/typography"
 
 const Header = () => {
+  const [isSmall, setIsSmall] = useState(false)
   const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsSmall(true)
+      } else {
+        setIsSmall(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <header className="sticky top-0 z-50 border-b border-grey-50">
-      <div className="container mx-auto flex items-center justify-between px-4 py-6">
+    <header className={`border-b border-grey-50 transition-all duration-300 ${
+          isSmall ? 'h-16' : 'h-28'
+        } flex items-center`}>
+      <div className="container mx-auto flex justify-between px-4">
 
         <div className="flex items-center">
           <div className="text-primary"><Wrench className="h-10 w-10" /></div>
         </div>
 
         <div className="flex items-center space-x-4">
+          <Link href={'/es/aboutus'}>
+            <Button variant="ghost" className="hidden md:flex">
+              Acerca de nosotros
+            </Button>
+          </Link>
+
           <Link href={'/es/auth/signup'}>
             <Button variant="default" className="hidden md:flex">
               Subí tu WorkShop
@@ -47,13 +74,16 @@ const Header = () => {
               <DropdownMenuItem>Iniciar sesión</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => (theme == "dark" ? setTheme("light") : setTheme("dark"))}>
-                {theme === "light" ? (
-                  <div className="text-foreground"><Icon name="MoonIcon" /></div>
-                ) : (
-                  <div className="text-foreground"><Icon name="SunIcon" /></div>
-                )}
+                <div className="flex flex-wrap justify-between w-full">
+                  <Typography>Tema</Typography>
+                  {theme === "light" ? (
+                    <div className="text-foreground"><Icon name="MoonIcon" /></div>
+                  ) : (
+                    <div className="text-foreground"><Icon name="SunIcon" /></div>
+                  )}
+                </div>
               </DropdownMenuItem>
-              <DropdownMenuItem>Ayuda</DropdownMenuItem>
+              <DropdownMenuItem>Acerca de nosotros</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
