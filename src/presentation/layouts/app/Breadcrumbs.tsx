@@ -4,8 +4,8 @@ import React from 'react'
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { BREADCRUMBS_LABEL } from "@/config/constants"
-import { Icon } from '@/presentation/ui/atoms/icon'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/presentation/ui/atoms/breadcrumbs"
+import { Icon } from '@/presentation/ds/icon'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/presentation/ds/breadcrumbs"
 
 const Breadcrumbs = () => {
   const pathname = usePathname()

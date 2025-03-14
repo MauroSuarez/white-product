@@ -1,17 +1,17 @@
 'use client'
 
 import React from 'react'
-import { Button } from '@/presentation/ui/atoms/button'
+import { Button } from '@/presentation/ds/button'
 import { FormSignUp } from './Form'
 import Link from 'next/link'
-import { Typography } from '@/presentation/ui/atoms/typography'
+import { Typography } from '@/presentation/ds/typography'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/presentation/ui/atoms/dialog"
+} from "@/presentation/ds/dialog"
 
 export default function SignUpModule() {
   const [open, setOpen] = React.useState(false)

@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 import "./globals.css"
 import { ThemeAppProvider } from "@/presentation/providers/ThemeProvider"
-import { Toaster } from "@/presentation/ui/atoms/toaster"
+import { Toaster } from "@/presentation/ds/toaster"
 
 const geistSans = localFont({
   src: "../../presentation/assets/fonts/GeistVF.woff",

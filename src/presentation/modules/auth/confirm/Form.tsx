@@ -9,15 +9,15 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/presentation/ui/atoms/form"
+} from "@/presentation/ds/form"
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
   InputOTPSeparator,
-} from "@/presentation/ui/atoms/input-otp"
+} from "@/presentation/ds/input-otp"
 import { toast } from "@/presentation/hooks/useToast"
-import { Button } from "@/presentation/ui/atoms/button"
+import { Button } from "@/presentation/ds/button"
 
 const FormSchema = z.object({
   pin: z.string().min(6, {

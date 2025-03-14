@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/presentation/ui/atoms/card"
+} from "@/presentation/ds/card"
 
 export default function GeneralModule() {
   return (

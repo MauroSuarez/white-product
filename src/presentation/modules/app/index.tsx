@@ -5,8 +5,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/presentation/ui/atoms/card"
-import { Icon } from "@/presentation/ui/atoms/icon"
+} from "@/presentation/ds/card"
+import { Icon } from "@/presentation/ds/icon"
 
 export default function AppModule() {
   return (

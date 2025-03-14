@@ -2,22 +2,22 @@
 
 import { useState } from "react"
 import { useTheme } from "next-themes"
-import { Button } from "@/presentation/ui/atoms/button"
-import { Icon } from "@/presentation/ui/atoms/icon"
-import { Avatar, AvatarFallback, AvatarImage } from "@/presentation/ui/atoms/avatar"
+import { Button } from "@/presentation/ds/button"
+import { Icon } from "@/presentation/ds/icon"
+import { Avatar, AvatarFallback, AvatarImage } from "@/presentation/ds/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator
-} from "@/presentation/ui/atoms/dropdown-menu"
+} from "@/presentation/ds/dropdown-menu"
 import { Wrench, User } from "lucide-react"
 import Link from "next/link"
-import { Typography } from "@/presentation/ui/atoms/typography"
+import { Typography } from "@/presentation/ds/typography"
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/presentation/ui/atoms/dialog"
-import { Input } from "@/presentation/ui/atoms/input"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/presentation/ds/dialog"
+import { Input } from "@/presentation/ds/input"
 
 const Header = () => {
   const { isSmall } = usePositionScroll()

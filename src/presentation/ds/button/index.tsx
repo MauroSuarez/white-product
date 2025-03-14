@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { Spinner } from "@/presentation/ui/atoms/spinner"
+import { Spinner } from "@/presentation/ds/spinner"
 
 import { cn } from "@/presentation/utils/uiHelpers"
 

@@ -1,6 +1,6 @@
 import { FormForgotPassword } from './Form'
-import { Button } from "@/presentation/ui/atoms/button"
-import { Typography } from "@/presentation/ui/atoms/typography"
+import { Button } from "@/presentation/ds/button"
+import { Typography } from "@/presentation/ds/typography"
 import Link from "next/link"
 
 export default function ForgotPaswordModule() {

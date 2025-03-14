@@ -12,10 +12,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/presentation/ui/atoms/form"
-import { Input } from "@/presentation/ui/atoms/input"
+} from "@/presentation/ds/form"
+import { Input } from "@/presentation/ds/input"
 import { toast } from "@/presentation/hooks/useToast"
-import { Button } from "@/presentation/ui/atoms/button"
+import { Button } from "@/presentation/ds/button"
 
 const authController = new AuthController()
 

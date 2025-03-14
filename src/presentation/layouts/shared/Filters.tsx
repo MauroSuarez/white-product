@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react'
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
-import { Button } from '@/presentation/ui/atoms/button'
-import { Typography } from '@/presentation/ui/atoms/typography'
+import { Button } from '@/presentation/ds/button'
+import { Typography } from '@/presentation/ds/typography'
 import { SlidersHorizontal, Map, Hammer } from "lucide-react"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/presentation/ui/atoms/carousel'
-import { Card, CardContent } from '@/presentation/ui/atoms/card'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/presentation/ds/carousel'
+import { Card, CardContent } from '@/presentation/ds/card'
+import { Swipper } from '@/presentation/ds/swipper'
 
 const Filters = () => {
   const { isSmall } = usePositionScroll()
@@ -27,70 +28,15 @@ const Filters = () => {
 
         <div className="grid grid-cols-[5fr_1fr_1fr] gap-6 h-20">
 
-          <div className="flex">
-          {/* <Carousel
-            opts={{
-              align: "start",
-            }}
-            className="w-full max-w-sm"
-          >
-            <CarouselContent>
-              {Array.from({ length: 5 }).map((_, key) => (
-                <CarouselItem key={key} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
-                  <Button
-                      onClick={() => toggleActive(key)}
-                      variant='outline'
-                      className={`h-auto border-0 shadow-none w-auto py-1 flex flex-wrap justify-center rounded-none
-                        ${isActive === key ? 'border-b-2 border-primary' : ''}
-                        
-                      `}
-                    >
-                      <Hammer />
-                      <div className='flex w-full py-0 m-0 justify-center'>
-                        <Typography variant='muted' className='py-0 m-0'>Lavadero {key}</Typography>
-                      </div>
-                    </Button>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel> */}
-            {/* <Carousel>
-              <CarouselContent>
-                {[...new Array(8)].map((_, key) => (
-                  <CarouselItem key={key} className='border border-red-500 h-20'>
-                    <div className='flex items-center justify-center h-64 bg-yellow-100 rounded-lg'>
-                    <Button
-                      onClick={() => toggleActive(key)}
-                      variant='outline'
-                      className={`h-auto border-0 shadow-none w-auto py-1 flex flex-wrap justify-center rounded-none
-                        ${isActive === key ? 'border-b-2 border-primary' : ''}
-                        
-                      `}
-                    >
-                      <Hammer />
-                      <div className='flex w-full py-0 m-0 justify-center'>
-                        <Typography variant='muted' className='py-0 m-0'>Lavadero {key}</Typography>
-                      </div>
-                    </Button>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel> */}
-            <div className='w-full flex flex-nowrap gap-2'>
-              {[...new Array(8)].map((_, key) => (
+          <div className="flex w-full">
+          {[...new Array(8)].map((_, key) => (
                 <Button
                   onClick={() => toggleActive(key)}
                   variant='outline'
-                  className={`h-auto border-0 shadow-none w-auto py-1 flex flex-wrap justify-center rounded-none
+                  className={`
+                    relative inline-block mr-2.5
+                    h-auto border-0 shadow-none w-auto py-1 flex flex-wrap justify-center rounded-none
                     ${isActive === key ? 'border-b-2 border-primary' : ''}
-                    
                   `}
                 >
                   <Hammer />
@@ -98,8 +44,26 @@ const Filters = () => {
                     <Typography variant='muted' className='py-0 m-0'>Lavadero {key}</Typography>
                   </div>
                 </Button>
-              ))}
-            </div>
+            ))}
+            {/* <Swipper /> */}
+            {/* <Swipper>
+              {[...new Array(18)].map((_, key) => (
+                <Button
+                  onClick={() => toggleActive(key)}
+                  variant='outline'
+                  className={`
+                    relative inline-block mr-2.5
+                    h-auto border-0 shadow-none w-auto py-1 flex flex-wrap justify-center rounded-none
+                    ${isActive === key ? 'border-b-2 border-primary' : ''}
+                  `}
+                >
+                  <Hammer />
+                  <div className='flex w-full py-0 m-0 justify-center'>
+                    <Typography variant='muted' className='py-0 m-0'>Lavadero {key}</Typography>
+                  </div>
+                </Button>
+            ))}
+            </Swipper> */}
           </div>
 
           <div className="flex items-center justify-end">

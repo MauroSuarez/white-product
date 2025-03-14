@@ -1,7 +1,7 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
-import { Separator } from "@/presentation/ui/atoms/separator"
-import { Typography } from "@/presentation/ui/atoms/typography"
-import { Button } from "@/presentation/ui/atoms/button"
+import { Separator } from "@/presentation/ds/separator"
+import { Typography } from "@/presentation/ds/typography"
+import { Button } from "@/presentation/ds/button"
 
 const SocialAuthBlock = () => {
   return (

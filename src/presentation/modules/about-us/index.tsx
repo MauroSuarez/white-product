@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import { Typography } from "@/presentation/ui/atoms/typography"
+import { Typography } from "@/presentation/ds/typography"
 import { GearIcon } from "@radix-ui/react-icons"
 import MobileIcon from "@/presentation/assets/svg/mobile-icon.svg"
 import Mobile2Icon from "@/presentation/assets/svg/mobile-2-icon.svg"
 import MapIcon from "@/presentation/assets/svg/map-icon.svg"
-import { Button } from '@/presentation/ui/atoms/button'
+import { Button } from '@/presentation/ds/button'
 
 export default function LandingModule() {
   return (
