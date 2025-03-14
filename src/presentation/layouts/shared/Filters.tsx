@@ -18,52 +18,34 @@ const Filters = () => {
   }
   
   return (
-    <section className={`bg-background transition-all duration-300 ${
-          isSmall ? 'shadow-sm' : ''
-        } h-22
-         
-      `
-      }>
-      <div className="px-10 h-20 flex items-center">
+    <section className={`bg-background transition-all duration-300 ${isSmall ? 'shadow-sm' : ''} h-22`}>
+      <div className="px-10 h-20 w-full">
 
-        <div className="grid grid-cols-[5fr_1fr_1fr] gap-6 h-20">
+        <div className="grid grid-cols-[5fr_1fr_1fr] gap-6 h-full">
 
-          <div className="flex w-full">
-          {[...new Array(8)].map((_, key) => (
-                <Button
-                  onClick={() => toggleActive(key)}
-                  variant='outline'
-                  className={`
-                    relative inline-block mr-2.5
-                    h-auto border-0 shadow-none w-auto py-1 flex flex-wrap justify-center rounded-none
-                    ${isActive === key ? 'border-b-2 border-primary' : ''}
-                  `}
-                >
-                  <Hammer />
-                  <div className='flex w-full py-0 m-0 justify-center'>
-                    <Typography variant='muted' className='py-0 m-0'>Lavadero {key}</Typography>
-                  </div>
-                </Button>
-            ))}
-            {/* <Swipper /> */}
-            {/* <Swipper>
-              {[...new Array(18)].map((_, key) => (
-                <Button
-                  onClick={() => toggleActive(key)}
-                  variant='outline'
-                  className={`
-                    relative inline-block mr-2.5
-                    h-auto border-0 shadow-none w-auto py-1 flex flex-wrap justify-center rounded-none
-                    ${isActive === key ? 'border-b-2 border-primary' : ''}
-                  `}
-                >
-                  <Hammer />
-                  <div className='flex w-full py-0 m-0 justify-center'>
-                    <Typography variant='muted' className='py-0 m-0'>Lavadero {key}</Typography>
-                  </div>
-                </Button>
-            ))}
-            </Swipper> */}
+          <div className="flex flex-wrap w-full items-center overflow-x-auto">
+            <Swipper>
+              {[...new Array(10)].map((_, key) => (
+                <div className='inline-block h-full p-0 w-[10]'>
+                  <Button
+                    onClick={() => toggleActive(key)}
+                    variant='outline'
+                    className={`
+                      flex flex-wrap
+                      h-full border-0 shadow-none py-1 justify-center rounded-none
+                      ${isActive === key ? 'border-b-2 border-primary' : ''}
+                    `}
+                  >
+                    <div className='flex w-full py-0 m-0 justify-center'>
+                      <Hammer />
+                    </div>
+                    <div className='flex w-full py-0 m-0 justify-center'>
+                      <Typography variant='muted' className='py-0 m-0'>Lavadero {key}</Typography>
+                    </div>
+                  </Button>
+                </div>
+              ))}
+            </Swipper>
           </div>
 
           <div className="flex items-center justify-end">

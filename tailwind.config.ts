@@ -81,6 +81,9 @@ const config: Config = {
 			"caret-blink": "caret-blink 1.25s ease-out infinite",
 			"spin": "spin 1s infinite",
 		},
+		// gridTemplateColumns: {
+		// 	'custom': 'minmax(0, 6fr) minmax(0, 3fr) minmax(0, 3fr)',
+		// },
   },
   plugins: [require("tailwindcss-animate")],
 };

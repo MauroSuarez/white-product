@@ -4,16 +4,15 @@ import React, { useState, useRef, FunctionComponent, useEffect } from 'react'
 import { Icon } from '../icon'
 
 type SwipperProps = {
-  // children: React.ReactNode
-  classes?: string
+  children: React.ReactNode
   scrollArrows?: boolean
   onClick?: (chipData: object | undefined) => void
 }
 
-const Swipper: FunctionComponent<SwipperProps> = ({
-  // children = [],
+const Swipper = ({
+  children,
   scrollArrows = true,
-}) => {
+}: SwipperProps) => {
   const [scrollLeft, setScrollLeft] = useState(0)
   const [maxScroll, setMaxScroll] = useState<undefined | number>(undefined)
   const ref = useRef<HTMLDivElement>(null)
@@ -33,7 +32,7 @@ const Swipper: FunctionComponent<SwipperProps> = ({
     'absolute flex z-10 top-0 w-[100px] h-full items-center bg-gradient-to-r'
 
   return (
-    <div className="h-auto relative">
+    <div className="h-20 w-full flex flex-wrap relative">
       {scrollArrows && scrollLeft > 0 && (
         <button
           onClick={() => setScrollLeft(Math.max(0, scrollLeft - 20))}
@@ -43,19 +42,12 @@ const Swipper: FunctionComponent<SwipperProps> = ({
         </button>
       )}
       <div
-        className={`mx-13 max-w-full ${
+        className={`h-full ${
           scrollArrows ? 'overflow-hidden' : 'overflow-x-auto'
         } whitespace-nowrap`}
         ref={ref}
       >
-        {[...new Array(12)].map((_, i) => {
-          return (
-            <div
-              key={`${i}`}
-              className={`relative inline-block mr-2.5 w-20 h-10 border`}
-            >{i}</div>
-          );
-        })}
+        {children}
       </div>
       {scrollArrows && (!maxScroll || scrollLeft < maxScroll) && (
         <button
