@@ -12,13 +12,18 @@ export default function AppModule() {
   return (
     <section className="w-full py-8 px-10 h-screen">
       <div className="grid grid-cols-4 gap-6">
-        {[...new Array(4)].map((column, index) => (
+        {[...new Array(7)].map((column, index) => (
           <Card className="overflow-hidden rounded-lg border-0">
-            <img
-              src="/images/workshop.jpg"
-              alt="Taller mecánico"
-              className="w-full h-48 object-cover"
-            />
+            <div className="relative">
+              <img
+                src="/images/workshop.jpg"
+                alt="Taller mecánico"
+                className="w-full h-48 object-cover"
+              />
+              <div className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md">
+                <Icon name='HeartIcon' className="w-4 h-4" />
+              </div>
+            </div>
             
             <CardContent className="px-0">
               <CardHeader className="py-6 px-0">

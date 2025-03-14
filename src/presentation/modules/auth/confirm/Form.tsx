@@ -9,7 +9,7 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/presentation/ui/molecules/form"
+} from "@/presentation/ui/atoms/form"
 import {
   InputOTP,
   InputOTPGroup,

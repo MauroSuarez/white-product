@@ -12,7 +12,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/presentation/ui/molecules/form"
+} from "@/presentation/ui/atoms/form"
 import { Input } from "@/presentation/ui/atoms/input"
 import { toast } from "@/presentation/hooks/useToast"
 import { Button } from "@/presentation/ui/atoms/button"

@@ -1,5 +1,3 @@
-'use client'
-
 import { Header } from "@/presentation/layouts/shared/Header"
 import { Footer } from '@/presentation/layouts/shared/Footer'
 import { Filters } from "@/presentation/layouts/shared/Filters"
