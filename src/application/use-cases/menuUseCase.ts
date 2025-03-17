@@ -14,16 +14,16 @@ export const menuUseCase = (authStore: any): MenuItem[] => {
 
   if (isLoggedIn) {
     return [
-      { label: 'Mensajes', path: '/es/app/messages' },
-      { label: 'Mi agenda', path: '/es/app/reservations' },
-      { label: 'Favoritos', path: '/es/app/favorites' },
+      { label: 'Mensajes', path: '/es/messages' },
+      { label: 'Mi agenda', path: '/es/reservations' },
+      { label: 'Favoritos', path: '/es/favorites' },
       { separator: true },
-      { label: 'Poné tu FreeWheels', path: '/es/app/messages' },
-      { label: 'Invita un FreeWheels', path: '/es/app/invite' },
-      { label: 'Cuenta', path: '/es/app/account' },
+      { label: 'Poné tu FreeWheels', path: '/es/messages' },
+      { label: 'Invita un FreeWheels', path: '/es/invite' },
+      { label: 'Cuenta', path: '/es/account' },
       { separator: true },
-      { label: 'Tema', path: '/es/app/contact' },
-      { label: 'Centro de ayuda', path: '/es/app/contact' },
+      { label: 'Tema', icon: 'SunIcon', action: 'theme' },
+      { label: 'Centro de ayuda', path: '/es/contact' },
       { label: 'Cerrar sesión', action: 'logout' },
     ]
   } else {
@@ -31,11 +31,11 @@ export const menuUseCase = (authStore: any): MenuItem[] => {
       { label: 'Iniciar sesión', action: 'signin' },
       { label: 'Registrate', action: 'signup' },
       { separator: true },
-      { label: 'Poné tu FreeWheels', path: '/es/app/messages' },
-      { label: 'Invita un FreeWheels', path: '/es/app/invite' },
+      { label: 'Poné tu FreeWheels', path: '/es/messages' },
+      { label: 'Invita un FreeWheels', path: '/es/invite' },
       { separator: true },
       { label: 'Tema', icon: 'SunIcon', action: 'theme' },
-      { label: 'Centro de ayuda', path: '/es/app/contact' },
+      { label: 'Centro de ayuda', path: '/es/contact' },
     ]
   }
 }
