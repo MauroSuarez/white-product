@@ -1,5 +1,5 @@
 export const APPLICATION = {
-  appName: 'WorkShop'
+  appName: 'FreeWheels'
 }
 
 export const BREADCRUMBS_LABEL: { [key: string]: string } = {
