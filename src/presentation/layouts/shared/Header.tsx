@@ -45,7 +45,7 @@ const Header = () => {
             </Button>
           </Link>
 
-          <Link href={'/es/auth/signup'}>
+          <Link href={'/es/workshop'}>
             <Button variant="default" className="hidden md:flex h-10">
               Subí tu WorkShop
               <Wrench className='h-5 w-5' />
