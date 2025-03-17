@@ -23,7 +23,7 @@ const HeaderSimple = () => {
   return (
     <header className={`transition-all duration-300 ${isSmall ? 'border-b border-grey-50' : ''} h-28 flex items-center`}>
 
-      <div className="container mx-auto flex justify-between px-4">
+<div className="w-full px-10 mx-auto flex justify-between">
 
         <div className="flex items-center">
           <Link href={'/es'}>

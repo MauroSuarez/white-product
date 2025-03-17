@@ -14,3 +14,5 @@ export const useAuthStore = create<AuthState>((set) => ({
   setUser: (user) => set({ user, isLoggedIn: true }),
   clearUser: () => set({ user: null, isLoggedIn: false }),
 }))
+
+export type AuthStore = ReturnType<typeof useAuthStore>
