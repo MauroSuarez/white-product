@@ -1,3 +1,4 @@
+'use client'
 
 import React, { FC } from 'react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/presentation/ds/dialog"
@@ -6,13 +7,13 @@ type ModalProps = {
   title?: string
   description?: string
   isOpen: boolean
-  onOpenChange: () => void
+  onOpenChange: (open: boolean) => void
   children: React.ReactNode
 }
 
 const Modal: FC<ModalProps> = ({
   title,
-  description,
+  description = 'descripcion',
   isOpen = false,
   onOpenChange,
   children
@@ -21,8 +22,8 @@ const Modal: FC<ModalProps> = ({
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          {title && <DialogTitle>{title}</DialogTitle>}
-          {description && <DialogDescription>{description}</DialogDescription>}
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <>
           {children}

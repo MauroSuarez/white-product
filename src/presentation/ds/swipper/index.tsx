@@ -32,13 +32,13 @@ const Swipper = ({
     'absolute flex z-10 top-0 w-[100px] h-full items-center bg-gradient-to-r'
 
   return (
-    <div className="h-20 w-full flex flex-wrap relative">
+    <div className="relative h-20 w-full flex flex-wrap ">
       {scrollArrows && scrollLeft > 0 && (
         <button
           onClick={() => setScrollLeft(Math.max(0, scrollLeft - 20))}
           className={`${arrowsClasses} left-0 justify-start from-background to-transparent`}
         >
-          <Icon name='ChevronLeftIcon' />
+          <Icon name='ChevronLeftIcon' className='w-8 h-8 bg-gray-100 rounded-full p-1' />
         </button>
       )}
       <div
@@ -56,7 +56,7 @@ const Swipper = ({
           }
           className={`${arrowsClasses} right-0 justify-end from-transparent to-background`}
         >
-          <Icon name='ChevronRightIcon' />
+          <Icon name='ChevronRightIcon' className='w-8 h-8 bg-gray-100 rounded-full p-1' />
         </button>
       )}
     </div>

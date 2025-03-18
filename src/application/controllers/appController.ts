@@ -7,4 +7,8 @@ export class AppController {
   getMenu() {
     return this.menuItemsUseCase
   }
+
+  isLoggedIn() {
+    return { isLoggedIn: true }
+  }
 }

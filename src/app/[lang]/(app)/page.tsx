@@ -14,10 +14,9 @@ import { Filters } from "./Filters"
 import { Header } from "./Header"
 
 export default function App() {
-
   return (
     <>
-      <div className="sticky top-0 z-50 bg-background">
+      <div className="sticky top-0 z-20 bg-background">
         <Header />
         <Filters />
       </div>
