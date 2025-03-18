@@ -1,8 +1,8 @@
-import AuthLayout from "@/presentation/layouts/auth"
 import type { Metadata } from "next"
+import { Header } from "./Header"
 
 export const metadata: Metadata = {
-  title: 'Iniciar sesión',
+  title: 'Home',
   description: 'a ver',
 }
 
@@ -10,8 +10,9 @@ export default function Layout({
   children
 }: { children: React.ReactNode }) {
   return (
-    <AuthLayout>
+    <div className="flex min-h-screen w-full flex-col bg-background">
+      <Header />
       {children}
-    </AuthLayout>
+    </div>
   )
 }

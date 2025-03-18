@@ -5,8 +5,6 @@ import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { Button } from '@/presentation/ds/button'
 import { Typography } from '@/presentation/ds/typography'
 import { SlidersHorizontal, Map, Hammer } from "lucide-react"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/presentation/ds/carousel'
-import { Card, CardContent } from '@/presentation/ds/card'
 import { Swipper } from '@/presentation/ds/swipper'
 
 const Filters = () => {
@@ -26,7 +24,7 @@ const Filters = () => {
           <div className="flex flex-wrap w-full items-center overflow-x-auto">
             <Swipper>
               {[...new Array(10)].map((_, key) => (
-                <div className='inline-block h-full p-0 w-[10]'>
+                <div key={`item-filter-${key}`} className='inline-block h-full p-0 w-[10]'>
                   <Button
                     onClick={() => toggleActive(key)}
                     variant='outline'

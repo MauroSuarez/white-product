@@ -24,8 +24,9 @@ const Modal: FC<ModalProps> = ({
           {title && <DialogTitle>{title}</DialogTitle>}
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
-
-        {children}
+        <>
+          {children}
+        </>
       </DialogContent>
     </Dialog>
   )
