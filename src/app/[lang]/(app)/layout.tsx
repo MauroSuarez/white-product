@@ -6,7 +6,7 @@ export default function AppLayout({
   children: React.ReactNode
 }) {
   return (
-    <section className="flex min-h-screen w-full flex-col bg-background">
+    <section className="flex min-h-screen h-auto w-full flex-col bg-background">
       {children}
       <Footer />
     </section>
