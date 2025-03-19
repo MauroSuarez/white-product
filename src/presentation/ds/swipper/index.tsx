@@ -38,7 +38,7 @@ const Swipper = ({
           onClick={() => setScrollLeft(Math.max(0, scrollLeft - 20))}
           className={`${arrowsClasses} left-0 justify-start from-background to-transparent`}
         >
-          <Icon name='ChevronLeftIcon' className='w-8 h-8 bg-gray-100 rounded-full p-1' />
+          <Icon name='ChevronLeftIcon' className='w-8 h-8 dark:bg-foreground bg-gray-100 dark:text-background text-foreground rounded-full p-1' />
         </button>
       )}
       <div
@@ -56,7 +56,7 @@ const Swipper = ({
           }
           className={`${arrowsClasses} right-0 justify-end from-transparent to-background`}
         >
-          <Icon name='ChevronRightIcon' className='w-8 h-8 bg-gray-100 rounded-full p-1' />
+          <Icon name='ChevronRightIcon' className='w-8 h-8 dark:bg-foreground bg-gray-100 dark:text-background text-foreground rounded-full p-1' />
         </button>
       )}
     </div>

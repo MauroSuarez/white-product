@@ -105,13 +105,13 @@ const Header: React.FC<HeaderProps> = ({}) => {
             </Link>
 
             <DropdownMenu items={menuItems} onClick={handleItemClick}>
-              <div className="rounded-full px-5 border border-gray-300 p-2 h-10 flex justify-center">
-                <div className="flex justify-center space-x-2">
-                  <Icon name="HamburgerMenuIcon" className="h-5 w-5" />
-                  <Avatar className="h-6 w-6">
+              <div className="rounded-full px-4 border border-gray-300 items-center h-12 flex justify-center cursor-pointer">
+                <div className="flex justify-center space-x-2 items-center">
+                  <Icon name="HamburgerMenuIcon" className="h-5 w-5 text-foreground" />
+                  <Avatar className="h-10 w-10 bg-gray-300 rounded-full flex items-center justify-center">
                     <AvatarImage src="https://github.com/shadcn.pngd" alt="@shadcn" />
                     <AvatarFallback>
-                      <User className="h-5 w-5" />
+                      <User className="h-5 w-5 dark:text-background" />
                     </AvatarFallback>
                   </Avatar>
                 </div>
@@ -129,10 +129,6 @@ const Header: React.FC<HeaderProps> = ({}) => {
       >
         <AuthForm handleSubmit={handleSubmitAuth} type='signin' />
       </CustomModal>
-
-      {/* <Modal isOpen={isModalOpen} title="Iniciá sesión o registrate" onOpenChange={(open) => setIsModalOpen(open)}>
-        <div>fadsf adsf asdfasdasd</div>
-      </Modal> */}
     </>
   )
 }

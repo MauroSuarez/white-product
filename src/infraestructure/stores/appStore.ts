@@ -1,5 +1,13 @@
 import { create } from 'zustand'
 
+const categoriesInitialState = {
+  
+}
+
+const filtersInitalState = {
+  category: 1,
+}
+
 type AppState = {
   isError: boolean
   isLoading: boolean
