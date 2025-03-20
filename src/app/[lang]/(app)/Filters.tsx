@@ -7,30 +7,43 @@ import { Typography } from '@/presentation/ds/typography'
 import { SlidersHorizontal, Map, LayoutGrid, Hammer } from "lucide-react"
 import { Swipper } from '@/presentation/ds/swipper'
 import { ViewTypeController } from '@/application/controllers/viewTypeController'
+import { CategoriesController } from '@/application/controllers/categoriesController'
+import { Category } from '@/infraestructure/stores/appStore'
 
 const viewTypeController = new ViewTypeController()
+const categoriesController = new CategoriesController()
 
 const Filters = () => {
   const [viewType, setViewType] = useState(viewTypeController.getViewType())
+  const [categories, setCategory] = useState(categoriesController.getCategories())
   const { isSmall } = usePositionScroll()
   const [isActive, setIsActive] = useState<number>(-1)
-
-  const toggleActive = (key: number) => {
-    setIsActive(key)
-  }
 
   const handleViewType = () => {
     const type = viewType === 'card' ? 'map' : 'card'
     viewTypeController.setViewType(type)
   }
 
+  const handleCategory = (key: number) => {
+    // TODO Setear el store con la categoria
+    setIsActive(key)
+    categoriesController.setCategory(key)
+  }
+
   useEffect(() => {
-    const unsubscribe = viewTypeController.subscribe((newState: any) => {
+    const unsubscribeViewType = viewTypeController.subscribe((newState: any) => {
+      setViewType(newState.viewType)
+    })
+
+    const unsubscribeCategory = categoriesController.subscribe((newState: any) => {
       setViewType(newState.viewType)
     })
 
     // Limpiar la suscripción al desmontar el componente
-    return () => unsubscribe()
+    return () => {
+      unsubscribeViewType()
+      unsubscribeCategory()
+    }
   }, [])
   
   return (
@@ -41,26 +54,28 @@ const Filters = () => {
 
           <div className="flex flex-wrap w-full items-center overflow-x-auto">
             <Swipper>
-              {[...new Array(10)].map((_, key) => (
-                <div key={`item-filter-${key}`} className='inline-block h-full p-0 w-[10]'>
-                  <Button
-                    onClick={() => toggleActive(key)}
-                    variant='outline'
-                    className={`
-                      flex flex-wrap
-                      h-full border-0 shadow-none py-1 justify-center rounded-none
-                      ${isActive === key ? 'border-b-2 border-primary' : ''}
-                    `}
-                  >
-                    <div className='flex w-full py-0 m-0 justify-center'>
-                      <Hammer />
-                    </div>
-                    <div className='flex w-full py-0 m-0 justify-center'>
-                      <Typography variant='muted' className='py-0 m-0'>Lavadero {key}</Typography>
-                    </div>
-                  </Button>
-                </div>
-              ))}
+              <div className='flex flex-nowrap h-full w-full'>
+                {categories?.map((item: Category, key: number) => (
+                  <div key={`item-filter-${key}`} className='flex h-full p-0 w-[80px] border border-blue-500'>
+                    <Button
+                      onClick={() => handleCategory(key)}
+                      variant='outline'
+                      className={`
+                        flex flex-wrap
+                        h-full border-0 shadow-none py-1 justify-center rounded-none
+                        ${isActive === key ? 'border-b-2 border-primary' : ''}
+                      `}
+                    >
+                      <div className='flex h-10 w-full justify-center border border-purple-500'>
+                        <Hammer />
+                      </div>
+                      <div className='flex w-[80px] py-0 m-0 justify-center text-wrap'>
+                        <Typography variant='muted' className='py-0 m-0'>{item.label}</Typography>
+                      </div>
+                    </Button>
+                  </div>
+                ))}
+              </div>
             </Swipper>
           </div>
 

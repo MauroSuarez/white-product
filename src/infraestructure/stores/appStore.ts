@@ -1,12 +1,12 @@
 import { create } from 'zustand'
 
-export type Categories = {
+export type Category = {
   icon: string
   label: string
   category: number
 }
 
-const categoriesInitialState: Categories[] = [
+const categoriesInitialState: Category[] = [
   {
     icon: 'hammer',
     label: 'Taller mécanico',

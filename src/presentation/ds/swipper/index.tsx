@@ -32,7 +32,7 @@ const Swipper = ({
     'absolute flex z-10 top-0 w-[100px] h-full items-center bg-gradient-to-r'
 
   return (
-    <div className="relative h-20 w-full flex flex-wrap ">
+    <div className="relative h-20 w-full flex flex-wrap border border-red-500">
       {scrollArrows && scrollLeft > 0 && (
         <button
           onClick={() => setScrollLeft(Math.max(0, scrollLeft - 20))}
