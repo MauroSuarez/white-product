@@ -11,7 +11,6 @@ const AuthRepository: IAuthRepository = {
         data: {
           first_name: dataUser.firstName,
           last_name: dataUser.lastName,
-          id_role: dataUser.roleId,
           terms: dataUser.terms,
           username: dataUser.userName,
           avatar: ''

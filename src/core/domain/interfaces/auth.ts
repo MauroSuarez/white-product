@@ -1,4 +1,3 @@
-type TRole = 1 | 2
 
 export interface ISignUp {
   email: string
@@ -6,7 +5,6 @@ export interface ISignUp {
   lastName: string
   password: string
   userName: string
-  roleId: TRole
   terms: boolean
 }
 

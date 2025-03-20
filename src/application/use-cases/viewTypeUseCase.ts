@@ -1,7 +1,7 @@
-import { ViewType } from "@/infraestructure/stores/appStore"
+import { ViewType } from "@/infraestructure/stores/viewTypeStore"
 
-export const viewTypeUseCase = (AppStore: any) => {
-  const { viewType, setViewType: setviewTypeStore } = AppStore.getState()
+export const viewTypeUseCase = (store: any) => {
+  const { viewType, setViewType: setviewTypeStore } = store.getState()
   return {
     getViewType: () => {
       return viewType
@@ -12,7 +12,7 @@ export const viewTypeUseCase = (AppStore: any) => {
     },
 
     subscribe: (callback: any) => {
-      return AppStore.subscribe(callback)
+      return store.subscribe(callback)
     }
   }
 }

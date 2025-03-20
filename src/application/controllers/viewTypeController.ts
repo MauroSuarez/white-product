@@ -1,8 +1,8 @@
 import { viewTypeUseCase } from "../use-cases/viewTypeUseCase"
-import { useAppStore, ViewType } from "@/infraestructure/stores/appStore"
+import { useViewTypeStore, ViewType } from "@/infraestructure/stores/viewTypeStore"
 
 export class ViewTypeController {
-  private viewTypesUseCase = viewTypeUseCase(useAppStore)
+  private viewTypesUseCase = viewTypeUseCase(useViewTypeStore)
 
   getViewType() {
     return this.viewTypesUseCase.getViewType()

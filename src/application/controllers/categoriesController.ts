@@ -1,15 +1,11 @@
 import { categoriesUseCase } from "../use-cases/categoriesUseCase"
-import { useAppStore, Categories } from "@/infraestructure/stores/appStore"
+import { useCategoriesStore } from "@/infraestructure/stores/categoriesStore"
 
 export class CategoriesController {
-  private useCategoriesUseCase = categoriesUseCase(useAppStore)
+  private useCategoriesUseCase = categoriesUseCase(useCategoriesStore)
 
   getCategories() {
     return this.useCategoriesUseCase.getCategories()
-  }
-
-  setCategory(category: number) {
-    this.useCategoriesUseCase.setCategory(category)
   }
 
   subscribe(callback: any) {

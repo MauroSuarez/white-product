@@ -1,50 +1,35 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { Button } from '@/presentation/ds/button'
 import { Typography } from '@/presentation/ds/typography'
 import { SlidersHorizontal, Map, LayoutGrid, Hammer } from "lucide-react"
 import { Swipper } from '@/presentation/ds/swipper'
 import { ViewTypeController } from '@/application/controllers/viewTypeController'
-import { CategoriesController } from '@/application/controllers/categoriesController'
-import { Category } from '@/infraestructure/stores/appStore'
+import { FiltersController } from '@/application/controllers/filtersController'
+import { useViewTypeStore } from '@/infraestructure/stores/viewTypeStore'
+import { Category, useCategoriesStore } from '@/infraestructure/stores/categoriesStore'
+import { useFilterstore } from '@/infraestructure/stores/filtersStore'
 
 const viewTypeController = new ViewTypeController()
-const categoriesController = new CategoriesController()
+const filtersController = new FiltersController()
 
 const Filters = () => {
-  const [viewType, setViewType] = useState(viewTypeController.getViewType())
-  const [categories, setCategory] = useState(categoriesController.getCategories())
+  const viewType = useViewTypeStore((state) => state.viewType)
+  const categories = useCategoriesStore((state) => state.categories)
+  const { category } = useFilterstore((state) => state.filters)
   const { isSmall } = usePositionScroll()
-  const [isActive, setIsActive] = useState<number>(-1)
 
   const handleViewType = () => {
-    const type = viewType === 'card' ? 'map' : 'card'
+    const type = viewType === 'grid' ? 'map' : 'grid'
     viewTypeController.setViewType(type)
   }
 
-  const handleCategory = (key: number) => {
-    // TODO Setear el store con la categoria
-    setIsActive(key)
-    categoriesController.setCategory(key)
+  const handleCategory = (value: number) => {
+    const newValue = value !== category ? value : 0
+    filtersController.setFilters("category", newValue)
   }
-
-  useEffect(() => {
-    const unsubscribeViewType = viewTypeController.subscribe((newState: any) => {
-      setViewType(newState.viewType)
-    })
-
-    const unsubscribeCategory = categoriesController.subscribe((newState: any) => {
-      setViewType(newState.viewType)
-    })
-
-    // Limpiar la suscripción al desmontar el componente
-    return () => {
-      unsubscribeViewType()
-      unsubscribeCategory()
-    }
-  }, [])
   
   return (
     <section className={`bg-background transition-all duration-300 ${isSmall ? 'shadow-sm' : ''} h-22`}>
@@ -56,23 +41,22 @@ const Filters = () => {
             <Swipper>
               <div className='flex flex-nowrap h-full w-full'>
                 {categories?.map((item: Category, key: number) => (
-                  <div key={`item-filter-${key}`} className='flex h-full p-0 w-[80px] border border-blue-500'>
-                    <Button
-                      onClick={() => handleCategory(key)}
-                      variant='outline'
+                  <div key={`item-filter-${key}`} className='flex h-full p-0 w-[80px]'>
+                    <div
+                      onClick={() => handleCategory(item.category)}
                       className={`
-                        flex flex-wrap
+                        flex flex-wrap cursor-pointer
                         h-full border-0 shadow-none py-1 justify-center rounded-none
-                        ${isActive === key ? 'border-b-2 border-primary' : ''}
+                        ${category === item.category ? 'border-b-2 border-primary' : ''}
                       `}
                     >
-                      <div className='flex h-10 w-full justify-center border border-purple-500'>
+                      <div className='flex h-10 w-full justify-center items-center'>
                         <Hammer />
                       </div>
-                      <div className='flex w-[80px] py-0 m-0 justify-center text-wrap'>
-                        <Typography variant='muted' className='py-0 m-0'>{item.label}</Typography>
+                      <div className='flex w-[80px] py-0 m-0 justify-center text-wrap text-center'>
+                        <Typography variant='muted' className={`py-0 m-0 text-[10px] ${category === item.category ? 'font-semibold' : ''}`}>{item.label}</Typography>
                       </div>
-                    </Button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -87,7 +71,7 @@ const Filters = () => {
 
           <div className="flex items-center justify-end">
             <Button variant='outline' onClick={handleViewType}>
-              {viewType === 'card' ? (
+              {viewType === 'grid' ? (
                 <>
                   <Map className='mr-4' /> Mostrar en mapa
                 </>

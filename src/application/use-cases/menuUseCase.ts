@@ -9,8 +9,8 @@ export type MenuItem = {
   action?: 'logout' | 'signin' | 'signup' | 'theme'
 }
 
-export const menuUseCase = (authStore: any): MenuItem[] => {
-  const { isLoggedIn } = authStore.getState()
+export const menuUseCase = (store: any): MenuItem[] => {
+  const { isLoggedIn } = store.getState()
 
   if (isLoggedIn) {
     return [

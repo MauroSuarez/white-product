@@ -1,17 +1,13 @@
 
-export const categoriesUseCase = (AppStore: any) => {
-  const { categories } = AppStore.getState()
+export const categoriesUseCase = (store: any) => {
+  const { categories } = store.getState()
   return {
     getCategories: () => {
       return categories
     },
 
-    setCategory: (category: number) => {
-      
-    },
-
     subscribe: (callback: any) => {
-      return AppStore.subscribe(callback)
+      return store.subscribe(callback)
     }
   }
 }

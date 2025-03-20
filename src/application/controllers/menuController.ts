@@ -2,10 +2,10 @@ import { useAuthStore } from "@/infraestructure/stores/authStore"
 import { menuUseCase } from "../use-cases/menuUseCase"
 
 export class MenuController {
-  private menuItemsUseCase = menuUseCase(useAuthStore)
+  private useMenuItemsUseCase = menuUseCase(useAuthStore)
 
   getMenu() {
-    return this.menuItemsUseCase
+    return this.useMenuItemsUseCase
   }
 
   // subscribe(callback: any) {

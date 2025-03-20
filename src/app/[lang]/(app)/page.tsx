@@ -13,19 +13,17 @@ import {
 import { Icon } from "@/presentation/ds/icon"
 import { Filters } from "./Filters"
 import { Header } from "./Header"
-import { ViewTypeController } from '@/application/controllers/viewTypeController'
 import { Map } from '@/presentation/components/map'
 import { ScrollArea } from '@/presentation/ds/scroll-area'
 import { Separator } from '@/presentation/ds/separator'
-
-const viewTypeController = new ViewTypeController()
+import { useViewTypeStore } from "@/infraestructure/stores/viewTypeStore"
 
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`
 )
 
 export default function App() {
-  const [viewType, setViewType] = useState(viewTypeController.getViewType())
+  const viewType = useViewTypeStore((state) => state.viewType)
   const center: [number, number] = [-34.600625, -58.563671]
 
   const markers = [
@@ -41,14 +39,6 @@ export default function App() {
     },
   ]
 
-  useEffect(() => {
-      const unsubscribe = viewTypeController.subscribe((newState: any) => {
-        setViewType(newState.viewType)
-      })
-  
-      // Limpiar la suscripción al desmontar el componente
-      return () => unsubscribe()
-    }, [])
   return (
     <>
       <div className="sticky top-0 z-20 bg-background">
@@ -56,7 +46,7 @@ export default function App() {
         <Filters />
       </div>
       <section className="w-full py-8 px-10 h-screen">
-        {viewType === 'card' ? (
+        {viewType === 'grid' ? (
         <div className="grid grid-cols-4 gap-6">
           {[...new Array(7)].map((column, index) => (
             <Card key={`card-freewheel-${index}`} className="overflow-hidden rounded-lg border-0">
