@@ -17,6 +17,10 @@ interface MapWithMarkersProps {
   center: [number, number] // [lat, lng]
   zoom: number
   markers: Marker[]
+  styleContainer: {
+    height: string
+    width: string
+  }
 }
 
 const svgString = `
@@ -25,7 +29,7 @@ const svgString = `
   </svg>
 `
 
-const Map: React.FC<MapWithMarkersProps> = ({ center, zoom, markers }) => {
+const Map: React.FC<MapWithMarkersProps> = ({ center, zoom, markers, styleContainer }) => {
   const mapRef = useRef<L.Map | null>(null)
   const tooltipRefs = useRef<{ [key: string]: L.Tooltip }>({})
 
@@ -77,7 +81,7 @@ const Map: React.FC<MapWithMarkersProps> = ({ center, zoom, markers }) => {
     } // Limpiar el mapa al desmontar el componente
   }, [center, zoom, markers])
 
-  return <div id="map" style={{ height: '700px', width: '100%', zIndex: 30 }} />
+  return <div id="map" style={{ ...styleContainer, zIndex: 10 }} />
 }
 
 export { Map }

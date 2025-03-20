@@ -1,4 +1,8 @@
 
 export default function FreeWheel() {
-  return <div>faskjdfljañdsl</div>
+  return (
+    <section className="w-full py-8 px-10 h-screen">
+      fasdf
+    </section>
+  )
 }

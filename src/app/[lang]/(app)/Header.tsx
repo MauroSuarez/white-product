@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 // import { Typography } from "@/presentation/ds/typography"
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { Input } from "@/presentation/ds/input"
-import { AppController } from "@/application/controllers/appController"
+import { MenuController } from "@/application/controllers/menuController"
 import { DropDown as DropdownMenu } from "@/presentation/components/dropdown-menu"
 import { MenuItem } from "@/application/use-cases/menuUseCase"
 import { Modal } from "@/presentation/components/modal"
@@ -21,7 +21,7 @@ import { CustomModal } from '@/presentation/components/custom-modal'
 import { AuthForm } from './Form'
 
 
-const appController = new AppController()
+const menuController = new MenuController()
 
 export type HeaderProps = {
   // children: React.ReactNode
@@ -32,8 +32,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
   const { isSmall } = usePositionScroll()
   const { theme, setTheme } = useTheme()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const menuItems = appController.getMenu()
-  const { isLoggedIn } = appController.isLoggedIn()
+  const menuItems = menuController.getMenu()
 
   const formatMenu = () => menuItems.map((item) => {
     if(item.action === 'theme') {
@@ -66,10 +65,12 @@ const Header: React.FC<HeaderProps> = ({}) => {
       <header className={`border-b border-grey-50 transition-all duration-300 ${isSmall ? 'h-16' : 'h-28'} flex items-center`}>
         <div className="w-full px-10 mx-auto flex justify-between">
 
-          <div className="flex items-center flex-nowrap">
-            <div className="text-primary flex w-full"><Wrench className="h-10 w-10" /></div>
-            <Typography className='w-full flex text-primary ml-2'>FreeWheels</Typography>
-          </div>
+          <Link href={'/es'} className="flex items-center">
+            <div className="flex items-center flex-nowrap">
+              <div className="text-primary flex w-full"><Wrench className="h-10 w-10" /></div>
+              <Typography className='w-full flex text-primary ml-2'>FreeWheels</Typography>
+            </div>
+          </Link>
 
           <div className="flex items-center space-x-4">
 

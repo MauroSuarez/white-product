@@ -1,19 +1,37 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { Button } from '@/presentation/ds/button'
 import { Typography } from '@/presentation/ds/typography'
-import { SlidersHorizontal, Map, Hammer } from "lucide-react"
+import { SlidersHorizontal, Map, LayoutGrid, Hammer } from "lucide-react"
 import { Swipper } from '@/presentation/ds/swipper'
+import { ViewTypeController } from '@/application/controllers/viewTypeController'
+
+const viewTypeController = new ViewTypeController()
 
 const Filters = () => {
+  const [viewType, setViewType] = useState(viewTypeController.getViewType())
   const { isSmall } = usePositionScroll()
   const [isActive, setIsActive] = useState<number>(-1)
 
   const toggleActive = (key: number) => {
     setIsActive(key)
   }
+
+  const handleViewType = () => {
+    const type = viewType === 'card' ? 'map' : 'card'
+    viewTypeController.setViewType(type)
+  }
+
+  useEffect(() => {
+    const unsubscribe = viewTypeController.subscribe((newState: any) => {
+      setViewType(newState.viewType)
+    })
+
+    // Limpiar la suscripción al desmontar el componente
+    return () => unsubscribe()
+  }, [])
   
   return (
     <section className={`bg-background transition-all duration-300 ${isSmall ? 'shadow-sm' : ''} h-22`}>
@@ -53,8 +71,16 @@ const Filters = () => {
           </div>
 
           <div className="flex items-center justify-end">
-            <Button variant='outline'>
-              <Map className='mr-4' /> Mostrar en mapa
+            <Button variant='outline' onClick={handleViewType}>
+              {viewType === 'card' ? (
+                <>
+                  <Map className='mr-4' /> Mostrar en mapa
+                </>
+              ) : (
+                <>
+                  <LayoutGrid className='mr-4' /> Mostrar tarjetas
+                </>
+              )}
             </Button>
           </div>
         </div>

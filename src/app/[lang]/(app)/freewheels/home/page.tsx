@@ -4,12 +4,12 @@ import { Typography } from "@/presentation/ds/typography";
 import { Map } from '@/presentation/components/map'
 
 export default function Home() {
-  const center: [number, number] = [51.505, -0.09]
+  const center: [number, number] = [-34.600625, -58.563671]
 
   const markers = [
     {
-      lat: 51.51,
-      lng: -0.1,
+      lat: -34.600625,
+      lng: -58.563671,
       tooltip: (
         <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
           <h3 style={{ color: 'blue' }}>Tooltip con React</h3>
@@ -18,13 +18,13 @@ export default function Home() {
       ),
     },
     {
-      lat: 51.49,
-      lng: -0.08,
+      lat: -34.600537,
+      lng: -58.570565,
       tooltip: '<b>Tooltip con HTML</b><br><a href="#">Enlace</a>', // Tooltip con HTML
     },
     {
-      lat: 51.5,
-      lng: -0.06,
+      lat: -34.595529,
+      lng: -58.564390,
       tooltip: 'Tooltip de texto simple', // Tooltip con string
     },
   ]
@@ -41,7 +41,7 @@ export default function Home() {
           </div>
         </div>
         <div className="lg:col-span-1 md:col-span-1 col-span-1">
-          <Map center={center} zoom={13} markers={markers} />
+          <Map center={center} zoom={13} markers={markers} styleContainer={{ height: '700px', width: '100%' }} />
         </div>
       </div>
     </section>

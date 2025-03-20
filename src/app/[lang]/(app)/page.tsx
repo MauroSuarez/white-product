@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import {
   Card,
@@ -12,8 +13,42 @@ import {
 import { Icon } from "@/presentation/ds/icon"
 import { Filters } from "./Filters"
 import { Header } from "./Header"
+import { ViewTypeController } from '@/application/controllers/viewTypeController'
+import { Map } from '@/presentation/components/map'
+import { ScrollArea } from '@/presentation/ds/scroll-area'
+import { Separator } from '@/presentation/ds/separator'
+
+const viewTypeController = new ViewTypeController()
+
+const tags = Array.from({ length: 50 }).map(
+  (_, i, a) => `v1.2.0-beta.${a.length - i}`
+)
 
 export default function App() {
+  const [viewType, setViewType] = useState(viewTypeController.getViewType())
+  const center: [number, number] = [-34.600625, -58.563671]
+
+  const markers = [
+    {
+      lat: -34.600625,
+      lng: -58.563671,
+      tooltip: (
+        <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
+          <h3 style={{ color: 'blue' }}>Tooltip con React</h3>
+          <p>Este es un tooltip hecho con un componente de React.</p>
+        </div>
+      ),
+    },
+  ]
+
+  useEffect(() => {
+      const unsubscribe = viewTypeController.subscribe((newState: any) => {
+        setViewType(newState.viewType)
+      })
+  
+      // Limpiar la suscripción al desmontar el componente
+      return () => unsubscribe()
+    }, [])
   return (
     <>
       <div className="sticky top-0 z-20 bg-background">
@@ -21,6 +56,7 @@ export default function App() {
         <Filters />
       </div>
       <section className="w-full py-8 px-10 h-screen">
+        {viewType === 'card' ? (
         <div className="grid grid-cols-4 gap-6">
           {[...new Array(7)].map((column, index) => (
             <Card key={`card-freewheel-${index}`} className="overflow-hidden rounded-lg border-0">
@@ -56,6 +92,29 @@ export default function App() {
             </Card>
           ))}
         </div>
+        ) : (
+          <div className="grid grid-cols-4 gap-4 h-full">
+            <div className="col-span-1">
+              <ScrollArea className="h-48 w-full rounded-md border">
+                <div className="p-4">
+                  <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
+                  {tags.map((tag) => (
+                    <>
+                      <div key={tag} className="text-sm">
+                        {tag}
+                      </div>
+                      <Separator className="my-2" />
+                    </>
+                  ))}
+                </div>
+              </ScrollArea>
+            </div>
+
+            <div className="col-span-3 rounded-sm">
+              <Map center={center} zoom={13} markers={markers} styleContainer={{ height: '100%', width: '100%' }} />
+            </div>
+          </div>
+        )}
       </section>
     </>
   )
