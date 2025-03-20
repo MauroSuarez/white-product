@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { Button } from '@/presentation/ds/button'
 import { Typography } from '@/presentation/ds/typography'
@@ -11,6 +11,7 @@ import { FiltersController } from '@/application/controllers/filtersController'
 import { useViewTypeStore } from '@/infraestructure/stores/viewTypeStore'
 import { Category, useCategoriesStore } from '@/infraestructure/stores/categoriesStore'
 import { useFilterstore } from '@/infraestructure/stores/filtersStore'
+import { CategoryIcon } from '@/presentation/components/category-icon'
 
 const viewTypeController = new ViewTypeController()
 const filtersController = new FiltersController()
@@ -51,7 +52,7 @@ const Filters = () => {
                       `}
                     >
                       <div className='flex h-10 w-full justify-center items-center'>
-                        <Hammer />
+                        <CategoryIcon iconName={item.icon} />
                       </div>
                       <div className='flex w-[80px] py-0 m-0 justify-center text-wrap text-center'>
                         <Typography variant='muted' className={`py-0 m-0 text-[10px] ${category === item.category ? 'font-semibold' : ''}`}>{item.label}</Typography>

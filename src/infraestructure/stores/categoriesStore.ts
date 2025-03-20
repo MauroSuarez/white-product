@@ -38,7 +38,7 @@ const categoriesInitialState: Category[] = [
     category: 6
   },
   {
-    icon: 'hammer',
+    icon: 'garage',
     label: 'Garage',
     category: 7
   },
@@ -58,7 +58,7 @@ const categoriesInitialState: Category[] = [
     category: 10
   },
   {
-    icon: 'hammer',
+    icon: 'carKey',
     label: 'Cerrajeria',
     category: 11
   },
@@ -78,9 +78,14 @@ const categoriesInitialState: Category[] = [
     category: 14
   },
   {
-    icon: 'hammer',
+    icon: 'carwhash',
     label: 'Lavadero',
     category: 15
+  },
+  {
+    icon: 'carElectric',
+    label: 'Electricidad del automotor',
+    category: 16
   },
 ]
 
