@@ -8,32 +8,32 @@ export type Category = {
 
 const categoriesInitialState: Category[] = [
   {
-    icon: 'hammer',
+    icon: 'carRepair',
     label: 'Taller mécanico',
     category: 1
   },
   {
-    icon: 'hammer',
+    icon: 'carTired',
     label: 'Gomeria',
     category: 2
   },
   {
-    icon: 'hammer',
+    icon: 'carOil',
     label: 'Lubricentro',
     category: 3
   },
   {
-    icon: 'hammer',
+    icon: 'carSeat',
     label: 'Tapizados',
     category: 4
   },
   {
-    icon: 'hammer',
+    icon: 'carAccessories',
     label: 'Accesorios',
     category: 5
   },
   {
-    icon: 'hammer',
+    icon: 'carPaint',
     label: 'Chapa y pintura',
     category: 6
   },
@@ -43,37 +43,37 @@ const categoriesInitialState: Category[] = [
     category: 7
   },
   {
-    icon: 'hammer',
+    icon: 'bicycle',
     label: 'Bicicleteria',
     category: 8
   },
+  // {
+  //   icon: 'hammer',
+  //   label: 'Lonas',
+  //   category: 9
+  // },
   {
-    icon: 'hammer',
-    label: 'Lonas',
-    category: 9
-  },
-  {
-    icon: 'hammer',
+    icon: 'truckBox',
     label: 'Cajas para camión',
     category: 10
   },
   {
     icon: 'carKey',
-    label: 'Cerrajeria',
+    label: 'Cerrajeria del automotor',
     category: 11
   },
   {
-    icon: 'hammer',
+    icon: 'carRadio',
     label: 'Auto radio',
     category: 12
   },
   {
-    icon: 'hammer',
+    icon: 'motorCycle',
     label: 'Motos',
     category: 13
   },
   {
-    icon: 'hammer',
+    icon: 'carPolarized',
     label: 'Polarizados',
     category: 14
   },
@@ -86,6 +86,16 @@ const categoriesInitialState: Category[] = [
     icon: 'carElectric',
     label: 'Electricidad del automotor',
     category: 16
+  },
+  {
+    icon: 'carAirCold',
+    label: 'Aire acondicionado',
+    category: 17
+  },
+  {
+    icon: 'roadSafety',
+    label: 'Seguridad vial',
+    category: 18
   },
 ]
 

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, FunctionComponent, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Icon } from '../icon'
 
 type SwipperProps = {
