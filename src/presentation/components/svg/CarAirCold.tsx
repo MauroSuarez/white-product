@@ -1,29 +1,23 @@
 import React, { SVGAttributes } from "react"
+import { GlobalSvg } from "."
 
 const CarAirColdIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
   return (
-    <svg
+    <GlobalSvg
       viewBox="0 0 24 24"
       width={props.width}
       height={props.height}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#000000"
+      fill="currentColor"
+      stroke="currentColor"
       {...props}
     >
-      <g id="SVGRepo_bgCarrier" strokeWidth={0} />
+      <g strokeWidth={0} />
       <g
         id="SVGRepo_tracerCarrier"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <g id="SVGRepo_iconCarrier">
-        <defs>
-          <style>
-            {
-              ".cls-1{fill:none;stroke:#020202;stroke-miterlimit:10;stroke-width:1.92px;}"
-            }
-          </style>
-        </defs>
+      <g>
         <polyline className="cls-1" points="12 23.5 12 17.75 12 14.88" />
         <line className="cls-1" x1={12} y1={9.13} x2={12} y2={0.5} />
         <polyline className="cls-1" points="15.35 2.9 12 6.25 8.65 2.9" />
@@ -56,7 +50,7 @@ const CarAirColdIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
           d="M14.88,12a2.89,2.89,0,1,1-.39-1.44A2.9,2.9,0,0,1,14.88,12Z"
         />
       </g>
-    </svg>
+    </GlobalSvg>
   );
 };
 

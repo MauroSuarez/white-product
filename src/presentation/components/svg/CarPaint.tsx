@@ -1,18 +1,16 @@
 import React, { SVGAttributes } from "react"
+import { GlobalSvg } from "."
 
 const CarPaintIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
   return (
-    <svg
+    <GlobalSvg
       width={props.width}
       height={props.height}
-      id="_x32_"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 512 512"
       xmlSpace="preserve"
+      fill="currentColor"
       {...props}
     >
-      <style type="text/css">{"\n\t.st0{fill:#000000;}\n"}</style>
       <g>
         <path
           className="st0"
@@ -23,7 +21,7 @@ const CarPaintIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
           d="M244.806,258.231c9.409,0,17.036-7.626,17.036-17.036c0-9.417-7.627-17.043-17.036-17.043 c-9.417,0-17.044,7.626-17.044,17.043C227.762,250.605,235.389,258.231,244.806,258.231z"
         />
       </g>
-    </svg>
+    </GlobalSvg>
   );
 };
 

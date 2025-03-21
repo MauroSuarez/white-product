@@ -1,5 +1,5 @@
 import React from 'react'
-import { CarWhashIcon } from '../svg/CarWhash';
+import { CarWashIcon } from '../svg/CarWash';
 import { CarKeyIcon } from '../svg/CarKey';
 import { GarageIcon } from '../svg/Garage';
 import { CarElectricIcon } from '../svg/CarElectric';
@@ -25,7 +25,7 @@ type IconDictionary = {
 }
 
 const icons: IconDictionary = {
-  'carwhash': CarWhashIcon,
+  'carwash': CarWashIcon,
   'carKey': CarKeyIcon,
   'garage': GarageIcon,
   'carElectric': CarElectricIcon,

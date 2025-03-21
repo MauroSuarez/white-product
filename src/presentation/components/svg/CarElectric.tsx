@@ -1,23 +1,43 @@
 import React, { SVGAttributes } from "react"
+import { GlobalSvg } from "."
 
 const CarElectricIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
   return (
-    <svg
+    <GlobalSvg
       width={props.width}
       height={props.height}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 512 512"
+      xmlSpace="preserve"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth={3.58012}
       {...props}
     >
-      <path
-        d="M5 5H9M6 13.5H10M15 5H19M14 13.5H18M16 11.5V15.5M6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V11.2C21 10.0799 21 9.51984 20.782 9.09202C20.5903 8.71569 20.2843 8.40973 19.908 8.21799C19.4802 8 18.9201 8 17.8 8H6.2C5.0799 8 4.51984 8 4.09202 8.21799C3.71569 8.40973 3.40973 8.71569 3.21799 9.09202C3 9.51984 3 10.0799 3 11.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19Z"
-        stroke="#000000"
-        strokeWidth={2}
+      <g strokeWidth={0} />
+      <g
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </svg>
+      <g>
+        <g>
+          <path
+            fill="currentColor"
+            className="st0"
+            d="M452.01,113.752V64.893H294.666v48.859H217.33V64.893H59.988v48.859H0v333.356h512V154.807v-41.055H452.01z M470.942,406.049H41.055V154.807h59.99v-48.856h75.227v48.856h159.453v-48.856h75.226v48.856h59.99V406.049z"
+          />
+          <polygon
+            fill="currentColor"
+            className="st0"
+            points="178.248,207.041 133.234,207.041 133.234,252.055 88.221,252.055 88.221,297.068 133.234,297.068 133.234,342.082 178.248,342.082 178.248,297.068 223.262,297.068 223.262,252.055 178.248,252.055 "
+          />
+          <polygon
+            fill="currentColor"
+            className="st0"
+            points="333.75,252.055 288.736,252.055 288.736,297.068 333.75,297.068 378.764,297.068 423.777,297.068 423.777,252.055 378.764,252.055 "
+          />
+        </g>
+      </g>
+    </GlobalSvg>
   );
 };
 

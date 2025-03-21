@@ -78,7 +78,7 @@ const categoriesInitialState: Category[] = [
     category: 14
   },
   {
-    icon: 'carwhash',
+    icon: 'carwash',
     label: 'Lavadero',
     category: 15
   },
@@ -100,7 +100,7 @@ const categoriesInitialState: Category[] = [
 ]
 
 type CategoryState = {
-  categories: any
+  categories: Category[]
 }
 
 export const useCategoriesStore = create<CategoryState>((set) => ({
