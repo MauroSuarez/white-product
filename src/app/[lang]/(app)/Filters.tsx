@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { Button } from '@/presentation/ds/button'
@@ -10,7 +10,6 @@ import { Swipper } from '@/presentation/ds/swipper'
 import { ViewTypeController } from '@/application/controllers/viewTypeController'
 import { FiltersController } from '@/application/controllers/filtersController'
 import { useViewTypeStore } from '@/infraestructure/stores/viewTypeStore'
-// import { Category, useCategoriesStore } from '@/infraestructure/stores/categoriesStore'
 import { useFilterstore } from '@/infraestructure/stores/filtersStore'
 import { CategoryIcon } from '@/presentation/components/category-icon'
 import { CategoriesController } from '@/application/controllers/categoriesController'
@@ -19,10 +18,8 @@ import { fetchCategories } from '@/core/domain/services/fetchCategories'
 
 const viewTypeController = new ViewTypeController()
 const filtersController = new FiltersController()
-const categoriesController = new CategoriesController()
 
 const Filters = () => {
-  // const [dataCategories, setDataCategories] = useState<Category[] | null>([])
   const viewType = useViewTypeStore((state) => state.viewType)
 
   const { category } = useFilterstore((state) => state.filters)
@@ -39,26 +36,6 @@ const Filters = () => {
   })
 
   console.log(categories, 'categories')
-
-  // const fetchDataCategories = async () => {
-  //   try {
-  //     const response = await categoriesController.getCategories()
-  //     if (!response.success) {
-  //       throw new Error('Error al obtener los datos');
-  //     }
-  //     console.log(response?.categories!)
-  //     setDataCategories(response?.categories!)
-  //   } catch (err) {
-  //     const e = err as Error
-  //     // setError(e.message)
-  //   } finally {
-      
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchDataCategories()
-  // }, [])
 
   const handleViewType = () => {
     const type = viewType === 'grid' ? 'map' : 'grid'
