@@ -1,9 +1,9 @@
 
 import { IAuthRepository } from "../../interfaces/authRepository"
 
-export const createResetPasswordUseCase = (authRepo: IAuthRepository) => {
+export const createResetPasswordUseCase = (repository: IAuthRepository) => {
   return async (email: string) => {
-    const success = await authRepo.resetPassword(email)
+    const success = await repository.resetPassword(email)
     return success
   }
 }

@@ -27,7 +27,6 @@ export class AuthController {
         firstName: data.firstName,
         lastName: data.lastName,
         userName,
-        roleId: data.roleId,
         terms: data.terms
       })
 

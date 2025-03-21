@@ -1,9 +1,9 @@
 
 import { IAuthRepository } from "../../interfaces/authRepository"
 
-export const createSignOutUseCase = (authRepo: IAuthRepository) => {
+export const createSignOutUseCase = (repository: IAuthRepository) => {
   return async () => {
-    const success = await authRepo.signOut()
+    const success = await repository.signOut()
     return success
   }
 }

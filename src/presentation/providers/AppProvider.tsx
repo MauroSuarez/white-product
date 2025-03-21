@@ -1,35 +1,20 @@
-// import React, { createContext } from 'react'
-// import { useInitMock, useGetProfile, useSetFlowName } from "hooks"
-// import { Profile } from 'interfaces/Profile'
-// // import { Grid } from '@mui/material'
-// // import { Breadcrumbs } from 'components'
+'use client'
 
-// interface AppContextProps {
-//   profile: Profile
-//   setProfile(profile: Profile): void
-// }
+import React, { createContext } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-// interface AppProviderProps {
-//   children: React.ReactNode
-// }
+const queryClient = new QueryClient()
 
-// const AppContext = createContext<AppContextProps>({} as AppContextProps)
+interface AppProviderProps {
+  children: React.ReactNode
+}
 
-// function AppProvider({ children }: AppProviderProps): JSX.Element {
-//   useSetFlowName()
-//   useInitMock()
-//   const { profile, setProfile } = useGetProfile()
-//   return (
-//     <AppContext.Provider
-//       value={{
-//         profile: profile as Profile,
-//         setProfile
-//       }}
-//     >
-//       {children}
-//     </AppContext.Provider>
-//   )
-// }
+function AppProvider({ children }: AppProviderProps): JSX.Element {
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+    </QueryClientProvider>
+  )
+}
 
-// export { AppContext }
-// export default AppProvider
+export { AppProvider }

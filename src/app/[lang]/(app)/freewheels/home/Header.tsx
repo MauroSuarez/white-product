@@ -8,18 +8,8 @@ import { Icon } from "@/presentation/ds/icon"
 import { User, Wrench } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from 'next/navigation'
-// import { Typography } from "@/presentation/ds/typography"
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
-import { Input } from "@/presentation/ds/input"
-import { AppController } from "@/application/controllers/appController"
-import { DropDown } from "@/presentation/components/dropdown-menu"
-import { MenuItem } from "@/application/use-cases/menuUseCase"
-import { Modal } from "@/presentation/components/modal"
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from "@/presentation/ds/dropdown-menu"
 import { Typography } from '@/presentation/ds/typography'
-
-const appController = new AppController()
 
 export type HeaderProps = {
   // children: React.ReactNode
@@ -31,36 +21,6 @@ const Header: React.FC<HeaderProps> = () => {
   const { theme, setTheme } = useTheme()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const menuItems = appController.getMenu()
-
-  const formatMenu = () => menuItems.map((item) => {
-    if(item.action === 'theme') {
-      return { label: 'Tema', action: 'theme', icon: theme === "light" ? 'MoonIcon' : 'SunIcon'}
-    }
-
-    return item
-  }) as MenuItem[]
-
-  const handleItemClick = (item: MenuItem) => {
-    console.log(item, 'ITEM')
-    if(item.action === 'theme')
-      theme == "dark" ? setTheme("light") : setTheme("dark")
-
-    if(item.path)
-      router.push(`/es/${item.path}`)
-
-    if(item.action === 'signin' || item.action === 'signup')
-      setIsModalOpen(!isModalOpen)
-    
-    // console.log(item, 'ITEM')
-  }
-
-  const handleMenu = () => {
-    console.log("A VER")
-    // router.push(`/es/auth2/signin`)
-    // setIsMenuOpen(true)
-    // setIsModalOpen(!isModalOpen)
-  }
 
   return (
     <>

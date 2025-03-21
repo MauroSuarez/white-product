@@ -1,14 +1,15 @@
-import { categoriesUseCase } from "../use-cases/categoriesUseCase"
-import { useCategoriesStore } from "@/infraestructure/stores/categoriesStore"
+import { CategoriesRepository } from "@/infraestructure/repositories/categoriesRepository"
+import { createCategoriesUseCase } from "../use-cases/categoriesUseCase"
 
 export class CategoriesController {
-  private useCategoriesUseCase = categoriesUseCase(useCategoriesStore)
+  private categoriesUseCase = createCategoriesUseCase(CategoriesRepository)
 
-  getCategories() {
-    return this.useCategoriesUseCase.getCategories()
-  }
-
-  subscribe(callback: any) {
-    return this.useCategoriesUseCase.subscribe(callback)
+  async getCategories() {
+    try {
+      const categories = await this.categoriesUseCase()
+      return { success: true, categories }
+    } catch (error: any) {
+      return { success: false, error: error.message }
+    }
   }
 }

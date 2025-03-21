@@ -16,9 +16,9 @@ import { TruckBoxIcon } from '../svg/TruckBox';
 import { RoadSafetyIcon } from '../svg/RoadSafety';
 import { CarAirColdIcon } from '../svg/CarAirCold';
 import { CarSeatIcon } from '../svg/CarSeat';
+import { VTVIcon } from '../svg/VTV';
 
 type IconComponent = React.FC<React.SVGProps<SVGSVGElement>>
-
 
 type IconDictionary = {
   [key: string]: IconComponent;
@@ -42,6 +42,7 @@ const icons: IconDictionary = {
   'roadSafety': RoadSafetyIcon,
   'carAirCold': CarAirColdIcon,
   'carSeat': CarSeatIcon,
+  'vtv': VTVIcon,
 }
 
 export const CategoryIcon: React.FC<{ iconName: string }> = ({ iconName }) => {

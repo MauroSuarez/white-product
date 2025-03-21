@@ -4,6 +4,7 @@ export type Category = {
   icon: string
   label: string
   category: number
+  isVisible?: boolean
 }
 
 const categoriesInitialState: Category[] = [
@@ -48,8 +49,8 @@ const categoriesInitialState: Category[] = [
     category: 8
   },
   // {
-  //   icon: 'hammer',
-  //   label: 'Lonas',
+  //   icon: 'vtv',
+  //   label: 'VTV',
   //   category: 9
   // },
   {
