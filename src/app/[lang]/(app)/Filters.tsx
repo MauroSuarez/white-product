@@ -79,7 +79,7 @@ const Filters = () => {
           <div className="flex flex-wrap w-full items-center overflow-x-auto">
             <Swipper>
               <div className='flex flex-nowrap h-full w-full'>
-                {[]?.map((item: Category, key: number) => (
+                {categories?.map((item: Category, key: number) => (
                   <div key={`item-filter-${key}`} className='flex h-full p-0 w-[80px]'>
                     <div
                       onClick={() => handleCategory(item.id)}
