@@ -12,9 +12,9 @@ import { FiltersController } from '@/application/controllers/filtersController'
 import { useViewTypeStore } from '@/infraestructure/stores/viewTypeStore'
 import { useFilterstore } from '@/infraestructure/stores/filtersStore'
 import { CategoryIcon } from '@/presentation/components/category-icon'
-import { CategoriesController } from '@/application/controllers/categoriesController'
 import { Category } from '@/core/domain/entities/Category'
 import { fetchCategories } from '@/core/domain/services/fetchCategories'
+import { SkeletonFilter } from '@/presentation/components/skeleton/filters'
 
 const viewTypeController = new ViewTypeController()
 const filtersController = new FiltersController()
@@ -35,8 +35,6 @@ const Filters = () => {
     queryFn: fetchCategories, // Función que obtiene los datos
   })
 
-  console.log(categories, 'categories')
-
   const handleViewType = () => {
     const type = viewType === 'grid' ? 'map' : 'grid'
     viewTypeController.setViewType(type)
@@ -46,6 +44,18 @@ const Filters = () => {
     const newValue = value !== category ? value : 0
     filtersController.setFilters("category", newValue)
   }
+
+  const LoaderSkeleton = () => {
+    return (
+      <div className='relative h-20 w-full flex flex-nowrap items-center'>
+        {[...new Array(15)].map((key) => (
+          <div className='flex flex-nowrap h-full w-full items-center'>
+            <SkeletonFilter />
+          </div>
+        ))}
+      </div>
+    )
+  }
   
   return (
     <section className={`bg-background transition-all duration-300 ${isSmall ? 'shadow-sm' : ''} h-22`}>
@@ -54,29 +64,33 @@ const Filters = () => {
         <div className="grid grid-cols-[5fr_1fr_1fr] gap-6 h-full">
 
           <div className="flex flex-wrap w-full items-center overflow-x-auto">
-            <Swipper>
-              <div className='flex flex-nowrap h-full w-full'>
-                {categories?.map((item: Category, key: number) => (
-                  <div key={`item-filter-${key}`} className='flex h-full p-0 w-[80px]'>
-                    <div
-                      onClick={() => handleCategory(item.id)}
-                      className={`
-                        flex flex-wrap cursor-pointer
-                        h-full border-0 shadow-none py-1 justify-center rounded-none
-                        ${category === item.id ? 'border-b-2 border-primary' : ''}
-                      `}
-                    >
-                      <div className='flex h-10 w-full justify-center items-center'>
-                        <CategoryIcon iconName={item.icon} />
-                      </div>
-                      <div className='flex w-[80px] py-0 m-0 justify-center text-wrap text-center'>
-                        <Typography variant='muted' className={`py-0 m-0 text-[10px] ${category === item.id ? 'font-semibold' : ''}`}>{item.label}</Typography>
+            {isLoading ?
+              <LoaderSkeleton />
+            : (
+              <Swipper>
+                <div className='flex flex-nowrap h-full w-full'>
+                  {categories?.map((item: Category, key: number) => (
+                    <div key={`item-filter-${key}`} className='flex h-full p-0 w-[80px]'>
+                      <div
+                        onClick={() => handleCategory(item.id)}
+                        className={`
+                          flex flex-wrap cursor-pointer
+                          h-full border-0 shadow-none py-1 justify-center rounded-none
+                          ${category === item.id ? 'border-b-2 border-primary' : ''}
+                        `}
+                      >
+                        <div className='flex h-10 w-full justify-center items-center'>
+                          <CategoryIcon iconName={item.icon} />
+                        </div>
+                        <div className='flex w-[80px] py-0 m-0 justify-center text-wrap text-center'>
+                          <Typography variant='muted' className={`py-0 m-0 text-[10px] ${category === item.id ? 'font-semibold' : ''}`}>{item.label}</Typography>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </Swipper>
+                  ))}
+                </div>
+              </Swipper>
+            )}
           </div>
 
           <div className="flex items-center justify-end">

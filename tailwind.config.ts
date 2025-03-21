@@ -76,10 +76,15 @@ const config: Config = {
 					transform: "rotate(360deg)",
 				},
 			},
+			pulse: {
+				"0%, 100%": { opacity: "1" },
+				"50%": { opacity: "0.5" },
+			},
 		},
 		animation: {
 			"caret-blink": "caret-blink 1.25s ease-out infinite",
 			"spin": "spin 1s infinite",
+			pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite', 
 		},
 		// gridTemplateColumns: {
 		// 	'custom': 'minmax(0, 6fr) minmax(0, 3fr) minmax(0, 3fr)',

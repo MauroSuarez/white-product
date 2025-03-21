@@ -7,6 +7,11 @@ export class AuthService {
     setUser(user)
   }
 
+  static setToken(token: string) {
+    const { setToken } = useAuthStore.getState()
+    setToken(token)
+  }
+
   static clearUser() {
     const { clearUser } = useAuthStore.getState()
     clearUser()

@@ -18,8 +18,7 @@ import { Modal } from "@/presentation/components/modal"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import { Typography } from '@/presentation/ds/typography'
 import { CustomModal } from '@/presentation/components/custom-modal'
-import { AuthForm } from './Form'
-
+// import { AuthForm } from './Form'
 
 const menuController = new MenuController()
 
@@ -128,7 +127,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
         onClose={() => setIsModalOpen(false)}
         title='Inicia sesión o registrate'
       >
-        <AuthForm handleSubmit={handleSubmitAuth} type='signin' />
+        {/* <AuthForm handleSubmit={handleSubmitAuth} type='signin' /> */}
       </CustomModal>
     </>
   )

@@ -19,9 +19,9 @@ const AuthRepository: IAuthRepository = {
     })
     if (error || !data.user) throw new Error(error?.message ?? 'Signup failed')
 
-    return {
-      ...data.user
-      }
+    if (!data.user || !data.session) return null;
+
+    return { ...data.user, ...data.session }
   },
 
   async signIn(credentials: ISignIn) {
@@ -34,9 +34,7 @@ const AuthRepository: IAuthRepository = {
       throw error;
     }
 
-    return {
-      ...data.user
-     }
+    return { ...data.user, ...data.session }
   },
 
   async resetPassword(email) {
@@ -52,9 +50,7 @@ const AuthRepository: IAuthRepository = {
     if (error) throw new Error(error.message)
     if (!data.user) return null
 
-    return {
-     ...data.user
-    }
+    return { ...data.user }
   },
 
   async signOut() {

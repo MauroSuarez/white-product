@@ -44,13 +44,14 @@ export class AuthController {
     }
 
     try {
-      const user = await this.signInUseCase(data)
+      const response = await this.signInUseCase(data)
 
-      if(user) {
-        AuthService.setUser(user)
+      if(response) {
+        AuthService.setUser(response.user)
+        AuthService.setToken(response?.access_token)
       }
 
-      return { success: true, user }
+      return { success: true, user: response?.user }
     } catch (error: any) {
       return { success: false, error: error.message }
     }

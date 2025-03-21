@@ -14,7 +14,6 @@ const TruckBoxIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
     >
       <g  strokeWidth={0} />
       <g
-        id="SVGRepo_tracerCarrier"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
