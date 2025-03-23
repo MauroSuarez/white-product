@@ -8,7 +8,6 @@ import { Icon } from "@/presentation/ds/icon"
 import { User, Wrench, ScanSearch } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from 'next/navigation'
-// import { Typography } from "@/presentation/ds/typography"
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { Input } from "@/presentation/ds/input"
 import { MenuController } from "@/application/controllers/menuController"
@@ -18,7 +17,6 @@ import { Modal } from "@/presentation/components/modal"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import { Typography } from '@/presentation/ds/typography'
 import { CustomModal } from '@/presentation/components/custom-modal'
-// import { AuthForm } from './Form'
 
 const menuController = new MenuController()
 

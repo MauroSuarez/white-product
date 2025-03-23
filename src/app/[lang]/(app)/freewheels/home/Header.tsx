@@ -32,7 +32,6 @@ const Header: React.FC<HeaderProps> = () => {
   }
 
   const handleTypeForm = (type: string) => {
-    console.log(type, 'CHANGE')
     setTypeForm(type)
   }
 
@@ -82,7 +81,7 @@ const Header: React.FC<HeaderProps> = () => {
       <CustomModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title='Inicia sesión o registrate'
+        title={`${typeForm === 'reset' ? 'Recupear contraseña' : 'Inicia sesión o registrate'}`}
       >
         <AuthForm isLoading={isLoading} onSubmit={handleSubmitAuth} handleTypeForm={handleTypeForm} typeForm={typeForm} />
       </CustomModal>

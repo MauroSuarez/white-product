@@ -1,4 +1,3 @@
-import { AuthStore } from "@/infraestructure/stores/authStore"
 import { IconNames } from "@/presentation/ds/icon"
 
 export type MenuItem = {

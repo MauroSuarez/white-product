@@ -7,8 +7,4 @@ export class MenuController {
   getMenu() {
     return this.useMenuItemsUseCase
   }
-
-  // subscribe(callback: any) {
-  //   return this.viewTypesUseCase.subscribe(callback)
-  // }
 }

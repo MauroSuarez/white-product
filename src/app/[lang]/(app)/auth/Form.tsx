@@ -1,4 +1,5 @@
 import { FormSignIn } from "./containers/SignInForm"
+import { FormSignUp } from "./containers/SignUpForm"
 import { ResetPasswordForm } from "./containers/ResetPasswordForm"
 
 type TypeForm = 'signin' | 'signup' | 'reset'
@@ -18,6 +19,7 @@ type AuthFormDictionary = {
 
 const authForm: AuthFormDictionary = {
   'signin': FormSignIn,
+  'signup': FormSignUp,
   'reset': ResetPasswordForm
 }
 
