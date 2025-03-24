@@ -1,48 +1,70 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/presentation/ds/sheet"
+import { CustomSheet } from "@/presentation/components/custom-sheet"
+import { Button } from "@/presentation/ds/button"
+import clsx from "clsx"
+
+const TOTAL_STEPS = 3
+const SUBSTEPS_PER_STEP = 3
 
 export default function Onboarding() {
   const [isOpenSheet, setIsOpenSheet] = useState(true)
+  const [step, setStep] = useState(0)
+  const [subStep, setSubStep] = useState(0)
+  const [direction, setDirection] = useState<"forward" | "backward">("forward")
+
+  const goNext = () => {
+    console.log("A ver")
+    setDirection("forward")
+    setStep(step + 1)
+    // if (subStep < SUBSTEPS_PER_STEP - 1) {
+    //   setSubStep(subStep + 1)
+    // } else if (step < TOTAL_STEPS - 1) {
+    //   setStep(step + 1)
+    //   setSubStep(0)
+    // }
+  }
+
+  const goBack = () => {
+    setDirection("backward")
+    setStep(step - 1)
+    // if (subStep > 0) {
+    //   setSubStep(subStep - 1)
+    // } else if (step > 0) {
+    //   setStep(step - 1)
+    //   setSubStep(SUBSTEPS_PER_STEP - 1)
+    // }
+  }
+
+  const currentStepProgress = ((step + 1) / TOTAL_STEPS) * 100
+  const currentSubStepProgress = ((subStep + 1) / SUBSTEPS_PER_STEP) * 100
 
   return (
     <div className="p-10 h-screen">
-      <Sheet  open={isOpenSheet} onOpenChange={setIsOpenSheet}>
-        <SheetContent side={'bottom'} className="h-screen max-h-screen flex flex-col [&>button]:hidden">
-          <SheetHeader>
-            <SheetTitle>Edit profile</SheetTitle>
-            <SheetDescription>
-              Make changes to your profile here. Click save when you're done.
-            </SheetDescription>
-          </SheetHeader>
-          <div className="flex-1 overflow-y-auto p-6">
-            <div className="space-y-4">
-              {[...Array(30)].map((_, i) => (
-                <p key={i}>Elemento #{i + 1}</p>
-              ))}
-            </div>
+      <CustomSheet direction={direction} id={step} isOpen={isOpenSheet} isOpenChange={() => setIsOpenSheet(!isOpenSheet)} footer={(
+        <>
+          <Button
+            variant="outline"
+            onClick={goBack}
+            disabled={step === 0 && subStep === 0}
+          >
+            Anterior
+          </Button>
+          <Button
+            onClick={goNext}
+            disabled={step === TOTAL_STEPS - 1 && subStep === SUBSTEPS_PER_STEP - 1}
+          >
+            Siguiente
+          </Button>
+      </>
+      )}>
+        <div className="p-6">
+          <div className={`w-full h-screen ${step === 1 ? 'bg-primary' : 'bg-green-200'}`}>
+            Contenido {step}
           </div>
-          <div className="p-6 border-t">
-            acá va el footer
-          </div>
-          {/* <SheetFooter className="border border-blue-600">
-            <SheetClose asChild>
-              <Button type="submit">Save changes</Button>
-            </SheetClose> 
-            con piesidex
-          </SheetFooter> */}
-        </SheetContent>
-      </Sheet>
+        </div>
+      </CustomSheet>
     </div>
   )
 }
