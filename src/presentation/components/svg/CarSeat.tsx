@@ -22,7 +22,7 @@ const CarSeatIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
         />
       </g>
     </GlobalSvg>
-  );
-};
+  )
+}
 
 export { CarSeatIcon }

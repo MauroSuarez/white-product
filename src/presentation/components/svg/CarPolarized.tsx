@@ -26,7 +26,7 @@ const CarPolarizeIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
         />
       </g>
     </GlobalSvg>
-  );
-};
+  )
+}
 
 export { CarPolarizeIcon }

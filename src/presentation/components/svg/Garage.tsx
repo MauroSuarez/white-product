@@ -21,7 +21,7 @@ const GarageIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
         </g>
       </g>
     </GlobalSvg>
-  );
-};
+  )
+}
 
 export { GarageIcon }

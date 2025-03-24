@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Header } from "../../Header"
+import { Header } from "../../layout/Header"
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -11,7 +11,7 @@ export default function Layout({
 }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen h-auto pb-8 w-full flex-col bg-background">
-      <Header />
+      <Header type="detail" />
       {children}
     </div>
   )

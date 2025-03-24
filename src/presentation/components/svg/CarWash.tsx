@@ -22,7 +22,7 @@ const CarWashIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
         />
       </g>
     </GlobalSvg>
-  );
-};
+  )
+}
 
 export { CarWashIcon }

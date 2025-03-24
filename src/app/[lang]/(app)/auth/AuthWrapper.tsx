@@ -3,12 +3,12 @@ import React, { useEffect } from 'react'
 import { useAuthStore } from "@/infraestructure/stores/authStore"
 
 type AuthWrapperProps = () => {
-  authAction?: () => void
+  action?: () => void
   children: React.ReactNode
 }
 
 const AuthWrapper = ({
-  authAction,
+  action,
   children,
 }: AuthWrapperProps) => {
   const user = useAuthStore((state) => state)

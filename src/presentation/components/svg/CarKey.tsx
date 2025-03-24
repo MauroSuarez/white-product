@@ -22,7 +22,7 @@ const CarKeyIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
         />
       </g>
     </GlobalSvg>
-  );
-};
+  )
+}
 
 export { CarKeyIcon }

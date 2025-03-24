@@ -11,8 +11,8 @@ import {
   CardTitle,
 } from "@/presentation/ds/card"
 import { Icon } from "@/presentation/ds/icon"
-import { Filters } from "./Filters"
-import { Header } from "./Header"
+import { Filters } from "./layout/Filters"
+import { Header } from "./layout/Header"
 import { Map } from '@/presentation/components/map'
 import { ScrollArea } from '@/presentation/ds/scroll-area'
 import { Separator } from '@/presentation/ds/separator'
@@ -51,7 +51,7 @@ export default function App() {
           {[...new Array(7)].map((column, index) => (
             <Card key={`card-freewheel-${index}`} className="overflow-hidden rounded-lg border-0">
               <div className="relative">
-                <Link href={'/es/freewheels/1'}>
+                <Link href={'/es/workshop/1'}>
                   <img
                     src="/images/workshop.jpg"
                     alt="Taller mecánico"
@@ -63,7 +63,7 @@ export default function App() {
                 </div>
               </div>
               
-              <Link href={'/es/freewheels/1'}>
+              <Link href={'/es/workshop/1'}>
                 <CardContent className="px-0">
                   <CardHeader className="py-6 px-0">
                     <CardTitle className="text-xl font-semibold">Taller Mecánico XYZ</CardTitle>

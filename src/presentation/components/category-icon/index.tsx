@@ -21,7 +21,7 @@ import { VTVIcon } from '../svg/VTV';
 type IconComponent = React.FC<React.SVGProps<SVGSVGElement>>
 
 type IconDictionary = {
-  [key: string]: IconComponent;
+  [key: string]: IconComponent
 }
 
 const icons: IconDictionary = {

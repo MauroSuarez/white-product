@@ -27,7 +27,7 @@ const MotorCycleIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
         </g>
       </g>
     </GlobalSvg>
-  );
-};
+  )
+}
 
 export { MotorCycleIcon }
