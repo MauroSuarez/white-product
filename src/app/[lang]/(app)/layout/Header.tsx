@@ -195,19 +195,17 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className={`border-b border-grey-50 transition-all duration-300 ${heightHeaderBar} flex items-center`}>
-        <div className="w-full px-10 mx-auto flex justify-between">
+      <header className={`border-b border-grey-50 transition-all duration-300 ${heightHeaderBar} flex w-full items-center`}>
+        <div className="mx-10 grid grid-cols-3 gap-4 items-center flex w-full">
 
-          <Link href={'/es'} className="flex items-center">
-            <div className="flex items-center justify-center flex-wrap transition-all duration-300">
+          <div onClick={() => handleNavigate('')} className="flex justify-start w-auto">
+            <div className="flex items-center justify-center flex-wrap transition-all duration-300 cursor-pointer">
               <div className="text-primary justify-center flex w-full"><Wrench className="h-10 w-10 md:h-10 md:w-10 lg:w-10 md:h-10" /></div>
               {!isSmall && <Typography className={`w-auto flex text-primary hidden md:block lg:block`}>{APPLICATION.appName}</Typography>}
             </div>
-          </Link>
+          </div>
 
-          <div className="flex items-center space-x-4">
-
-            {children ?? (
+          {children ?? (
               <HeaderDefault
                 isLoading={isLoadingWS}
                 user={user || undefined}
@@ -217,16 +215,7 @@ const Header: React.FC<HeaderProps> = ({
                 itemsAdminMenu={menuAdmin[type] || []}
                 handleSearch={search[type] ? handleSearch : undefined}
               />
-              // <ComponentHeader
-              //   user={user}
-              //   itemsButtons={buttons[type] || []}
-              //   itemsMenu={menu || []}
-              //   handleSearch={handleSearch}
-              // />
             )}
-
-          </div>
-
         </div>
       </header>
 
