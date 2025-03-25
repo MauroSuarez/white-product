@@ -1,3 +1,5 @@
+
+// DEPRECATED!!
 import { IconNames } from "@/presentation/ds/icon"
 
 export type MenuItem = {
@@ -5,10 +7,10 @@ export type MenuItem = {
   icon?: IconNames | any
   path?: string
   separator?: boolean
-  action?: 'logout' | 'signin' | 'signup' | 'theme'
+  onClick: () => void
 }
-
-export const menuUseCase = (store: any): MenuItem[] => {
+// DEPRECATED!!
+export const menuUseCase = (store: any) => {
   const { isLoggedIn } = store.getState()
 
   if (isLoggedIn) {

@@ -134,10 +134,6 @@ const DropDown: React.FC<DropDownProps> = ({
   onClick,
   children
 }) => {
-  const handleItem = (item: MenuItem) => {
-    onClick && onClick(item)
-  }
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -150,7 +146,7 @@ const DropDown: React.FC<DropDownProps> = ({
               {item?.separator ? (
                 <DropdownMenuSeparator />
               ) : (
-                <DropdownMenuItem onClick={() => handleItem(item)}>
+                <DropdownMenuItem onClick={() => item.onClick()}>
                   <div className="flex flex-wrap justify-between w-full items-center">
                     <Typography>
                       {item?.label}

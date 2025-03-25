@@ -21,8 +21,6 @@ export type HeaderDefaultProps = {
 const HeaderDefault: React.FC<HeaderDefaultProps> = ({
   user,
   itemsMenu,
-  handleItemClick,
-  handleChangeMode,
   isFreeWheel = false,
 }) => {
   const { isSmall } = usePositionScroll()
@@ -53,12 +51,12 @@ const HeaderDefault: React.FC<HeaderDefaultProps> = ({
         </Button>
       </Link>
 
-      <Button onClick={() => handleChangeMode(isFreeWheel ? '/freewheels/home' : '/freewheels')} variant="default" className="hidden md:flex h-10">
+      {/* <Button onClick={() => handleChangeMode(isFreeWheel ? '/freewheels/home' : '/freewheels')} variant="default" className="hidden md:flex h-10">
         Subí tu FreeWheels
         <Wrench className='h-5 w-5' />
-      </Button>
+      </Button> */}
 
-      <DropdownMenu items={itemsMenu} onClick={handleItemClick}>
+      <DropdownMenu items={itemsMenu}>
         <div className="rounded-full px-2 border border-gray-300 items-center h-12 flex justify-center cursor-pointer">
           <div className="flex justify-center space-x-2 items-center">
             <Icon name="HamburgerMenuIcon" className="h-5 w-5 text-foreground" />

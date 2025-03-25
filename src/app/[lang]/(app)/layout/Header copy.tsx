@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React from 'react'
+import { useState } from "react"
 import { useTheme } from "next-themes"
 import { User, Wrench, ScanSearch } from "lucide-react"
 import Link from "next/link"
@@ -15,10 +16,6 @@ import { AuthForm } from '../auth/Form'
 import { HeaderDefault } from './HeaderDefault'
 import { HeaderBasic } from './HeaderBasic'
 import { useAuthStore } from '@/infraestructure/stores/authStore'
-import { useSignIn } from '@/presentation/hooks/useSignIn'
-import { useCurrentPath } from '@/presentation/hooks/useCurrentPath'
-import { useLogout } from '@/presentation/hooks/useLogout'
-import { ISignIn, ISignUp } from '@/core/domain/interfaces/Auth'
 
 // import { cn } from "@/presentation/utils/uiHelpers"
 // {cn("mb-1 font-medium leading-none tracking-tight", className)}
@@ -52,43 +49,40 @@ const Header: React.FC<HeaderProps> = ({
   children
 }) => {
   const router = useRouter()
-  const { user, isLoggedIn, clearUser } = useAuthStore()
-  const currentPath = useCurrentPath()
+  const { user, clearUser } = useAuthStore()
   const { isSmall } = usePositionScroll()
   const { theme, setTheme } = useTheme()
-  const { mutate: signin, isPending, error } = useSignIn()
-  const { mutate: logout, isPending: isPedingLogout } = useLogout()
+  const [isLoading, setIsLoading] = useState(false)
   const [typeForm, setTypeForm] = useState<string>('signin')
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const handleFormSignIn = async (data: ISignIn) => {
-    signin(data)
-    if(currentPath === '/es/freewheels')
-      router.push('/es/freewhels/onboarding')
-  }
-
-  const handleFormSignUp = async (data: ISignUp) => {
-    // signin(data)
-    // if(currentPath === '/es/freewheels')
-    //   router.push('/es/freewhels/onboarding')
-  }
-
-  const handleLogout = () => {
-    logout()
-  }
-
-  const handleSearch = (value: string) => {
-    console.log(value)
-  }
-
-  const handleNavigate = (path: string) => {
-
-  }
-
-  const handleChangeTheme = () => theme == "dark" ? setTheme("light") : setTheme("dark")
-
+  const menuItems = menuController.getMenu()
 
   const ComponentHeader = headers[type]
+
+  const formatMenu = () => menuItems.map((item) => {
+    if(item.action === 'theme') {
+      return { label: 'Tema', action: 'theme', icon: theme === "light" ? 'MoonIcon' : 'SunIcon'}
+    }
+
+    return item
+  }) as MenuItem[]
+
+  const handleItemClick = (item: MenuItem) => {
+    console.log(item, 'ITEM')
+    if(item.action === 'theme')
+      theme == "dark" ? setTheme("light") : setTheme("dark")
+
+    if(item.path)
+      router.push(`/es/${item.path}`)
+
+    if(item.action === 'signin' || item.action === 'signup')
+      setIsModalOpen(!isModalOpen)
+
+    if(item.action === 'logout') {
+      clearUser()
+      window.location.reload()
+    }
+  }
 
   const handleChangeMode = (path: any) => {
     console.log(path)
@@ -99,35 +93,24 @@ const Header: React.FC<HeaderProps> = ({
     setTypeForm(type)
   }
 
-  const menu = useMemo(() => {
-    const boothItem =  { label: 'Tema', icon: theme === "light" ? 'MoonIcon' : 'SunIcon', onClick: handleChangeTheme }
-    if (isLoggedIn) {
-      return [
-        { label: 'Mensajes', path: '/messages' },
-        { label: 'Mi agenda', path: '/reservations' },
-        { label: 'Favoritos', path: '/favorites' },
-        { separator: true },
-        { label: 'Poné tu FreeWheels', path: '/freewheels' },
-        { label: 'Invita un FreeWheels', path: '/invite' },
-        { label: 'Cuenta', path: '/account' },
-        { separator: true },
-        { ...boothItem },
-        { label: 'Centro de ayuda', path: '/contact' },
-        { label: 'Cerrar sesión', onClick: handleLogout },
-      ]
-    } else {
-      return [
-        { label: 'Iniciar sesión', onClick: () => setIsModalOpen(true) },
-        { label: 'Registrate', onClick: () => setIsModalOpen(true) },
-        { separator: true },
-        { label: 'Poné tu FreeWheels', path: '/messages' },
-        { label: 'Invita un FreeWheels', path: '/invite' },
-        { separator: true },
-        { ...boothItem },
-        { label: 'Centro de ayuda', path: '/contact' },
-      ]
+  const handleSubmitAuth = async (data: any) => {
+    setIsLoading(true)
+    try {
+      const { success, error } = await authController.handleSignin(data)
+      setIsLoading(false)
+      setIsModalOpen(false)
+      window.location.reload()
+    } catch (error) {
+      const err = error as Error
+      // setError(err.message)
+    } finally {
+      setIsLoading(false)
     }
-  }, [isLoggedIn, theme])
+  }
+
+  const handleSearch = (value: string) => {
+    console.log(value)
+  }
 
   const heightHeaderBar = type === 'default' ? isSmall ? 'h-16' : 'h-28' : type ===  'detail' ? 'h-16' : 'h-auto py-4'
 
@@ -148,7 +131,9 @@ const Header: React.FC<HeaderProps> = ({
             {children ?? (
               <ComponentHeader
                 user={user}
-                itemsMenu={menu}
+                itemsMenu={formatMenu() || []}
+                handleItemClick={handleItemClick}
+                handleChangeMode={handleChangeMode}
               />
             )}
 
@@ -157,13 +142,13 @@ const Header: React.FC<HeaderProps> = ({
         </div>
       </header>
 
-      {/* <CustomModal
+      <CustomModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title={`${typeForm === 'reset' ? 'Recupear contraseña' : typeForm === 'signin' ? 'Inicia sesión' : 'Registrate'}`}
       >
         <AuthForm isLoading={isLoading} onSubmit={handleSubmitAuth} handleTypeForm={handleTypeForm} typeForm={typeForm} />
-      </CustomModal> */}
+      </CustomModal>
     </>
   )
 }
