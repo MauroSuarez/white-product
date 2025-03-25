@@ -1,20 +1,23 @@
 import { FormSignIn } from "./containers/SignInForm"
 import { FormSignUp } from "./containers/SignUpForm"
 import { ResetPasswordForm } from "./containers/ResetPasswordForm"
+import { ISignIn, ISignUp } from "@/core/domain/interfaces/Auth"
 
-type TypeForm = 'signin' | 'signup' | 'reset'
+export type TypeAuthForm = 'signin' | 'signup' | 'reset'
 
 type AuthFormProps = {
-  onSubmit?: (form: any) => void
-  handleTypeForm: (type: string) => void
-  typeForm: string
+  handleSignIn?: (form: ISignIn) => void
+  handleSignUp?: (form: ISignUp) => void
+  handleResetPassword?: (email: string) => void
+  handleTypeForm?: (typeForm: TypeAuthForm) => void
   isLoading: boolean
+  typeForm?: TypeAuthForm
 }
 
-type AuthFormComponent = any
+type AuthFormComponent = React.FC<any>
 
 type AuthFormDictionary = {
-  [key: string]: AuthFormComponent;
+  [key in TypeAuthForm]: AuthFormComponent;
 }
 
 const authForm: AuthFormDictionary = {
@@ -23,13 +26,28 @@ const authForm: AuthFormDictionary = {
   'reset': ResetPasswordForm
 }
 
-export const AuthForm: React.FC<AuthFormProps> = ({ typeForm = 'signin', isLoading, onSubmit, handleTypeForm }) => {
+export const AuthForm: React.FC<AuthFormProps> = ({
+  typeForm = 'signin',
+  isLoading,
+  handleTypeForm,
+  handleSignIn,
+  handleSignUp,
+  handleResetPassword
+}) => {
   const ComponentAuthForm = authForm[typeForm]
 
   if (!ComponentAuthForm) {
     return null
   }
 
-  return <ComponentAuthForm handleSubmit={onSubmit} handleTypeForm={handleTypeForm} isLoading={isLoading} />
+  const submit = typeForm === 'signin' ? handleSignIn : typeForm === 'signup' ? handleSignUp : handleResetPassword
+
+  return (
+    <ComponentAuthForm
+      handleSubmit={submit}
+      handleTypeForm={handleTypeForm}
+      isLoading={isLoading}
+    />
+  )
 }
 

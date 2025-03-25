@@ -146,7 +146,7 @@ const DropDown: React.FC<DropDownProps> = ({
               {item?.separator ? (
                 <DropdownMenuSeparator />
               ) : (
-                <DropdownMenuItem onClick={() => item.onClick()}>
+                <DropdownMenuItem onClick={() => item.onClick(item.path)}>
                   <div className="flex flex-wrap justify-between w-full items-center">
                     <Typography>
                       {item?.label}

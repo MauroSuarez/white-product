@@ -2,14 +2,14 @@
 
 import { useMutation } from '@tanstack/react-query'
 import { useAuthStore } from '@/infraestructure/stores/authStore'
-import { fetchSignIn } from '@/core/domain/services/fetchAuth'
+import { fetchSignUp } from '@/core/domain/services/fetchAuth'
 import { toast } from "@/presentation/hooks/useToast"
 
-function useSignIn() {
+function useSignUp() {
   const { setUser, setToken } = useAuthStore()
 
   return useMutation({
-    mutationFn: fetchSignIn,
+    mutationFn: fetchSignUp,
     onSuccess: (data) => {
       setUser(data.user)
       setToken(data.access_token)
@@ -26,4 +26,4 @@ function useSignIn() {
   })
 }
 
-export { useSignIn }
+export { useSignUp }

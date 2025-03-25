@@ -2,13 +2,13 @@
 
 import { useMutation } from '@tanstack/react-query'
 import { useAuthStore } from '@/infraestructure/stores/authStore'
-import { fetchLogout } from '@/core/domain/services/fetchAuth'
+import { fetchSignOut } from '@/core/domain/services/fetchAuth'
 
-function useLogout(position: number = 50) {
+function useSignOut() {
   const { clearUser } = useAuthStore()
 
   return useMutation({
-    mutationFn: fetchLogout,
+    mutationFn: fetchSignOut,
     onSuccess: () => {
       console.log('Logout')
       clearUser()
@@ -20,4 +20,4 @@ function useLogout(position: number = 50) {
   })
 }
 
-export { useLogout }
+export { useSignOut }

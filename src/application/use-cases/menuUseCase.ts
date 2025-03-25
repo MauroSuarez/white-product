@@ -7,7 +7,7 @@ export type MenuItem = {
   icon?: IconNames | any
   path?: string
   separator?: boolean
-  onClick: () => void
+  onClick: (path?: string) => void
 }
 // DEPRECATED!!
 export const menuUseCase = (store: any) => {
