@@ -11,7 +11,7 @@ const AuthWrapper = ({
   action,
   children,
 }: AuthWrapperProps) => {
-  const user = useAuthStore((state) => state)
+  const { user, isLoggedIn, setIsAuthModal } = useAuthStore()
   return (
     <div>estoy logueado</div>
   )

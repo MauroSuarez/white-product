@@ -17,14 +17,26 @@ import { Map } from '@/presentation/components/map'
 import { ScrollArea } from '@/presentation/ds/scroll-area'
 import { Separator } from '@/presentation/ds/separator'
 import { useViewTypeStore } from "@/infraestructure/stores/viewTypeStore"
+import { useAuthStore } from "@/infraestructure/stores/authStore"
 
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`
 )
 
 export default function App() {
+  const { user, isLoggedIn, setIsAuthModal } = useAuthStore()
   const viewType = useViewTypeStore((state) => state.viewType)
   const center: [number, number] = [-34.600625, -58.563671]
+
+  // TODO, agregar un wrapper para la revisión del logueo
+  const handleAddFavorite = () => {
+    if(!user) {
+      console.log("no estoy logueado")
+      setIsAuthModal(true)
+    }else {
+      console.log("si estoy logueado")
+    }
+  }
 
   const markers = [
     {
@@ -47,7 +59,7 @@ export default function App() {
       </div>
       <section className="w-full py-8 px-10 h-screen">
         {viewType === 'grid' ? (
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-0 lg:grid-cols-4 lg:gap-4 md:grid-cols-4 md:gap-4 sm:grid-cols-2 sm:gap-4">
           {[...new Array(7)].map((column, index) => (
             <Card key={`card-freewheel-${index}`} className="overflow-hidden rounded-lg border-0">
               <div className="relative">
@@ -58,7 +70,7 @@ export default function App() {
                     className="w-full h-48 object-cover"
                   />
                 </Link>
-                <div className="absolute top-2 right-2 bg-background rounded-full p-2 shadow-md">
+                <div onClick={handleAddFavorite} className="absolute cursor-pointer top-2 right-2 bg-background rounded-full p-2 shadow-md">
                   <Icon name='HeartIcon' className="w-4 h-4 text-foreground" />
                 </div>
               </div>

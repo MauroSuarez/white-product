@@ -63,7 +63,7 @@ const Filters = () => {
 
         <div className="grid grid-cols-[5fr_1fr_1fr] gap-6 h-full">
 
-          <div className="flex flex-wrap w-full items-center overflow-x-auto">
+          <div className="flex flex-wrap w-full items-center overflow-x-auto hidden lg:block md:block sm:hidden">
             {isLoading ?
               <LoaderSkeleton />
             : (

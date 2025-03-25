@@ -7,9 +7,9 @@ import { Header } from "../../layout/Header"
 export default function Home() {
   return (
     <>
-      <section className="w-full py-8 px-10 h-screen">
-        home
-      </section>
+      <div className="sticky top-0 z-20 bg-background">
+        <Header type="freewheel" />
+      </div>
     </>
   )
 }

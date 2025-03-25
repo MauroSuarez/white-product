@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useContext } from 'react'
 import { useTheme } from "next-themes"
 import { ScanSearch, Wrench } from "lucide-react"
 import Link from "next/link"
@@ -10,14 +10,17 @@ import { Typography } from '@/presentation/ds/typography'
 import { CustomModal } from '@/presentation/components/custom-modal'
 import { AuthForm, TypeAuthForm } from '../auth/Form'
 import { HeaderDefault } from './HeaderDefault'
-import { HeaderBasic } from './HeaderBasic'
 import { useAuthStore } from '@/infraestructure/stores/authStore'
 import { useSignIn } from '@/presentation/hooks/useSignIn'
 import { useCurrentPath } from '@/presentation/hooks/useCurrentPath'
+import { useCustomQuery } from '@/presentation/hooks/useCustomQuery'
 import { useSignOut } from '@/presentation/hooks/useSignOut'
 import { ISignIn, ISignUp } from '@/core/domain/interfaces/Auth'
 import { APPLICATION } from '@/config/constants'
 import { Icon } from '@/presentation/ds/icon'
+import { fetchWorkshopExistsUserId } from '@/core/domain/services/fetchWorkshop'
+import { BreakpointDeviceContext } from '@/presentation/providers/BreakPointDeviceProvider'
+
 
 // import { cn } from "@/presentation/utils/uiHelpers"
 // {cn("mb-1 font-medium leading-none tracking-tight", className)}
@@ -30,33 +33,38 @@ export type HeaderProps = {
   children?: React.ReactNode
 }
 
-type HeaderComponent = React.FC<any>
+// type HeaderComponent = React.FC<any>
 
-type HeaderDictionary = {
-  [key in HeaderTypeProps]: HeaderComponent
-}
+// type HeaderDictionary = {
+//   [key in HeaderTypeProps]: HeaderComponent
+// }
 
-const headers: HeaderDictionary = {
-  'empty': () => <></>,
-  'basic': HeaderBasic,
-  'default': HeaderDefault,
-  'detail': () => <></>,
-  'freewheel': () => <></>,
-}
+// const headers: HeaderDictionary = {
+//   'empty': () => <></>,
+//   'basic': HeaderBasic,
+//   'default': HeaderDefault,
+//   'detail': () => <></>,
+//   'freewheel': () => <></>,
+// }
 
 const Header: React.FC<HeaderProps> = ({
   type = 'default',
   children
 }) => {
   const router = useRouter()
-  const { user, isLoggedIn, clearUser } = useAuthStore()
+  const { user, isLoggedIn, token, clearUser, isAuthModal, setIsAuthModal } = useAuthStore()
   const currentPath = useCurrentPath()
   const { isSmall } = usePositionScroll()
   const { theme, setTheme } = useTheme()
+  const [typeForm, setTypeForm] = useState<TypeAuthForm>('signin')
   const { mutate: signin, isSuccess: isSuccessSignIn, isPending: isPendingSignin, error } = useSignIn()
   const { mutate: logout, isPending: isPedingLogout } = useSignOut()
-  const [typeForm, setTypeForm] = useState<TypeAuthForm>('signin')
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { data: existsWs = [], isLoading: isLoadingWS } = useCustomQuery(
+    () => fetchWorkshopExistsUserId(user?.id!),
+    ['fetchWorkshopExistsUserId', user?.id],
+    { enabled: !!user?.id}
+  )
+  const contextDevide = useContext(BreakpointDeviceContext)
 
   const isLoading = isPendingSignin || isPedingLogout
 
@@ -82,8 +90,9 @@ const Header: React.FC<HeaderProps> = ({
     logout()
   }
 
-  const handleSearch = (value: string) => {
-    console.log(value)
+  const handleSearch = (searchQuery: string) => {
+    console.log(searchQuery)
+    handleNavigate(`/search?q=${encodeURIComponent(searchQuery)}`)
   }
 
   const handleNavigate = (path?: string) => {
@@ -118,8 +127,8 @@ const Header: React.FC<HeaderProps> = ({
       ]
     } else {
       return [
-        { label: 'Iniciar sesión', onClick: () => setIsModalOpen(true) },
-        { label: 'Registrate', onClick: () => setIsModalOpen(true) },
+        { label: 'Iniciar sesión', onClick: () => setIsAuthModal(true) },
+        { label: 'Registrate', onClick: () => setIsAuthModal(true) },
         { separator: true },
         { label: 'Poné tu FreeWheels', path: '/freewheels', onClick: (path?: string) => handleNavigate(path) },
         { label: 'Invita un FreeWheels', path: '/invite' },
@@ -135,17 +144,17 @@ const Header: React.FC<HeaderProps> = ({
     return {
       'empty': [],
       'basic': [
-        { label: 'Empezar', variant: 'default', icon: <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: () => setIsModalOpen(true), visible: true },
+        { label: 'Empezar', variant: 'default', icon: <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: () => setIsAuthModal(true), visible: true },
       ],
       'default': [
         { label: 'Patetene Scan', variant: 'gradient', icon: <ScanSearch className='h-6 w-6 ml-2' />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: (path: string) => handleNavigate(path), visible: true },
-        { label: `Abrí tu ${APPLICATION.appName}`, variant: 'default', icon: <Wrench className='h-6 w-6 ml-2' />, classes: 'hidden md:flex h-10', path: '/freewheels', onClick: (path: string) => handleNavigate(path), visible: true },
-        { label: `Modo ${APPLICATION.appName}`, variant: 'ghost', classes: 'hidden md:flex h-10', path: '/freewheels', onClick: (path: string) => handleNavigate(path), visible: true }
+        { label: `Abrí tu ${APPLICATION.appName}`, variant: 'default', icon: <Wrench className='h-6 w-6 ml-2' />, classes: 'hidden md:flex h-10', path: '/freewheels', onClick: (path: string) => handleNavigate(path), visible: existsWs?.length === 0 },
+        { label: `Modo ${APPLICATION.appName}`, variant: 'outline', classes: 'hidden md:flex h-10', path: '/freewheels/home', onClick: (path: string) => handleNavigate(path), visible: existsWs?.length > 0 && isLoggedIn }
       ],
       'detail': [],
       'freewheel': [],
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn, existsWs])
 
   const texts = useMemo(() => {
     return {
@@ -167,6 +176,21 @@ const Header: React.FC<HeaderProps> = ({
     'freewheel': false,
   }
 
+  const menuAdmin = useMemo(() => {
+    return {
+      'empty': [],
+      'detail': [],
+      'basic': [],
+      'default': [],
+      'freewheel': [
+        { label: 'Hoy', variant: 'muted', visible: true },
+        { label: 'Reservas', variant: 'muted', visible: true },
+        { label: 'FreeWheels', variant: 'muted', visible: true },
+        { label: 'Mensajes', variant: 'muted', visible: true },
+      ],
+    }
+  }, [])
+
   const heightHeaderBar = type === 'default' ? isSmall ? 'h-16' : 'h-28' : type ===  'detail' ? 'h-16' : 'h-auto py-4'
 
   return (
@@ -176,8 +200,8 @@ const Header: React.FC<HeaderProps> = ({
 
           <Link href={'/es'} className="flex items-center">
             <div className="flex items-center justify-center flex-wrap transition-all duration-300">
-              <div className="text-primary justify-center flex w-full"><Wrench className="h-10 w-10" /></div>
-              {!isSmall && <Typography className={`w-auto flex text-primary`}>{APPLICATION.appName}</Typography>}
+              <div className="text-primary justify-center flex w-full"><Wrench className="h-10 w-10 md:h-10 md:w-10 lg:w-10 md:h-10" /></div>
+              {!isSmall && <Typography className={`w-auto flex text-primary hidden md:block lg:block`}>{APPLICATION.appName}</Typography>}
             </div>
           </Link>
 
@@ -185,10 +209,12 @@ const Header: React.FC<HeaderProps> = ({
 
             {children ?? (
               <HeaderDefault
+                isLoading={isLoadingWS}
                 user={user || undefined}
                 itemsButtons={buttons[type] || []}
                 itemsTexts={texts[type] || []}
                 itemsMenu={menu || []}
+                itemsAdminMenu={menuAdmin[type] || []}
                 handleSearch={search[type] ? handleSearch : undefined}
               />
               // <ComponentHeader
@@ -205,8 +231,8 @@ const Header: React.FC<HeaderProps> = ({
       </header>
 
       <CustomModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isAuthModal}
+        onClose={() => setIsAuthModal(false)}
         title={`${typeForm === 'reset' ? 'Recupear contraseña' : typeForm === 'signin' ? 'Inicia sesión' : 'Registrate'}`}
       >
         <AuthForm

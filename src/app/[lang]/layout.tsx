@@ -4,6 +4,7 @@ import "./globals.css"
 import { ThemeAppProvider } from "@/presentation/providers/ThemeProvider"
 import { Toaster } from "@/presentation/ds/toaster"
 import { AppProvider } from "@/presentation/providers/AppProvider"
+import { BreakpointProvider } from "@/presentation/providers/BreakPointDeviceProvider"
 
 const geistSans = localFont({
   src: "../../presentation/assets/fonts/GeistVF.woff",
@@ -36,8 +37,10 @@ export default function RootLayout({
       >
         <ThemeAppProvider>
           <AppProvider>
-            {children}
-            <Toaster />
+            <BreakpointProvider>
+              {children}
+              <Toaster />
+            </BreakpointProvider>
           </AppProvider>
         </ThemeAppProvider>
       </body>

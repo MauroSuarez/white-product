@@ -1,4 +1,4 @@
-import { Skeleton } from "@/presentation/ds/skeleton";
+import { Skeleton } from "@/presentation/ds/skeleton"
 
 export function SkeletonFilter() {
   return (
