@@ -1,6 +1,6 @@
 import { db } from '@/infraestructure/db'
 import { IAuthRepository } from '@/core/domain/interfaces/authRepository'
-import { ISignIn, ISignUp } from '@/core/domain/interfaces/Auth'
+import { ISignIn, ISignUp } from '@/core/domain/entities/Auth'
 
 const AuthRepository: IAuthRepository = {
   async signUp(dataUser: ISignUp) {

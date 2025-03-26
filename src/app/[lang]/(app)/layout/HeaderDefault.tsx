@@ -30,10 +30,8 @@ const HeaderDefault: React.FC<HeaderDefaultProps> = ({
   handleSearch
 }) => {
   const { isSmall } = usePositionScroll()
-  const currentPath = useCurrentPath() 
+  const currentPath = useCurrentPath()
   const [searchQuery, setSearchQuery] = useState('')
-
-  console.log(currentPath, 'A VERRRR')
 
   const handleOnSearch = () => {
     handleSearch && handleSearch(searchQuery.trim())

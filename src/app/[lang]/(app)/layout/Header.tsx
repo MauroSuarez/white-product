@@ -13,13 +13,14 @@ import { useAuthStore } from '@/infraestructure/stores/authStore'
 import { fetchSignIn, fetchSignOut, fetchSignUp } from '@/core/domain/services/fetchAuth'
 import { useCurrentPath } from '@/presentation/hooks/useCurrentPath'
 import { useCustomQuery } from '@/presentation/hooks/useCustomQuery'
-import { ISignIn, ISignUp } from '@/core/domain/interfaces/Auth'
+import { ISignIn, ISignUp } from '@/core/domain/entities/Auth'
 import { APPLICATION } from '@/config/constants'
 import { Icon } from '@/presentation/ds/icon'
 import { fetchWorkshopExistsUserId } from '@/core/domain/services/fetchWorkshop'
 import { BreakpointDeviceContext } from '@/presentation/providers/BreakPointDeviceProvider'
 import { useCustomMutation } from '@/presentation/hooks/useCustomMutation'
 import { toast } from "@/presentation/hooks/useToast"
+import { CustomAlert } from '@/presentation/components/custom-alert'
 
 // import { cn } from "@/presentation/utils/uiHelpers"
 // {cn("mb-1 font-medium leading-none tracking-tight", className)}
@@ -55,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({
   const currentPath = useCurrentPath()
   const { isSmall } = usePositionScroll()
   const { theme, setTheme } = useTheme()
-  const [typeForm, setTypeForm] = useState<TypeAuthForm>('signin')  
+  const [typeForm, setTypeForm] = useState<TypeAuthForm>('reset')  
   const { data: existsWs = [], isLoading: isLoadingWS } = useCustomQuery(
     () => fetchWorkshopExistsUserId(user?.id!),
     ['fetchWorkshopExistsUserId', user?.id],
@@ -71,7 +72,6 @@ const Header: React.FC<HeaderProps> = ({
   const handleFormSignIn = async (data: ISignIn) => {
     signInMutation.mutateAsync(data)
       .then((resp: any) => {
-        console.log(resp, 'A VER 222')
         setUser(resp?.user)
         setToken(resp?.access_token)
         toast({
@@ -259,6 +259,15 @@ const Header: React.FC<HeaderProps> = ({
           handleResetPassword={handleFormResetPassword}
           handleTypeForm={handleTypeForm}
           typeForm={typeForm}
+          alert={(
+            <CustomAlert
+              variant={'default'}
+              icon='CheckCircledIcon'
+              className='border border-success bg-success/30'
+              title='Un éxito, salio todo bien!'
+              description='Te enviamos un email de confirmación'
+            />
+          )}
         />
       </CustomModal>
     </>

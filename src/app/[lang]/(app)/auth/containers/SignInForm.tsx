@@ -1,20 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
 import { authSchema, SignInDTO } from "@/application/validators/authSchema"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/presentation/ds/form"
-import { Input } from "@/presentation/ds/input"
+import { FormCheckbox } from "@/presentation/components/form/FormCheckbox"
+import { FormContainer } from "@/presentation/components/form/FormContainer"
+import { FormInput } from "@/presentation/components/form/FormInput"
 import { Button } from "@/presentation/ds/button"
-import { Checkbox } from "@/presentation/ds/checkbox"
 import { FadeIn } from "@/presentation/components/fade-in"
 
 type FormSignInProps = {
@@ -24,77 +14,36 @@ type FormSignInProps = {
 }
 
 const FormSignIn = ({ handleSubmit, handleTypeForm, isLoading = false }: FormSignInProps) => {
-  const form = useForm<SignInDTO>({
-    resolver: zodResolver(authSchema.signin),
-    defaultValues: {
-      email: "",
-    },
-  })
-
   const onSubmit = async (data: SignInDTO) => {
     handleSubmit && handleSubmit(data)
   }
-
   return (
     <FadeIn>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="min-w-[500px] w-full space-y-4 mt-8">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input className="py-6" placeholder="Ingrese su email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Conseseña</FormLabel>
-                <FormControl>
-                  <Input type="password" className="py-6" placeholder="*****" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="w-full flex items-center justify-between">
-            <div className="flex items-center space-x-2 py-2">
-              <FormField
-                control={form.control}
+      <FormContainer schema={authSchema.signin} onSubmit={onSubmit} className="min-w-[500px] w-full space-y-4 mt-8">
+        {(methods) => (
+          <>
+            <FormInput name="email" label="Email" className="py-6" placeholder="Ingrese su email" />
+            <FormInput name="password" label="Contraseña" type="password" className="py-6" placeholder="*****" />
+            <div className="w-full flex items-center justify-between">
+              <FormCheckbox
                 name="remember"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox id="terms" className="h-6 w-6" onCheckedChange={field.onChange} />
-                    </FormControl>
-                    <FormLabel htmlFor="terms" className="text-sm font-normal">
-                      Recordarme
-                    </FormLabel>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Recordarme"
+                classNameContainer="flex flex-row items-center space-x-3 space-y-0"
+                className="h-6 w-6"
               />
+              <Button variant={'link'} className="text-foreground p-0" onClick={() => handleTypeForm('reset')}>
+                Olvide mi contraseña?
+              </Button>
             </div>
-            <Button variant={'link'} className="text-foreground p-0" onClick={() => handleTypeForm('reset')}>
-              Olvide mi contraseña?
+            <Button isLoading={isLoading} disabled={isLoading} type="submit" variant={'gradient'} className="w-full py-6">
+              Ingresar
             </Button>
-          </div>
-          <Button isLoading={isLoading} disabled={isLoading} type="submit" variant={'gradient'} className="w-full py-6">
-            Ingresar
-          </Button>
-          <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm('signup')}>
-            ¿No tenes cuenta?, Registrarme
-          </Button>
-        </form>
-      </Form>
+            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm('signup')}>
+              ¿No tenes cuenta?, Registrarme
+            </Button>
+          </>
+        )}
+      </FormContainer>
     </FadeIn>
   )
 }
