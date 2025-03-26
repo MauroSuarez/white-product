@@ -204,7 +204,7 @@ body {
 */
 
 /* PURPLE */
-/*
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -261,7 +261,7 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
-*/
+
 /* BLUE */
 /*
 @layer base {
@@ -349,8 +349,8 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --success: 159 100% 48%; /* Hex color #00F5A0 */
-    --warning: 50 95% 56%; /* #f9d423 */
+    --success: 159 100% 48%;
+    --warning: 50 95% 56%;
   }
   .dark {
     --background: 20 14.3% 4.1%;
@@ -377,8 +377,8 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --success: 159 100% 19%; /* Hex color #006240 */
-    --warning: 50 95% 22% /* Hex color #6f5c03 */
+    --success: 159 100% 19%;
+    --warning: 50 95% 22%
   }
 }
 
