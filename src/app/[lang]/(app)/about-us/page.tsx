@@ -143,249 +143,258 @@ export default function AboutUs() {
       />
 
       <div className="flex min-h-screen flex-col">
-        {/* Hero Section - Optimizado para palabras clave */}
-        <section className="relative flex items-center justify-center overflow-hidden bg-gradient-to-r from-background/10 to-background/20 py-20 md:py-32">
-          <div className="container relative z-10 px-4 text-center">
-            <Typography variant="h1" className="mb-6">
-              Transformamos tu experiencia automotriz
-            </Typography>
-            <Typography variant="lead" className="mb-8 mx-auto max-w-3xl">
-              Conectamos conductores con los{" "}
-              <strong>mejores talleres mecánicos</strong> y servicios de
-              reparación, haciendo que el{" "}
-              <strong>mantenimiento de tu vehículo</strong> sea simple,
-              transparente y confiable.
-            </Typography>
-            <Button size="lg">
-              Explorar talleres cercanos
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-          <div className="absolute inset-0 z-0 opacity-10">
-            <Image
-              src="/mechanic-working.jpg"
-              alt="Mecánico trabajando en un taller asociado a FreeWheels"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        </section>
-
-        {/* Mission Section - Contenido semántico */}
-        <section className="py-16 md:py-24">
-          <div className="container px-4">
-            <div className="mx-auto max-w-3xl text-center">
-              <Typography variant="h2" className="mb-6">
-                Nuestra misión: Revolucionar el cuidado automotriz
-              </Typography>
-              <Typography variant="lead" className="mb-10">
-                En FreeWheels, nos dedicamos a simplificar el proceso de
-                encontrar y contratar{" "}
-                <strong>servicios mecánicos de calidad</strong>. Nuestra
-                plataforma verifica cada taller y profesional para garantizar la
-                mejor experiencia.
-              </Typography>
-              <div className="grid gap-8 md:grid-cols-3">
-                <div className="flex flex-col items-center">
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <Car className="h-8 w-8" />
-                  </div>
-                  <Typography variant="h3" className="mb-2">
-                    Accesibilidad total
-                  </Typography>
-                  <Typography variant="muted" className="text-center">
-                    Encuentra talleres mecánicos cerca de tu ubicación con solo
-                    unos clics, sin importar tu conocimiento técnico.
-                  </Typography>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <ShieldCheck className="h-8 w-8" />
-                  </div>
-                  <Typography variant="h3" className="mb-2">
-                    Confianza garantizada
-                  </Typography>
-                  <Typography variant="muted" className="text-center">
-                    Reseñas verificadas y profesionales calificados para que
-                    tengas paz mental al dejar tu vehículo.
-                  </Typography>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <Users className="h-8 w-8" />
-                  </div>
-                  <Typography variant="h3" className="mb-2">
-                    Comunidad activa
-                  </Typography>
-                  <Typography variant="muted" className="text-center">
-                    Más de 50,000 usuarios y 10,000 talleres forman parte de
-                    nuestra red de servicios automotrices.
-                  </Typography>
-                </div>
+        {/* Hero Section - Simplificado */}
+        <section className="relative py-16 md:py-24 bg-white">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="md:w-1/2 space-y-4">
+                <Typography
+                  variant="h1"
+                  className="text-3xl md:text-4xl font-bold"
+                >
+                  Transformamos tu experiencia automotriz
+                </Typography>
+                <Typography variant="lead" className="text-muted-foreground">
+                  Conectamos conductores con los mejores talleres mecánicos y
+                  servicios de reparación, haciendo que el mantenimiento de tu
+                  vehículo sea simple y confiable.
+                </Typography>
+                <Button size="lg" className="mt-2">
+                  Explorar talleres cercanos
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+              <div className="md:w-1/2 relative h-64 md:h-80 w-full rounded-lg overflow-hidden">
+                <Image
+                  src="/placeholder.svg?height=320&width=480"
+                  alt="Mecánico trabajando en un taller asociado a FreeWheels"
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
             </div>
           </div>
         </section>
 
-        {/* How It Works - Pasos claros con microformatos */}
-        <section className="bg-muted py-16 md:py-24">
-          <div className="container px-4">
-            <Typography variant="h2" className="mb-12 text-center">
-              Cómo encontrar el mejor taller mecánico con FreeWheels
+        {/* Valores - Simplificado */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <Typography
+              variant="h2"
+              className="text-2xl md:text-3xl font-bold text-center mb-12"
+            >
+              Nuestra misión: Revolucionar el cuidado automotriz
             </Typography>
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="border-0 shadow-sm">
+                <CardContent className="p-6 flex flex-col items-center text-center">
+                  <Car className="h-8 w-8 text-primary mb-4" />
+                  <Typography variant="h3" className="text-xl font-medium mb-2">
+                    Accesibilidad total
+                  </Typography>
+                  <Typography variant="muted">
+                    Encuentra talleres mecánicos cerca de tu ubicación con solo
+                    unos clics.
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Card className="border-0 shadow-sm">
+                <CardContent className="p-6 flex flex-col items-center text-center">
+                  <ShieldCheck className="h-8 w-8 text-primary mb-4" />
+                  <Typography variant="h3" className="text-xl font-medium mb-2">
+                    Confianza garantizada
+                  </Typography>
+                  <Typography variant="muted">
+                    Reseñas verificadas y profesionales calificados para tu
+                    tranquilidad.
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Card className="border-0 shadow-sm">
+                <CardContent className="p-6 flex flex-col items-center text-center">
+                  <Users className="h-8 w-8 text-primary mb-4" />
+                  <Typography variant="h3" className="text-xl font-medium mb-2">
+                    Comunidad activa
+                  </Typography>
+                  <Typography variant="muted">
+                    Más de 50,000 usuarios y 10,000 talleres en nuestra red.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Cómo funciona - Simplificado */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <Typography
+              variant="h2"
+              className="text-2xl md:text-3xl font-bold text-center mb-8"
+            >
+              Cómo funciona FreeWheels
+            </Typography>
+            <Typography
+              variant="muted"
+              className="text-center max-w-2xl mx-auto mb-12"
+            >
+              Encuentra el mejor taller mecánico en tres simples pasos
+            </Typography>
+
+            <div className="grid md:grid-cols-3 gap-6">
               <div
-                className="relative"
+                className="flex flex-col items-center text-center"
                 itemScope
                 itemType="https://schema.org/HowToStep"
               >
                 <meta itemProp="position" content="1" />
-                <div className="absolute -left-4 top-0 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground md:left-0">
+                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mb-4">
                   1
                 </div>
-                <Card className="h-full border-0 shadow-lg">
-                  <CardContent className="p-6">
-                    <Typography variant="h3" className="mb-3" itemProp="name">
-                      Busca servicios
-                    </Typography>
-                    <Typography variant="muted" itemProp="text">
-                      Explora talleres mecánicos certificados, tiendas de
-                      repuestos originales y servicios de reparación vehicular
-                      cerca de tu ubicación.
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <Typography
+                  variant="h3"
+                  className="text-xl font-medium mb-2"
+                  itemProp="name"
+                >
+                  Busca servicios
+                </Typography>
+                <Typography variant="muted" itemProp="text">
+                  Explora talleres certificados y servicios de reparación cerca
+                  de ti.
+                </Typography>
               </div>
+
               <div
-                className="relative"
+                className="flex flex-col items-center text-center"
                 itemScope
                 itemType="https://schema.org/HowToStep"
               >
                 <meta itemProp="position" content="2" />
-                <div className="absolute -left-4 top-0 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground md:left-0">
+                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mb-4">
                   2
                 </div>
-                <Card className="h-full border-0 shadow-lg">
-                  <CardContent className="p-6">
-                    <Typography variant="h3" className="mb-3" itemProp="name">
-                      Compara opciones
-                    </Typography>
-                    <Typography variant="muted" itemProp="text">
-                      Revisa perfiles detallados con fotos, precios
-                      transparentes, especialidades y reseñas verificadas de
-                      otros conductores.
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <Typography
+                  variant="h3"
+                  className="text-xl font-medium mb-2"
+                  itemProp="name"
+                >
+                  Compara opciones
+                </Typography>
+                <Typography variant="muted" itemProp="text">
+                  Revisa perfiles con fotos, precios y reseñas verificadas.
+                </Typography>
               </div>
+
               <div
-                className="relative"
+                className="flex flex-col items-center text-center"
                 itemScope
                 itemType="https://schema.org/HowToStep"
               >
                 <meta itemProp="position" content="3" />
-                <div className="absolute -left-4 top-0 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground md:left-0">
+                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mb-4">
                   3
                 </div>
-                <Card className="h-full border-0 shadow-lg">
-                  <CardContent className="p-6">
-                    <Typography variant="h3" className="mb-3" itemProp="name">
-                      Reserva con confianza
-                    </Typography>
-                    <Typography variant="muted" itemProp="text">
-                      Agenda citas para mantenimiento preventivo o reparaciones
-                      directamente con los mejores talleres asociados.
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <Typography
+                  variant="h3"
+                  className="text-xl font-medium mb-2"
+                  itemProp="name"
+                >
+                  Reserva con confianza
+                </Typography>
+                <Typography variant="muted" itemProp="text">
+                  Agenda citas directamente con los mejores talleres asociados.
+                </Typography>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Stats Section - Datos verificables */}
-        <section className="py-16 md:py-24">
-          <div className="container px-4">
-            <div className="mx-auto max-w-4xl">
-              <Typography variant="h2" className="mb-12 text-center">
-                FreeWheels en números: Impacto real
-              </Typography>
-              <div className="grid gap-8 md:grid-cols-3">
-                <div className="text-center">
-                  <Typography variant="h1" className="mb-2 text-primary">
-                    10,000+
-                  </Typography>
-                  <Typography variant="lead">Talleres certificados</Typography>
-                </div>
-                <div className="text-center">
-                  <Typography variant="h1" className="mb-2 text-primary">
-                    50,000+
-                  </Typography>
-                  <Typography variant="lead">
-                    Conductores satisfechos
-                  </Typography>
-                </div>
-                <div className="text-center">
-                  <Typography variant="h1" className="mb-2 text-primary">
-                    100,000+
-                  </Typography>
-                  <Typography variant="lead">Servicios completados</Typography>
-                </div>
+        {/* Estadísticas - Simplificado */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center">
+                <Typography
+                  variant="h1"
+                  className="text-3xl md:text-4xl font-bold text-primary"
+                >
+                  10,000+
+                </Typography>
+                <Typography variant="muted">Talleres certificados</Typography>
+              </div>
+              <div className="text-center">
+                <Typography
+                  variant="h1"
+                  className="text-3xl md:text-4xl font-bold text-primary"
+                >
+                  50,000+
+                </Typography>
+                <Typography variant="muted">Conductores satisfechos</Typography>
+              </div>
+              <div className="text-center">
+                <Typography
+                  variant="h1"
+                  className="text-3xl md:text-4xl font-bold text-primary"
+                >
+                  100,000+
+                </Typography>
+                <Typography variant="muted">Servicios completados</Typography>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Testimonials - Opiniones reales */}
-        <section className="bg-gradient-to-r from-background/10 to-background/20 py-16 md:py-24">
-          <div className="container px-4">
-            <Typography variant="h2" className="mb-12 text-center">
-              Opiniones de nuestra comunidad
+        {/* Testimonios - Simplificado */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <Typography
+              variant="h2"
+              className="text-2xl md:text-3xl font-bold text-center mb-12"
+            >
+              Lo que dice nuestra comunidad
             </Typography>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+            <div className="grid md:grid-cols-3 gap-6">
               {testimonials.map((testimonial) => (
                 <Card
                   key={testimonial.id}
-                  className="h-full border-0 shadow-lg"
+                  className="border-0 shadow-sm"
                   itemScope
                   itemType="https://schema.org/Review"
                 >
-                  <CardContent className="flex h-full flex-col p-6">
+                  <CardContent className="p-6">
                     <div
-                      className="mb-4 flex"
+                      className="flex mb-4"
                       itemProp="reviewRating"
                       itemScope
                       itemType="https://schema.org/Rating"
                     >
                       <meta itemProp="ratingValue" content="5" />
                       {[1, 2, 3, 4, 5].map((star) => (
-                        <Award key={star} className="h-5 w-5 text-yellow-400" />
+                        <Award key={star} className="h-4 w-4 text-yellow-400" />
                       ))}
                     </div>
                     <Typography
                       variant="muted"
-                      className="mb-6 flex-1"
+                      className="mb-4 text-sm"
                       itemProp="reviewBody"
                     >
-                      {testimonial.quote}
+                      "{testimonial.quote}"
                     </Typography>
                     <div className="flex items-center">
-                      <div className="mr-4 h-12 w-12 overflow-hidden rounded-full bg-muted">
-                        <Image
-                          src={`/avatar-${testimonial.id}.jpg`}
-                          alt={`Foto de ${testimonial.name}`}
-                          width={48}
-                          height={48}
-                        />
-                      </div>
+                      <div className="w-8 h-8 rounded-full bg-gray-200 mr-3"></div>
                       <div>
-                        <Typography variant="h4" itemProp="author">
+                        <Typography
+                          variant="h4"
+                          className="text-sm font-medium"
+                          itemProp="author"
+                        >
                           {testimonial.name}
                         </Typography>
                         <Typography
                           variant="muted"
-                          className="text-sm"
+                          className="text-xs"
                           itemProp="description"
                         >
                           {testimonial.role}
@@ -399,76 +408,83 @@ export default function AboutUs() {
           </div>
         </section>
 
-        {/* Team/Founding Story - Autoridad y confianza */}
-        <section className="py-16 md:py-24">
-          <div className="container px-4">
-            <div className="mx-auto max-w-3xl text-center">
-              <Typography variant="h2" className="mb-6">
-                Nuestra historia: Pasión por los autos y la tecnología
-              </Typography>
-              <Typography variant="lead" className="mb-10">
-                FreeWheels nació de la necesidad de crear un estándar de calidad
-                en los servicios automotrices, combinando nuestra experiencia en
-                la industria con innovación tecnológica.
-              </Typography>
-              <div className="grid gap-8 md:grid-cols-3">
-                {founders.map((founder) => (
-                  <div
-                    key={founder.id}
-                    className="flex flex-col items-center"
-                    itemScope
-                    itemType="https://schema.org/Person"
+        {/* Equipo - Simplificado */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <Typography
+              variant="h2"
+              className="text-2xl md:text-3xl font-bold text-center mb-6"
+            >
+              Nuestro equipo fundador
+            </Typography>
+            <Typography
+              variant="muted"
+              className="text-center max-w-2xl mx-auto mb-12"
+            >
+              FreeWheels nació de la necesidad de crear un estándar de calidad
+              en los servicios automotrices
+            </Typography>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {founders.map((founder) => (
+                <div
+                  key={founder.id}
+                  className="text-center"
+                  itemScope
+                  itemType="https://schema.org/Person"
+                >
+                  <div className="w-20 h-20 rounded-full bg-gray-200 mx-auto mb-4"></div>
+                  <Typography
+                    variant="h3"
+                    className="text-lg font-medium mb-1"
+                    itemProp="name"
                   >
-                    <div className="mb-4 h-24 w-24 overflow-hidden rounded-full bg-muted">
-                      <Image
-                        src={`/founder-${founder.id}.jpg`}
-                        alt={`Foto de ${founder.name}, ${founder.role} de FreeWheels`}
-                        width={96}
-                        height={96}
-                      />
-                    </div>
-                    <Typography variant="h3" className="mb-1" itemProp="name">
-                      {founder.name}
-                    </Typography>
-                    <Typography
-                      variant="muted"
-                      className="mb-2"
-                      itemProp="jobTitle"
-                    >
-                      {founder.role}
-                    </Typography>
-                    <Typography
-                      variant="muted"
-                      className="text-center"
-                      itemProp="description"
-                    >
-                      {founder.bio}
-                    </Typography>
-                  </div>
-                ))}
-              </div>
+                    {founder.name}
+                  </Typography>
+                  <Typography
+                    variant="muted"
+                    className="text-sm mb-2"
+                    itemProp="jobTitle"
+                  >
+                    {founder.role}
+                  </Typography>
+                  <Typography
+                    variant="muted"
+                    className="text-sm"
+                    itemProp="description"
+                  >
+                    {founder.bio}
+                  </Typography>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* CTA Section - Optimizado para conversión */}
-        <section className="bg-primary py-16 text-primary-foreground md:py-24">
-          <div className="container px-4 text-center">
-            <Typography variant="h2" className="mb-6">
+        {/* CTA - Simplificado */}
+        <section className="py-16 bg-primary text-white">
+          <div className="container mx-auto px-4 max-w-5xl text-center">
+            <Typography
+              variant="h2"
+              className="text-2xl md:text-3xl font-bold mb-4 text-white"
+            >
               ¿Listo para una mejor experiencia automotriz?
             </Typography>
-            <Typography variant="lead" className="mx-auto mb-8 max-w-2xl">
+            <Typography
+              variant="muted"
+              className="mb-8 max-w-2xl mx-auto text-white/80"
+            >
               Únete a miles de conductores que ya confían en FreeWheels para el
               cuidado de sus vehículos.
             </Typography>
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="secondary">
                 Buscar talleres cercanos
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                className="border-white text-white hover:bg-white hover:text-primary"
               >
                 Registrar mi taller
               </Button>
