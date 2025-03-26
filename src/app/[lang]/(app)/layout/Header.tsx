@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState, useMemo, useContext } from 'react'
+import React, { useEffect, useState, useMemo, useContext } from 'react'
 import { useTheme } from "next-themes"
-import { ScanSearch, Wrench } from "lucide-react"
+import { Bell, ScanSearch, Wrench } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from 'next/navigation'
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
@@ -70,8 +70,6 @@ const Header: React.FC<HeaderProps> = ({
 
   const handleFormSignIn = async (data: ISignIn) => {
     signin(data)
-    if(currentPath === '/es/freewheels')
-      router.push('/es/freewhels/onboarding')
   }
 
   const handleFormSignUp = async (data: ISignUp) => {
@@ -88,6 +86,7 @@ const Header: React.FC<HeaderProps> = ({
 
   const handleLogout = () => {
     logout()
+    handleNavigate('')
   }
 
   const handleSearch = (searchQuery: string) => {
@@ -106,10 +105,16 @@ const Header: React.FC<HeaderProps> = ({
     setTypeForm(type)
   }
 
+  useEffect(() => {
+    // if(!user && currentPath === '/es/freewheels/home')
+    //   handleNavigate('')
+  }, [])
+
   // const ComponentHeader = headers[type]
 
   const menu = useMemo(() => {
     const boothItem = { label: 'Tema', icon: theme === "light" ? 'MoonIcon' : 'SunIcon', onClick: handleChangeTheme }
+    if(type === 'basic') return []
     if (isLoggedIn) {
       return [
         { label: 'Mensajes', path: '/messages' },
@@ -144,7 +149,7 @@ const Header: React.FC<HeaderProps> = ({
     return {
       'empty': [],
       'basic': [
-        { label: 'Empezar', variant: 'default', icon: <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: () => setIsAuthModal(true), visible: true },
+        { label: 'Empezar', variant: 'default', icon: <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: !isLoggedIn ? () => setIsAuthModal(true) : () => handleNavigate('/freewheels/onboarding'), visible: true },
       ],
       'default': [
         { label: 'Patetene Scan', variant: 'gradient', icon: <ScanSearch className='h-6 w-6 ml-2' />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: (path: string) => handleNavigate(path), visible: true },
@@ -152,7 +157,9 @@ const Header: React.FC<HeaderProps> = ({
         { label: `Modo ${APPLICATION.appName}`, variant: 'outline', classes: 'hidden md:flex h-10', path: '/freewheels/home', onClick: (path: string) => handleNavigate(path), visible: existsWs?.length > 0 && isLoggedIn }
       ],
       'detail': [],
-      'freewheel': [],
+      'freewheel': [
+        { icon: <Bell className="h-12 w-12 text-foreground" />, onClick: () => {}, visible: true, classes: 'rounded-full h-14 w-14', variant: 'ghost' }
+      ],
     }
   }, [isLoggedIn, existsWs])
 
@@ -196,9 +203,9 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <header className={`border-b border-grey-50 transition-all duration-300 ${heightHeaderBar} flex w-full items-center`}>
-        <div className="mx-10 grid grid-cols-3 gap-4 items-center flex w-full">
+        <div className="mx-10 items-center flex w-full">
 
-          <div onClick={() => handleNavigate('')} className="flex justify-start w-auto">
+          <div onClick={() => handleNavigate('')} className="flex justify-start w-1/5">
             <div className="flex items-center justify-center flex-wrap transition-all duration-300 cursor-pointer">
               <div className="text-primary justify-center flex w-full"><Wrench className="h-10 w-10 md:h-10 md:w-10 lg:w-10 md:h-10" /></div>
               {!isSmall && <Typography className={`w-auto flex text-primary hidden md:block lg:block`}>{APPLICATION.appName}</Typography>}
@@ -206,16 +213,16 @@ const Header: React.FC<HeaderProps> = ({
           </div>
 
           {children ?? (
-              <HeaderDefault
-                isLoading={isLoadingWS}
-                user={user || undefined}
-                itemsButtons={buttons[type] || []}
-                itemsTexts={texts[type] || []}
-                itemsMenu={menu || []}
-                itemsAdminMenu={menuAdmin[type] || []}
-                handleSearch={search[type] ? handleSearch : undefined}
-              />
-            )}
+            <HeaderDefault
+              isLoading={isLoadingWS}
+              user={user || undefined}
+              itemsButtons={buttons[type] || []}
+              itemsTexts={texts[type] || []}
+              itemsMenu={menu || []}
+              itemsAdminMenu={menuAdmin[type] || []}
+              handleSearch={search[type] ? handleSearch : undefined}
+            />
+          )}
         </div>
       </header>
 

@@ -50,7 +50,7 @@ const HeaderDefault: React.FC<HeaderDefaultProps> = ({
   }
   return (
     <>
-      <div className="flex justify-center w-auto">
+      <div className="flex justify-center w-2/5 w-auto">
 
         {handleSearch && (
           <div className="flex items-center border rounded-full shadow-sm overflow-hidden w-auto lg:min-w-[450px] md:min-w-[450px] sm:min-w-[400px]">
@@ -69,7 +69,7 @@ const HeaderDefault: React.FC<HeaderDefaultProps> = ({
         )}
 
         {!isLoading && itemsAdminMenu && (
-          <div className="flex items-center justify-center w-auto">
+          <div className="flex items-center justify-center w-auto space-x-6">
             {itemsAdminMenu?.map((item, key) => {
               return item.visible ? (
                 <Button variant='ghost' onClick={() => item.onClick(item.path)} key={`button-menuadmin-${key}`}>
@@ -84,7 +84,7 @@ const HeaderDefault: React.FC<HeaderDefaultProps> = ({
 
       </div>
 
-      <div className="flex justify-end items-center space-x-2 sm:space-x-4">
+      <div className="flex justify-end items-center w-2/5 space-x-2 sm:space-x-4">
 
         {isLoading && (
           [...new Array(2)].map((_, key) => (
@@ -111,14 +111,16 @@ const HeaderDefault: React.FC<HeaderDefaultProps> = ({
           ) : null
         })}
 
-        <DropdownMenu items={itemsMenu}>
-          <div className="rounded-full px-2 border border-gray-300 items-center h-12 flex justify-center cursor-pointer">
-            <div className="flex justify-center space-x-2 items-center">
-              <Icon name="HamburgerMenuIcon" className="h-5 w-5 text-foreground" />
-              <CustomAvatar user={user || {} as TUser} />
+        {itemsMenu && itemsMenu.length > 0 && (
+          <DropdownMenu items={itemsMenu}>
+            <div className="rounded-full px-2 border border-gray-300 items-center h-12 flex justify-center cursor-pointer">
+              <div className="flex justify-center space-x-2 items-center">
+                <Icon name="HamburgerMenuIcon" className="h-5 w-5 text-foreground" />
+                <CustomAvatar user={user as TUser} />
+              </div>
             </div>
-          </div>
-        </DropdownMenu>
+          </DropdownMenu>
+        )}
       </div>
     </>
   )
