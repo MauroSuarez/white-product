@@ -50,7 +50,7 @@ const HeaderDefault: React.FC<HeaderDefaultProps> = ({
   }
   return (
     <>
-      <div className="flex justify-center w-3/5 w-auto">
+      <div className="flex justify-center w-3/5">
 
         {handleSearch && (
           <div className="flex items-center border rounded-full shadow-sm overflow-hidden w-auto lg:min-w-[450px] md:min-w-[450px] sm:min-w-[400px]">
