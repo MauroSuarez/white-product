@@ -50,3 +50,10 @@ export const fetchGetCurrentUser = async () => {
 
   return { ...data.user }
 }
+
+export const fetchSignInTest = async (credentials: ISignIn) => {
+  return {
+    keys: ['signIn', credentials],
+    fetcher: () => db.auth.getUser().then((resp) => resp).catch((e) => e)
+  }
+}

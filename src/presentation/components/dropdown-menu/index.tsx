@@ -141,7 +141,7 @@ const DropDown: React.FC<DropDownProps> = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[12rem]">
         {items.map((item: MenuItem, key: number) => {
-          return (
+          return item.visible ? (
             <React.Fragment key={`items-menu-${key}`}>
               {item?.separator ? (
                 <DropdownMenuSeparator />
@@ -158,7 +158,7 @@ const DropDown: React.FC<DropDownProps> = ({
                 </DropdownMenuItem>
               )}
             </React.Fragment>
-          )
+          ) : null
         })}
       </DropdownMenuContent>
     </DropdownMenu>

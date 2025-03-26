@@ -8,6 +8,7 @@ export type MenuItem = {
   path?: string
   separator?: boolean
   onClick: (path?: string) => void
+  visible: boolean
 }
 // DEPRECATED!!
 export const menuUseCase = (store: any) => {

@@ -10,21 +10,24 @@ function useCustomMutation(
 ) {
   const queryClient = useQueryClient()
 
-  const { handleErrors, ...useMutationConfig } = useMemo(
-    () => ({
-      showLoadingBackdrop: false,
-      handleErrors: true,
-      onSettled: (mutationResponse: any, error: any, mutationBody: any) => {
-        queryClient.invalidateQueries(fetchService(mutationBody).keys);
-      },
-      ...config,
-    }),
-    [config, fetchService, queryClient]
-  );
-
-  const useMutationResult = useMutation((mutationBody: any) => {
-    return fetchService(mutationBody).fetcher();
-  }, useMutationConfig)
+  const useMutationResult = useMutation({
+    mutationKey: keys,
+    mutationFn: fetchService,
+    onSuccess: (data, variables) => {
+      // Invalidar queries automáticamente
+      if (config.invalidateQueries) {
+        config.invalidateQueries.forEach((queryKey: any) => {
+          queryClient.invalidateQueries({ queryKey })
+        })
+      }
+      // Callback opcional
+      config.onSuccess?.(data, variables)
+    },
+    onError: (error, variables) => {
+      config.onError?.(error, variables)
+    },
+    ...config // Otras opciones (retry, gcTime, etc.)
+  })
 
   return useMutationResult
 }
