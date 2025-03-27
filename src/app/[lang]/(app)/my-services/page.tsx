@@ -180,113 +180,91 @@ export default function ServicesPage() {
       </header>
 
       <main className="container mx-auto px-4 py-8 md:py-16">
-        {isMobile ? (
-          // Versión móvil con opción de escaneo
-          <div className="max-w-md mx-auto">
-            <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">
-                {inputMethod === "scan"
-                  ? "Escanear patente"
-                  : "Consulta de servicio"}
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">
-                Verifica el estado actual de tu vehículo
-              </p>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 max-w-6xl mx-auto">
+          {/* Título y descripción */}
+          <div className="md:col-span-4 flex flex-col justify-center">
+            <h1 className="text-4xl font-bold mb-4 leading-tight text-gray-900 dark:text-white">
+              Consulta
+              <br />
+              de
+              <br />
+              servicio
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              Verifica el estado actual de tu vehículo
+            </p>
+          </div>
 
-            {/* Selector de método - Solo visible en móvil */}
-            <div className="flex border rounded-lg overflow-hidden mb-6 shadow-sm dark:border-gray-700">
-              <button
-                className={`flex-1 py-3 font-medium flex items-center justify-center gap-2 ${
-                  inputMethod === "scan"
-                    ? "bg-primary text-white"
-                    : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                }`}
-                onClick={() => setInputMethod("scan")}
-              >
-                <Scan className="h-5 w-5" />
-                Escanear
-              </button>
-              <button
-                className={`flex-1 py-3 font-medium flex items-center justify-center gap-2 ${
-                  inputMethod === "manual"
-                    ? "bg-primary text-white"
-                    : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                }`}
-                onClick={() => setInputMethod("manual")}
-              >
-                <Keyboard className="h-5 w-5" />
-                Manual
-              </button>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 border border-gray-200 dark:border-gray-700">
+          {/* Formulario de búsqueda */}
+          <div className="md:col-span-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
               <form onSubmit={handleSubmit}>
-                {inputMethod === "scan" ? (
-                  <div className="space-y-4">
-                    <div className="relative h-64 w-full rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center bg-gray-50 dark:bg-gray-700/50">
-                      <div className="text-center p-6">
-                        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                          <QrCode className="h-8 w-8 text-primary" />
-                        </div>
-                        <p className="font-medium mb-2 text-gray-900 dark:text-white">
-                          Escanea la patente
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          Apunta la cámara a la patente de tu vehículo para
-                          escanearla automáticamente
-                        </p>
-                      </div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-64 h-16 border-2 border-primary rounded-md opacity-50"></div>
-                      </div>
-                    </div>
-                    <div className="text-center text-sm text-gray-500 dark:text-gray-400 my-4">
-                      o
-                    </div>
-                    <div className="relative">
-                      <Car className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                      <input
-                        type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="Ingresa la patente manualmente"
-                        className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
                     <label
                       htmlFor="trackingNumber"
-                      className="block text-gray-900 dark:text-white font-medium mb-2"
+                      className="text-gray-900 dark:text-white font-medium"
                     >
                       Número de patente o seguimiento
                     </label>
-                    <div className="relative">
-                      <Car className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                      <input
-                        id="trackingNumber"
-                        type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="Ej: ABC123 o XYZ789"
-                        className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                        required
-                      />
-                    </div>
+                    <button
+                      type="button"
+                      className="text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400"
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M10 13.75V10"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M10 6.25H10.0062"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
                   </div>
-                )}
+                  <div className="relative">
+                    <Car className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                    <input
+                      id="trackingNumber"
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      placeholder="Ej: ABC123 o XYZ789"
+                      className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                      required
+                    />
+                  </div>
+                </div>
 
                 {error && (
-                  <div className="text-red-500 dark:text-red-400 text-sm mt-4 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
+                  <div className="text-red-500 dark:text-red-400 text-sm mb-4 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
                     {error}
                   </div>
                 )}
 
                 <Button
                   type="submit"
-                  className="w-full py-3 bg-primary hover:bg-primary/90 text-white flex items-center justify-center mt-6"
+                  className="w-full py-3 bg-primary hover:bg-primary/90 text-white flex items-center justify-center"
                   disabled={isLoading || !inputValue.trim()}
                 >
                   {isLoading ? (
@@ -303,9 +281,11 @@ export default function ServicesPage() {
                 </Button>
               </form>
             </div>
+          </div>
 
-            {/* Búsquedas recientes - Versión móvil */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+          {/* Búsquedas recientes y ayuda */}
+          <div className="md:col-span-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 border border-gray-200 dark:border-gray-700">
               <div className="flex items-center mb-4">
                 <History className="h-5 w-5 text-primary mr-2" />
                 <h2 className="text-gray-900 dark:text-white font-medium">
@@ -343,172 +323,25 @@ export default function ServicesPage() {
                 })}
               </div>
             </div>
-          </div>
-        ) : (
-          // Versión desktop - Layout de 3 columnas
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 max-w-6xl mx-auto">
-            {/* Título y descripción */}
-            <div className="md:col-span-4 flex flex-col justify-center">
-              <h1 className="text-4xl font-bold mb-4 leading-tight text-gray-900 dark:text-white">
-                Consulta
-                <br />
-                de
-                <br />
-                servicio
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">
-                Verifica el estado actual de tu vehículo
+
+            {/* Ayuda */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
+              <h2 className="text-gray-900 dark:text-white font-medium mb-2">
+                ¿Necesitas ayuda?
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Nuestro equipo está disponible para asistirte
               </p>
-            </div>
-
-            {/* Formulario de búsqueda */}
-            <div className="md:col-span-4">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <label
-                        htmlFor="trackingNumber"
-                        className="text-gray-900 dark:text-white font-medium"
-                      >
-                        Número de patente o seguimiento
-                      </label>
-                      <button
-                        type="button"
-                        className="text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400"
-                      >
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M10 13.75V10"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M10 6.25H10.0062"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="relative">
-                      <Car className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                      <input
-                        id="trackingNumber"
-                        type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="Ej: ABC123 o XYZ789"
-                        className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  {error && (
-                    <div className="text-red-500 dark:text-red-400 text-sm mb-4 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
-                      {error}
-                    </div>
-                  )}
-
-                  <Button
-                    type="submit"
-                    className="w-full py-3 bg-primary hover:bg-primary/90 text-white flex items-center justify-center"
-                    disabled={isLoading || !inputValue.trim()}
-                  >
-                    {isLoading ? (
-                      <>
-                        <Clock className="h-5 w-5 mr-2 animate-spin" />
-                        Buscando...
-                      </>
-                    ) : (
-                      <>
-                        <Search className="h-5 w-5 mr-2" />
-                        Consultar estado
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </div>
-            </div>
-
-            {/* Búsquedas recientes y ayuda */}
-            <div className="md:col-span-4">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center mb-4">
-                  <History className="h-5 w-5 text-primary mr-2" />
-                  <h2 className="text-gray-900 dark:text-white font-medium">
-                    Búsquedas recientes
-                  </h2>
-                </div>
-
-                <div>
-                  {recentSearches.map((plate, index) => {
-                    const service = mockServices[plate];
-                    return service ? (
-                      <div
-                        key={index}
-                        onClick={() => handleRecentSearch(plate)}
-                        className="p-4 border border-gray-100 dark:border-gray-700 rounded-lg mb-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="font-medium text-gray-900 dark:text-white mb-1">
-                              {plate} - {service.vehicle}
-                            </div>
-                            <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                              <Car className="h-4 w-4 mr-2 text-primary" />
-                              <div className="flex items-center">
-                                <span>En progreso</span>
-                                <span className="mx-2">•</span>
-                                <span>{service.lastUpdate}</span>
-                              </div>
-                            </div>
-                          </div>
-                          <ArrowRight className="h-5 w-5 text-gray-400 dark:text-gray-500" />
-                        </div>
-                      </div>
-                    ) : null;
-                  })}
-                </div>
-              </div>
-
-              {/* Ayuda */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                <h2 className="text-gray-900 dark:text-white font-medium mb-2">
-                  ¿Necesitas ayuda?
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  Nuestro equipo está disponible para asistirte
-                </p>
-                <Link
-                  href="#"
-                  className="text-primary hover:underline flex items-center font-medium"
-                >
-                  Contacta con soporte
-                  <ArrowRight className="h-4 w-4 ml-1" />
-                </Link>
-              </div>
+              <Link
+                href="#"
+                className="text-primary hover:underline flex items-center font-medium"
+              >
+                Contacta con soporte
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </Link>
             </div>
           </div>
-        )}
+        </div>
       </main>
     </div>
   );

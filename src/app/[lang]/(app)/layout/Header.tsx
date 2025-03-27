@@ -265,6 +265,14 @@ const Header: React.FC<HeaderProps> = ({ type = "default", children }) => {
           visible: true
         },
         {
+          label: `Mis Servicios`,
+          variant: "outline",
+          classes: "hidden md:flex h-10",
+          path: "/my-services",
+          onClick: (path: string) => handleNavigate(path),
+          visible: existsWs?.length > 0
+        },
+        {
           label: `Abrí tu ${APPLICATION.appName}`,
           variant: "default",
           icon: <Wrench className="h-6 w-6 ml-2" />,
@@ -280,14 +288,6 @@ const Header: React.FC<HeaderProps> = ({ type = "default", children }) => {
           path: "/freewheels/home",
           onClick: (path: string) => handleNavigate(path),
           visible: existsWs?.length > 0 && isLoggedIn
-        },
-        {
-          label: `Mis Servicios`,
-          variant: "outline",
-          classes: "hidden md:flex h-10",
-          path: "/my-services",
-          onClick: (path: string) => handleNavigate(path),
-          visible: existsWs?.length > 0
         }
       ],
       detail: [],
