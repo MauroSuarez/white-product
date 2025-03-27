@@ -254,7 +254,7 @@ export default function ServiceStatusPage() {
                 <Moon className="h-5 w-5" />
               )}
             </button>
-            <Link href="/scan">
+            <Link href="/my-services">
               <Button
                 variant="outline"
                 size="sm"
