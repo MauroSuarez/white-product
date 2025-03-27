@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useMemo, useContext } from 'react'
+import React, { useState, useMemo, useContext } from 'react'
 import { useTheme } from "next-themes"
 import { Bell, ScanSearch, Wrench } from "lucide-react"
 import { useRouter } from 'next/navigation'
@@ -10,7 +10,7 @@ import { CustomModal } from '@/presentation/components/custom-modal'
 import { AuthForm, TypeAuthForm } from '../auth/Form'
 import { HeaderDefault } from './HeaderDefault'
 import { useAuthStore } from '@/infraestructure/stores/authStore'
-import { fetchSignIn, fetchSignOut, fetchSignUp } from '@/core/domain/services/fetchAuth'
+import { fetchResetPassword, fetchSignIn, fetchSignOut, fetchSignUp } from '@/core/domain/services/fetchAuth'
 import { useCurrentPath } from '@/presentation/hooks/useCurrentPath'
 import { useCustomQuery } from '@/presentation/hooks/useCustomQuery'
 import { ISignIn, ISignUp } from '@/core/domain/entities/Auth'
@@ -19,12 +19,11 @@ import { Icon } from '@/presentation/ds/icon'
 import { fetchWorkshopExistsUserId } from '@/core/domain/services/fetchWorkshop'
 import { BreakpointDeviceContext } from '@/presentation/providers/BreakPointDeviceProvider'
 import { useCustomMutation } from '@/presentation/hooks/useCustomMutation'
+import { useDebounce } from '@/presentation/hooks/useDebounce'
 import { toast } from "@/presentation/hooks/useToast"
-import { CustomAlert } from '@/presentation/components/custom-alert'
 
 // import { cn } from "@/presentation/utils/uiHelpers"
 // {cn("mb-1 font-medium leading-none tracking-tight", className)}
-
 
 export type HeaderTypeProps = 'basic' | 'default' | 'detail' | 'empty' | 'freewheel'
 
@@ -53,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const router = useRouter()
   const { user, isLoggedIn, token, clearUser, isAuthModal, setIsAuthModal, setUser, setToken } = useAuthStore()
-  const currentPath = useCurrentPath()
+  const { pathname } = useCurrentPath()
   const { isSmall } = usePositionScroll()
   const { theme, setTheme } = useTheme()
   const [typeForm, setTypeForm] = useState<TypeAuthForm>('reset')  
@@ -65,12 +64,26 @@ const Header: React.FC<HeaderProps> = ({
   const signInMutation = useCustomMutation(fetchSignIn, ['signin'], { enabled: false })
   const signOutMutation = useCustomMutation(fetchSignOut, ['signOut'], { enabled: false })
   const signUpMutation = useCustomMutation(fetchSignUp, ['signUp'], { enabled: false })
+  const resetPasswordMutation = useCustomMutation(fetchResetPassword, ['resetPassword'], { enabled: false })
   const contextDevice = useContext(BreakpointDeviceContext)
 
-  const isLoading = signInMutation.isPending || signOutMutation.isPending
+  const isLoadingFech = signInMutation.isPending || signOutMutation.isPending || resetPasswordMutation.isPending
+  const isSuccessFetch = signInMutation.isSuccess || signOutMutation.isSuccess || resetPasswordMutation.isSuccess
+  const isErrorFetch = signInMutation.isError || signOutMutation.isError || resetPasswordMutation.isError
 
-  const handleFormSignIn = async (data: ISignIn) => {
-    signInMutation.mutateAsync(data)
+  const verifyRedirect = () => {
+    console.log(pathname, 'PATH')
+    const redirectPath: { [key: string]: string } = {
+      '/es/freewheels': '/es/freewheels/onboarding',
+    }
+
+    router.push(redirectPath[pathname] || pathname)
+  }
+
+  // useEffect(() => verifyRedirect(), [])
+
+  const handleFormSignIn = async (credentials: any) => {
+    signInMutation.mutateAsync(credentials)
       .then((resp: any) => {
         setUser(resp?.user)
         setToken(resp?.access_token)
@@ -80,20 +93,17 @@ const Header: React.FC<HeaderProps> = ({
           // description: "There was a problem with your request.",
         })
         setIsAuthModal(false)
+        verifyRedirect()
       }).catch((e) => {})
       .finally(() => {})
   }
 
-  const handleFormSignUp = async (data: ISignUp) => {
-    // signin(data)
-    // if(currentPath === '/es/freewheels')
-    //   router.push('/es/freewhels/onboarding')
+  const handleFormSignUp = async (data: any) => {
+    
   }
 
-  const handleFormResetPassword = async (email: string) => {
-    // signin(data)
-    // if(currentPath === '/es/freewheels')
-    //   router.push('/es/freewhels/onboarding')
+  const handleFormResetPassword = async (email: any) => {
+    
   }
 
   const handleLogout = () => {
@@ -109,26 +119,14 @@ const Header: React.FC<HeaderProps> = ({
       })
   }
 
-  const handleSearch = (searchQuery: string) => {
-    console.log(searchQuery)
-    handleNavigate(`/search?q=${encodeURIComponent(searchQuery)}`)
-  }
+  const handleSearch = (searchQuery: string) => handleNavigate(`/search?q=${encodeURIComponent(searchQuery)}`)
 
-  const handleNavigate = (path?: string) => {
-    router.push(`/es/${path}`)
-  }
+  const handleNavigate = (path?: string) => router.push(`/es/${path}`)
 
   const handleChangeTheme = () => theme == "dark" ? setTheme("light") : setTheme("dark")
 
 
-  const handleTypeForm = (type: TypeAuthForm) => {
-    setTypeForm(type)
-  }
-
-  useEffect(() => {
-    // if(!user && currentPath === '/es/freewheels/home')
-    //   handleNavigate('')
-  }, [])
+  const handleTypeForm = (type: TypeAuthForm) => setTypeForm(type)
 
   // const ComponentHeader = headers[type]
 
@@ -137,17 +135,17 @@ const Header: React.FC<HeaderProps> = ({
     if(type === 'basic') return []
     if (isLoggedIn) {
       return [
-        { label: 'Mensajes', path: '/messages', visible: true },
-        { label: 'Mi agenda', path: '/reservations', visible: true },
-        { label: 'Favoritos', path: '/favorites', visible: true },
+        { label: 'Mensajes', path: '/messages', onClick: (path?: string) => handleNavigate(path), visible: true },
+        { label: 'Mi agenda', path: '/reservations', onClick: (path?: string) => handleNavigate(path), visible: true },
+        { label: 'Favoritos', path: '/favorites', onClick: (path?: string) => handleNavigate(path), visible: true },
         { separator: true },
-        { label: 'Poné tu FreeWheels', path: '/freewheels', visible: true },
-        { label: 'Invita un FreeWheels', path: '/invite', visible: true },
-        { label: 'Cuenta', path: '/account', visible: true },
+        { label: 'Poné tu FreeWheels', path: '/freewheels', onClick: (path?: string) => handleNavigate(path), visible: true },
+        { label: 'Invita un FreeWheels', path: '/invite', onClick: (path?: string) => handleNavigate(path), visible: true },
+        { label: 'Cuenta', path: '/account', onClick: (path?: string) => handleNavigate(path), visible: true },
         { separator: true },
         { ...boothItem },
         { label: 'Acerca de nosotros', path: '/about-us', onClick: (path?: string) => handleNavigate(path), visible: true },
-        { label: 'Centro de ayuda', path: '/contact', onClick: undefined, visible: false },
+        { label: 'Centro de ayuda', path: '/contact', onClick: (path?: string) => handleNavigate(path), visible: false },
         { label: 'Cerrar sesión', onClick: handleLogout, visible: true },
       ]
     } else {
@@ -156,7 +154,7 @@ const Header: React.FC<HeaderProps> = ({
         { label: 'Registrate', onClick: () => { setIsAuthModal(true), setTypeForm('signup') }, visible: true },
         { separator: true },
         { label: 'Poné tu FreeWheels', path: '/freewheels', onClick: (path?: string) => handleNavigate(path), visible: true },
-        { label: 'Invita un FreeWheels', path: '/invite', visible: true },
+        { label: 'Invita un FreeWheels', path: '/invite', onClick: (path?: string) => handleNavigate(path), visible: true },
         { separator: true },
         { ...boothItem },
         { label: 'Acerca de nosotros', path: '/about-us', onClick: (path: string) => handleNavigate(path), visible: true },
@@ -169,7 +167,7 @@ const Header: React.FC<HeaderProps> = ({
     return {
       'empty': [],
       'basic': [
-        { label: 'Empezar', variant: 'default', icon: <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: !isLoggedIn ? () => setIsAuthModal(true) : () => handleNavigate('/freewheels/onboarding'), visible: true },
+        { label: 'Empezar', variant: 'default', icon: <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: !isLoggedIn ? () => { setIsAuthModal(true), setTypeForm('signin') } : () => handleNavigate('/freewheels/onboarding'), visible: true },
       ],
       'default': [
         { label: 'Acerca de nosotros', variant: 'ghost', classes: 'hidden sm:hidden md:hidden lg:block h-10 min-w-[100px]', path: '/about-us', onClick: (path: string) => handleNavigate(path), visible: type !== 'default' },
@@ -253,21 +251,14 @@ const Header: React.FC<HeaderProps> = ({
         title={`${typeForm === 'reset' ? 'Recupear contraseña' : typeForm === 'signin' ? 'Inicia sesión' : 'Registrate'}`}
       >
         <AuthForm
-          isLoading={isLoading}
+          isLoading={isLoadingFech}
+          isSuccess={isSuccessFetch}
+          isError={isErrorFetch}
           handleSignIn={handleFormSignIn}
           handleSignUp={handleFormSignUp}
           handleResetPassword={handleFormResetPassword}
           handleTypeForm={handleTypeForm}
           typeForm={typeForm}
-          alert={(
-            <CustomAlert
-              variant={'default'}
-              icon='CheckCircledIcon'
-              className='border border-success bg-success/30'
-              title='Un éxito, salio todo bien!'
-              description='Te enviamos un email de confirmación'
-            />
-          )}
         />
       </CustomModal>
     </>

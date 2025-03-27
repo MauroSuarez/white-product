@@ -6,26 +6,41 @@ import { FormContainer } from "@/presentation/components/form/FormContainer"
 import { FormInput } from "@/presentation/components/form/FormInput"
 import { Button } from "@/presentation/ds/button"
 import { FadeIn } from "@/presentation/components/fade-in"
+import { CustomAlert } from '@/presentation/components/custom-alert'
 
 type FormSignInProps = {
   isLoading: boolean
-  alert?: React.ReactNode
+  isSuccess: boolean
+  isError: boolean | string
   handleSubmit?: (form: any) => void
   handleTypeForm: (type: string) => void
 }
 
-const FormSignUp = ({ handleSubmit, handleTypeForm, isLoading = false, alert }: FormSignInProps) => {
+const FormSignUp = ({
+  handleSubmit,
+  handleTypeForm,
+  isLoading = false,
+  isSuccess = false,
+  isError = false
+}: FormSignInProps) => {
   const onSubmit = async (data: SignUpDTO) => {
     handleSubmit && handleSubmit(data)
   }
+
   return (
     <FadeIn>
       <FormContainer schema={authSchema.signup} onSubmit={onSubmit} className="min-w-[500px] w-full space-y-4 mt-8">
         {(methods) => (
           <>
-            {alert && (
+            {isSuccess || isError && (
               <div className="flex w-full">
-                {alert}
+                <CustomAlert
+                  variant={'default'}
+                  icon='CheckCircledIcon'
+                  className='border border-success bg-success/30'
+                  title='Un éxito, salio todo bien!'
+                  description='Te enviamos un email de confirmación'
+                />
               </div>
             )}
             <div className="grid grid-cols-2 gap-4">

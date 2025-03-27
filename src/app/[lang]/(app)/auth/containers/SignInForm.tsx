@@ -9,6 +9,8 @@ import { FadeIn } from "@/presentation/components/fade-in"
 
 type FormSignInProps = {
   isLoading: boolean
+  isSuccess: boolean
+  isError: boolean | string
   handleSubmit?: (form: any) => void
   handleTypeForm: (type: string) => void
 }

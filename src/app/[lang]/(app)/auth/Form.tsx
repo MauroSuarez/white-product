@@ -11,8 +11,9 @@ type AuthFormProps = {
   handleResetPassword?: (email: string) => void
   handleTypeForm?: (typeForm: TypeAuthForm) => void
   isLoading: boolean
+  isSuccess: boolean
+  isError: boolean | string
   typeForm?: TypeAuthForm
-  alert?: React.ReactNode
 }
 
 type AuthFormComponent = React.FC<any>
@@ -29,8 +30,9 @@ const authForm: AuthFormDictionary = {
 
 export const AuthForm: React.FC<AuthFormProps> = ({
   typeForm = 'signin',
-  isLoading,
-  alert,
+  isLoading = false,
+  isSuccess = false,
+  isError = false,
   handleTypeForm,
   handleSignIn,
   handleSignUp,
@@ -49,7 +51,8 @@ export const AuthForm: React.FC<AuthFormProps> = ({
       handleSubmit={submit}
       handleTypeForm={handleTypeForm}
       isLoading={isLoading}
-      alert={alert}
+      isSuccess={isSuccess}
+      isError={isError}
     />
   )
 }
