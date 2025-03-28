@@ -11,7 +11,7 @@ import { useCustomMutation } from "@/presentation/hooks/useCustomMutation"
 import { fetchResetPassword, fetchSignIn, fetchSignOut, fetchSignUp } from "@/core/domain/services/fetchAuth"
 import { toast } from "@/presentation/hooks/useToast"
 
-export type THeaderType = 'basic' | 'empty' | 'default' | 'detail' | 'workshop'
+export type THeaderType = 'basic' | 'empty' | 'default' | 'detail' | 'workshop' | 'scan'
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -73,7 +73,19 @@ export default function AppLayout({
   }
 
   const handleFormSignUp = async (data: any) => {
-    
+    signUpMutation.mutateAsync(data)
+    .then((resp: any) => {
+      // setUser(resp?.user)
+      // setToken(resp?.access_token)
+      toast({
+        variant: "default",
+        title: "Bienvenido!! :)",
+        // description: "There was a problem with your request.",
+      })
+      setAuthModal({ ...authModal, open: false })
+      // verifyRedirect()
+    }).catch((e) => {})
+    .finally(() => {})
   }
 
   const handleFormResetPassword = async (email: any) => {
@@ -117,7 +129,6 @@ export default function AppLayout({
         onClose={() => setAuthModal({ ...authModal, open: false })}
         title={`${authModal.type === 'reset' ? 'Recupear contraseña' : authModal.type === 'signin' ? 'Inicia sesión' : 'Registrate'}`}
       >
-        <div>Hola mundo</div>
         <AuthForm
           isLoading={isLoadingFech}
           isSuccess={isSuccessFetch}

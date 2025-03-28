@@ -314,6 +314,18 @@ export function useHeaderItems({
           visible: userRol === 'GUEST',
         },
         ...goScan,
+        {
+          id: 'my-services',
+          label: 'Mis servicios',
+          path: '/my-services',
+          format: ({ label, path }) => (
+            <Button onClick={() => handleNavigate && handleNavigate(path)} variant={'outline'} className='relative hidden md:flex h-10 min-w-[100px]'>
+              {label}
+              <Dot />
+            </Button>
+          ),
+          visible: userRol !== 'GUEST',
+        },
         ...(userRol === 'AUTHENTICATED' ? [...modeFreewheel] : userRol === 'FREEWHEELS' ? [...modePanelAdmin] : [...goSetup]),
         ...dropDownMenu
       ],
@@ -410,6 +422,9 @@ export function useHeaderItems({
         },
         ...dropDownMenu
       ],
+      'scan': [
+        ...dropDownMenu
+      ]
     }
   }, [user, userRol, theme, type])
 
