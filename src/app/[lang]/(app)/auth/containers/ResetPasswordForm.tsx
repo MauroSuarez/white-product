@@ -1,63 +1,77 @@
 'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useState } from 'react'
 import { authSchema, ResetPasswordDTO } from "@/application/validators/authSchema"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/presentation/ds/form"
-import { Input } from "@/presentation/ds/input"
+import { FormContainer } from "@/presentation/components/form/FormContainer"
+import { FormInput } from "@/presentation/components/form/FormInput"
 import { Button } from "@/presentation/ds/button"
 import { FadeIn } from "@/presentation/components/fade-in"
+import { CountDown } from "@/presentation/components/countdown"
+import { CustomAlert } from '@/presentation/components/custom-alert'
 
-type FormResetPasswordProps = {
+type FormSignInProps = {
   isLoading: boolean
+  isSuccess: boolean
+  isError: boolean | string
   handleSubmit?: (form: any) => void
   handleTypeForm: (type: string) => void
 }
 
-const ResetPasswordForm = ({ handleSubmit, handleTypeForm, isLoading = false }: FormResetPasswordProps) => {
-  const form = useForm<ResetPasswordDTO>({
-    resolver: zodResolver(authSchema.resetPassword),
-    defaultValues: {
-      email: "",
-    },
-  })
+const ResetPasswordForm = ({
+  handleSubmit,
+  handleTypeForm,
+  isLoading = false,
+  isSuccess = false,
+  isError = false
+}: FormSignInProps) => {
+  const [isCountDown, setIsCountDown] = useState<boolean>(false)
   
   const onSubmit = async (data: ResetPasswordDTO) => {
+    console.log(data, 'DATA')
     handleSubmit && handleSubmit(data)
+    setIsCountDown(!isCountDown)
   }
 
+  const handleCountDownCompleted = () => {
+    setIsCountDown(false)
+  }
   return (
     <FadeIn>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="min-w-[500px] w-full space-y-4 mt-8">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="mb-8">
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input className="py-6" placeholder="email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+      <FormContainer schema={authSchema.resetPassword} onSubmit={onSubmit} className="min-w-[500px] w-full space-y-4 mt-8">
+        {(methods) => (
+          <>
+            {isSuccess || isError && (
+              <div className="flex w-full">
+                <CustomAlert
+                  variant={'default'}
+                  icon='CheckCircledIcon'
+                  className='border border-success bg-success/30'
+                  title='Un éxito, salio todo bien!'
+                  description='Te enviamos un email de confirmación'
+                />
+              </div>
             )}
-          />
-          <Button type="submit" className="w-full py-6">Enviar</Button>
-          <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm('signin')}>
-            Volver
-          </Button>
-        </form>
-      </Form>
+            {isCountDown && (
+              <div className="w-full flex justify-center items-center spate-y-6">
+                <CountDown
+                  seconds={5}
+                  onComplete={handleCountDownCompleted}
+                  className='font-semibold text-[2rem]'
+                />
+              </div>
+            )}
+            <FormInput name="email" label="Email" className="py-6" placeholder="Ingrese su email" />
+            <Button isLoading={isLoading} disabled={isLoading || isCountDown} type="submit" className="w-full py-6">
+              Enviar
+            </Button>
+            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm('signin')}>
+              Volver
+            </Button>
+          </>
+        )}
+      </FormContainer>
     </FadeIn>
-  );
+  )
 }
 
 export { ResetPasswordForm }

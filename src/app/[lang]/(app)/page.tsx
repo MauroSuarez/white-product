@@ -18,6 +18,7 @@ import { ScrollArea } from '@/presentation/ds/scroll-area'
 import { Separator } from '@/presentation/ds/separator'
 import { useViewTypeStore } from "@/infraestructure/stores/viewTypeStore"
 import { useAuthStore } from "@/infraestructure/stores/authStore"
+import AppLayout from './AppLayout'
 
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`
@@ -52,11 +53,7 @@ export default function App() {
   ]
 
   return (
-    <>
-      <div className="sticky top-0 z-20 bg-background">
-        <Header />
-        <Filters />
-      </div>
+    <AppLayout filters={<Filters />} showSearchBar type="default">
       <section className="w-full py-8 px-10 h-screen">
         {viewType === 'grid' ? (
         <div className="grid grid-cols-1 gap-0 lg:grid-cols-4 lg:gap-4 md:grid-cols-4 md:gap-4 sm:grid-cols-2 sm:gap-4">
@@ -118,6 +115,6 @@ export default function App() {
           </div>
         )}
       </section>
-    </>
+    </AppLayout>
   )
 }

@@ -3,7 +3,7 @@
 import { IconNames } from "@/presentation/ds/icon"
 
 export type MenuItem = {
-  label?: string
+  label?: string | React.ReactElement
   icon?: IconNames | any
   path?: string
   separator?: boolean

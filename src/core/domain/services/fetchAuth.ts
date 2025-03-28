@@ -1,5 +1,5 @@
 import { db } from '@/infraestructure/db'
-import { ISignIn } from '../interfaces/Auth'
+import { ISignIn } from '../entities/Auth'
 
 export const fetchSignIn = async (credentials: ISignIn) => {
   const { data, error } = await db.auth.signInWithPassword({
@@ -49,11 +49,4 @@ export const fetchGetCurrentUser = async () => {
   if (!data.user) return null
 
   return { ...data.user }
-}
-
-export const fetchSignInTest = async (credentials: ISignIn) => {
-  return {
-    keys: ['signIn', credentials],
-    fetcher: () => db.auth.getUser().then((resp) => resp).catch((e) => e)
-  }
 }

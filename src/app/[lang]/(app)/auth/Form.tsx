@@ -1,7 +1,7 @@
 import { FormSignIn } from "./containers/SignInForm"
 import { FormSignUp } from "./containers/SignUpForm"
 import { ResetPasswordForm } from "./containers/ResetPasswordForm"
-import { ISignIn, ISignUp } from "@/core/domain/interfaces/Auth"
+import { ISignIn, ISignUp } from "@/core/domain/entities/Auth"
 
 export type TypeAuthForm = 'signin' | 'signup' | 'reset'
 
@@ -11,6 +11,8 @@ type AuthFormProps = {
   handleResetPassword?: (email: string) => void
   handleTypeForm?: (typeForm: TypeAuthForm) => void
   isLoading: boolean
+  isSuccess: boolean
+  isError: boolean | string
   typeForm?: TypeAuthForm
 }
 
@@ -28,7 +30,9 @@ const authForm: AuthFormDictionary = {
 
 export const AuthForm: React.FC<AuthFormProps> = ({
   typeForm = 'signin',
-  isLoading,
+  isLoading = false,
+  isSuccess = false,
+  isError = false,
   handleTypeForm,
   handleSignIn,
   handleSignUp,
@@ -47,6 +51,8 @@ export const AuthForm: React.FC<AuthFormProps> = ({
       handleSubmit={submit}
       handleTypeForm={handleTypeForm}
       isLoading={isLoading}
+      isSuccess={isSuccess}
+      isError={isError}
     />
   )
 }

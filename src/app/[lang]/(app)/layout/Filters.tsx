@@ -48,8 +48,8 @@ const Filters = () => {
   const LoaderSkeleton = () => {
     return (
       <div className='relative h-20 w-full flex flex-nowrap items-center'>
-        {[...new Array(15)].map((key) => (
-          <div className='flex flex-nowrap h-full w-full items-center'>
+        {[...new Array(15)].map((_, key) => (
+          <div key={`skeleton-filter-${key}`} className='flex flex-nowrap h-full w-full items-center'>
             <SkeletonFilter />
           </div>
         ))}

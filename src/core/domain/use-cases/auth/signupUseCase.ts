@@ -1,6 +1,6 @@
 
 import { IAuthRepository } from "../../interfaces/authRepository"
-import { ISignUp } from "../../interfaces/Auth"
+import { ISignUp } from "../../entities/Auth"
 
 export const createSignUpUseCase = (repository: IAuthRepository) => {
   return async (dataUser: ISignUp) => {

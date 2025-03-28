@@ -1,5 +1,5 @@
 import { User, Session } from "@supabase/supabase-js"
-import { ISignUp, ISignIn } from "./Auth"
+import { ISignUp, ISignIn } from "../entities/Auth"
 
 export interface IAuthRepository {
   signUp: (user: ISignUp) => Promise<User & Session | null>

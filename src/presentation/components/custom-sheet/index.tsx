@@ -15,18 +15,13 @@ import {
 
 type CustomSheetProps = {
   isOpen: boolean
-  direction: string
   isOpenChange: () => void
   children: React.ReactNode
   footer: React.ReactNode
-  id: number
 }
-
 
 const CustomSheet = ({
   isOpen = true,
-  direction = 'forward',
-  id,
   isOpenChange,
   children,
   footer
@@ -42,27 +37,7 @@ const CustomSheet = ({
         </SheetHeader>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden p-6">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${id}`}
-              initial={{
-                opacity: 0,
-                x: direction === "forward" ? 40 : -40,
-              }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{
-                opacity: 0,
-                x: direction === "forward" ? -40 : 40,
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="space-y-4">
-                {children}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+        {children}
         
         {/* Footer */}
         <div className="p-6 border-t">

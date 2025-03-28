@@ -6,13 +6,17 @@ import { useEffect, useState } from 'react'
 export function useCurrentPath() {
   const pathname = usePathname();
   const searchParams = useSearchParams()
-  const [currentPath, setCurrentPath] = useState<string | null>(null)
+  const [fullCurrentPath, setFullCurrentPath] = useState<string | null>(null)
 
   useEffect(() => {
     // Construye la ruta completa incluyendo los query params
     const path = `${pathname || ''}${searchParams?.toString() ? `?${searchParams.toString()}` : ''}`;
-    setCurrentPath(path);
+    setFullCurrentPath(path);
   }, [pathname, searchParams])
 
-  return currentPath
+  return {
+    fullCurrentPath,
+    pathname,
+    searchParams
+  }
 }

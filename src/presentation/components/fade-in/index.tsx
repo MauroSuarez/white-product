@@ -1,26 +1,45 @@
-import { motion } from 'framer-motion'
+'use client'
 
-type FadeInProps = {
+import { motion, AnimatePresence, MotionProps, HTMLMotionProps } from 'framer-motion'
+import React from 'react'
+
+type ValidHTMLElements = keyof JSX.IntrinsicElements
+
+interface FadeInProps extends Omit<HTMLMotionProps<'div'>, 'style'> {
+  mode?: "wait" | "sync" | "popLayout" | undefined
   children: React.ReactNode
+  style?: React.CSSProperties
+  as?: ValidHTMLElements
 }
 
-const FadeIn = ({
-  children
-}: FadeInProps) => {
+const FadeIn: React.FC<FadeInProps> = ({
+  mode,
+  children,
+  style = {},
+  transition = {},
+  initial = {},
+  animate = {},
+  as = 'div',
+  ...props
+}) => {
+  const defaultInitial = { opacity: 0, ...initial }
+  const defaultAnimate = { opacity: 1, ...animate }
+  const defaultTransition = { duration: 0.5, ease: "easeInOut", ...transition }
+
+  const MotionComponent = motion[as] as React.ComponentType<MotionProps & React.HTMLAttributes<HTMLElement>>
+
   return (
-    <motion.div
-      initial={{ opacity: 0 }} // Estado inicial: invisible
-      animate={{ opacity: 1 }} // Estado final: visible
-      transition={{ duration: 1 }} // Duración de la animación
-      style={{
-        width: 'w-full',
-        height: 'auto',
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      {children}
-    </motion.div>
+    <AnimatePresence mode={mode}>
+      <MotionComponent
+        initial={defaultInitial}
+        animate={defaultAnimate}
+        transition={defaultTransition}
+        style={style}
+        {...props}
+      >
+        {children}
+      </MotionComponent>
+    </AnimatePresence>
   )
 }
 
