@@ -8,13 +8,14 @@ import { Button } from "@/presentation/ds/button"
 import { FadeIn } from "@/presentation/components/fade-in"
 import { CountDown } from "@/presentation/components/countdown"
 import { CustomAlert } from '@/presentation/components/custom-alert'
+import { TAuthModal } from '@/infraestructure/stores/authStore'
 
 type FormSignInProps = {
   isLoading: boolean
   isSuccess: boolean
   isError: boolean | string
   handleSubmit?: (form: any) => void
-  handleTypeForm: (type: string) => void
+  handleTypeForm: (modalAuth: TAuthModal) => void
 }
 
 const ResetPasswordForm = ({
@@ -64,7 +65,7 @@ const ResetPasswordForm = ({
             <Button isLoading={isLoading} disabled={isLoading || isCountDown} type="submit" className="w-full py-6">
               Enviar
             </Button>
-            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm('signin')}>
+            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signin' })}>
               Volver
             </Button>
           </>

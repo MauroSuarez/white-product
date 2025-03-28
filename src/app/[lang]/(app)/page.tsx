@@ -25,7 +25,7 @@ const tags = Array.from({ length: 50 }).map(
 )
 
 export default function App() {
-  const { user, isLoggedIn, setIsAuthModal } = useAuthStore()
+  const { user, isLoggedIn, authModal } = useAuthStore()
   const viewType = useViewTypeStore((state) => state.viewType)
   const center: [number, number] = [-34.600625, -58.563671]
 
@@ -33,7 +33,7 @@ export default function App() {
   const handleAddFavorite = () => {
     if(!user) {
       console.log("no estoy logueado")
-      setIsAuthModal(true)
+      // setIsAuthModal(true)
     }else {
       console.log("si estoy logueado")
     }

@@ -6,13 +6,14 @@ import { FormContainer } from "@/presentation/components/form/FormContainer"
 import { FormInput } from "@/presentation/components/form/FormInput"
 import { Button } from "@/presentation/ds/button"
 import { FadeIn } from "@/presentation/components/fade-in"
+import { TAuthModal } from "@/infraestructure/stores/authStore"
 
 type FormSignInProps = {
   isLoading: boolean
   isSuccess: boolean
   isError: boolean | string
   handleSubmit?: (form: any) => void
-  handleTypeForm: (type: string) => void
+  handleTypeForm: (modalAuth: TAuthModal) => void
 }
 
 const FormSignIn = ({ handleSubmit, handleTypeForm, isLoading = false }: FormSignInProps) => {
@@ -33,14 +34,14 @@ const FormSignIn = ({ handleSubmit, handleTypeForm, isLoading = false }: FormSig
                 classNameContainer="flex flex-row items-center space-x-3 space-y-0"
                 className="h-6 w-6"
               />
-              <Button variant={'link'} className="text-foreground p-0" onClick={() => handleTypeForm('reset')}>
+              <Button variant={'link'} className="text-foreground p-0" onClick={() => handleTypeForm({ open: true, type: 'reset' })}>
                 Olvide mi contraseña?
               </Button>
             </div>
             <Button isLoading={isLoading} disabled={isLoading} type="submit" variant={'gradient'} className="w-full py-6">
               Ingresar
             </Button>
-            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm('signup')}>
+            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signup' })}>
               ¿No tenes cuenta?, Registrarme
             </Button>
           </>

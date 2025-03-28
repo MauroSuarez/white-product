@@ -7,13 +7,14 @@ import { FormInput } from "@/presentation/components/form/FormInput"
 import { Button } from "@/presentation/ds/button"
 import { FadeIn } from "@/presentation/components/fade-in"
 import { CustomAlert } from '@/presentation/components/custom-alert'
+import { TAuthModal } from "@/infraestructure/stores/authStore"
 
 type FormSignInProps = {
   isLoading: boolean
   isSuccess: boolean
   isError: boolean | string
   handleSubmit?: (form: any) => void
-  handleTypeForm: (type: string) => void
+  handleTypeForm: (modalAuth: TAuthModal) => void
 }
 
 const FormSignUp = ({
@@ -69,7 +70,7 @@ const FormSignUp = ({
             <Button isLoading={isLoading} disabled={isLoading} type="submit" className="w-full py-6">
               Registrame
             </Button>
-            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm('signin')}>
+            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signin' })}>
               Ya tengo cuenta, iniciar sesión
             </Button>
           </>

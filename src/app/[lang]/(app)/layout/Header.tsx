@@ -5,6 +5,7 @@ import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { TUserRol } from "@/core/domain/entities/UserRol"
 import { BrandLogo } from '@/presentation/components/brand-logo'
 import { SearchBox } from '@/presentation/components/searchbox'
+import { SkeletonButton } from '@/presentation/components/skeleton/button';
 
 export type HeaderItemProps<T> = {
   id: string
@@ -62,7 +63,15 @@ export function Header<T>({
         )}
 
         <div className={`flex justify-end items-center ${containerButtons} space-x-2 sm:space-x-4 border border-black`}>
-          {headerItems.map((item: any, i: number) => {
+          {isLoading && (
+            [...new Array(3)].map((_, key) => (
+              <React.Fragment key={`skeleton-button-${key}`}>
+                <SkeletonButton />
+              </React.Fragment>
+            ))
+          )}
+          
+          {!isLoading && headerItems.map((item: any, i: number) => {
             return item.visible ? (
               <React.Fragment key={`item-header-${i}`}>
                 {typeof item.format === 'function' ? item.format({ label: item?.label, path: item?.path }) : item.label}
