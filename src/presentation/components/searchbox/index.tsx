@@ -35,7 +35,7 @@ const SearchBox = ({
     setSearchQuery(e.target.value)
   }
   return (
-    <div className="flex items-center border rounded-full shadow-sm overflow-hidden w-auto lg:min-w-[450px] md:min-w-[450px] sm:min-w-[400px]">
+    <div className="flex items-center border rounded-full shadow-sm overflow-hidden w-auto lg:min-w-[450px] md:min-w-[350px] sm:min-w-[400px] w-auto">
       <Input
         value={searchQuery}
         onChange={handleOnChange}

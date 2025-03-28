@@ -60,21 +60,21 @@ export function Header<T>({
   };
 
   const heightHeaderBar = isSmall ? 'h-16' : 'h-28'
-  const containerButtons = showSearchBar ? 'w-2/5' : 'w-full'
+  const containerButtons = 'w-full'
   return (
     <>
       <header className={`border-b border-grey-50 transition-all duration-300 ${heightHeaderBar} flex w-full items-center`}>
         <div className="mx-10 items-center flex w-full">
 
-          <div className="flex justify-start w-1/5 border border-red-500">
+          <div className="flex justify-start w-auto border border-red-500">
             <BrandLogo
-              variant='secondary'
+              variant='primary'
               onClick={() => {}}
             />
           </div>
 
           {showSearchBar && (
-            <div className='flex justify-center w-2/5 border border-blue-500'>
+            <div className='flex justify-center w-auto lg:w-2/5 md:w-2/5 lg:px-10 md:px-10 px-4 border border-blue-500'>
               <SearchBox
                 handleSearch={handleOnSearch}
                 placeHolder='¿Qué servicio estas buscando para tu vehículo?'

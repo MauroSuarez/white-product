@@ -18,7 +18,7 @@ export function Dot({
   return (
     <div
       className={cn(
-        "rounded-full bg-destructive top-0 right-0 absolute absolute",
+        "rounded-full bg-destructive top-0 right-0 absolute",
         pulse && "animate-pulse",
         size === "sm" && "h-2 w-2",
         size === "md" && "h-3 w-3",

@@ -1,7 +1,7 @@
 import { HeaderItemProps } from "@/app/[lang]/(app)/layout/Header"
 import { Button } from "../ds/button"
 import { Dot } from "../components/dot"
-import { ScanSearch, Wrench } from "lucide-react"
+import { Bell, ScanSearch, Wrench } from "lucide-react"
 import { TUserRol } from "@/core/domain/entities/UserRol"
 import { User } from "@/core/domain/entities/User"
 import { useCurrentPath } from "./useCurrentPath"
@@ -27,6 +27,12 @@ type useHeaderItemsProps = {
   handleLogout: () => void
 }
 
+// type DropDownMenu = {
+//   [key in THeaderType]: {
+//     [key in TUserRol]: Array<HeaderItemProps<TItems>>
+//   }
+// }
+
 export function useHeaderItems({
   type = 'basic',
   user,
@@ -39,29 +45,6 @@ export function useHeaderItems({
 
   const handleChangeTheme = () => theme == "dark" ? setTheme("light") : setTheme("dark")
 
-  /*
-  const buttons = useMemo(() => {
-    return {
-      'empty': [],
-      'basic': [
-        { label: 'Empezar', variant: 'default', icon: <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: !isLoggedIn ? () => { setIsAuthModal(true), setTypeForm('signin') } : () => handleNavigate('/freewheels/onboarding'), visible: true },
-      ],
-      'default': [
-        { label: 'Acerca de nosotros', variant: 'ghost', classes: 'hidden sm:hidden md:hidden lg:block h-10 min-w-[100px]', path: '/about-us', onClick: (path: string) => handleNavigate(path), visible: type !== 'default' },
-        { label: 'Patetene Scan', variant: 'gradient', icon: <ScanSearch className='h-6 w-6 ml-2' />, classes: 'hidden md:flex h-10 min-w-[100px]', path: '/scan', onClick: (path: string) => handleNavigate(path), visible: true },
-        { label: `Abrí tu ${APPLICATION.appName}`, variant: 'default', icon: <Wrench className='h-6 w-6 ml-2' />, classes: 'hidden md:flex h-10', path: '/freewheels', onClick: (path: string) => handleNavigate(path), visible: existsWs?.length === 0 },
-        { label: `Modo ${APPLICATION.appName}`, variant: 'outline', classes: 'hidden md:flex h-10', path: '/freewheels/home', onClick: (path: string) => handleNavigate(path), visible: existsWs?.length > 0 && isLoggedIn }
-      ],
-      'detail': [],
-      'freewheel': [
-        { label: `Modo ${APPLICATION.appName}`, icon: '', variant: 'outline', dot: true, visible: true },
-        { icon: <Bell className="h-12 w-12 text-foreground" />, onClick: () => {}, visible: true, dot: true, classes: 'rounded-full h-14 w-14', variant: 'ghost' }
-      ],
-    }
-  }, [isLoggedIn, existsWs])
-  */
-
-
   const menu = useMemo(() => {
     const separator: Array<HeaderItemProps<TItems>> = [
       {
@@ -71,6 +54,50 @@ export function useHeaderItems({
       },
     ]
     const boothItem: Array<HeaderItemProps<TItems>> = [
+      {
+        id: 'account',
+        label: 'Cuenta',
+        path: '/account',
+        visible: userRol !== 'GUEST',
+        format: ({ label, path }) => (
+          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+            {label}
+          </DropdownMenuItem>
+        )
+      },
+      {
+        id: 'profile',
+        label: 'Perfil',
+        path: '/profile',
+        visible: userRol !== 'GUEST',
+        format: ({ label, path }) => (
+          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+            {label}
+          </DropdownMenuItem>
+        )
+      },
+      ...separator,
+      {
+        id: 'setup',
+        label: 'Abrí tu FreeWheel',
+        path: '/freewheels',
+        visible: (type === 'default' || type === 'detail') && userRol === 'AUTHENTICATED',
+        format: ({ label, path }) => (
+          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+            {label}
+          </DropdownMenuItem>
+        )
+      },
+      {
+        id: 'shared',
+        label: 'Invita un FreeWheels',
+        visible: true,
+        format: ({ label, path }) => (
+          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+            {label}
+          </DropdownMenuItem>
+        )
+      },
       ...separator,
       {
         id: 'theme',
@@ -107,6 +134,7 @@ export function useHeaderItems({
           </DropdownMenuItem>
         )
       },
+      ...separator,
       {
         id: 'signout',
         label: 'Cerrar sesión',
@@ -118,7 +146,9 @@ export function useHeaderItems({
         )
       },
     ]
-    let arrMenu: Array<HeaderItemProps<TItems>> = []
+    const arrMenuAdmin: Array<HeaderItemProps<TItems>> = [
+      ...boothItem
+    ]
     
     const arrMenuAuthenticate: Array<HeaderItemProps<TItems>> = [
       {
@@ -128,7 +158,10 @@ export function useHeaderItems({
         visible: true,
         format: ({ label, path }) => (
           <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
-            {label}
+            <div className="flex flex-wrap justify-between w-full items-center">
+              {label}
+              <Dot className="relative" />
+            </div>
           </DropdownMenuItem>
         )
       },
@@ -143,6 +176,18 @@ export function useHeaderItems({
           </DropdownMenuItem>
         )
       },
+      {
+        id: 'favorites',
+        label: 'Favoritos',
+        path: '/favorites',
+        visible: true,
+        format: ({ label, path }) => (
+          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+            {label}
+          </DropdownMenuItem>
+        )
+      },
+      ...separator,
       ...boothItem,
     ]
 
@@ -168,60 +213,17 @@ export function useHeaderItems({
         )
       },
       ...separator,
-      {
-        id: 'setup',
-        label: 'Abrí tu FreeWheel',
-        path: '/freewheels',
-        visible: true,
-        format: ({ label, path }) => (
-          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
-            {label}
-          </DropdownMenuItem>
-        )
-      },
-      {
-        id: 'sign-out',
-        label: 'Registrarse',
-        visible: true,
-        format: ({ label, path }) => (
-          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
-            {label}
-          </DropdownMenuItem>
-        )
-      },
       ...boothItem,
     ]
 
-    return arrMenu
-    // if (userRol !== 'GUEST') {
-    //   return [
-    //     { label: 'Mensajes', path: '/messages', onClick: (path?: string) => handleNavigate(path), visible: true },
-    //     { label: 'Mi agenda', path: '/reservations', onClick: (path?: string) => handleNavigate(path), visible: true },
-    //     { label: 'Favoritos', path: '/favorites', onClick: (path?: string) => handleNavigate(path), visible: true },
-    //     { separator: true },
-    //     { label: 'Poné tu FreeWheels', path: '/freewheels', onClick: (path?: string) => handleNavigate(path), visible: true },
-    //     { label: 'Invita un FreeWheels', path: '/invite', onClick: (path?: string) => handleNavigate(path), visible: true },
-    //     { label: 'Cuenta', path: '/account', onClick: (path?: string) => handleNavigate(path), visible: true },
-    //     { separator: true },
-    //     { ...boothItem },
-    //     { label: 'Acerca de nosotros', path: '/about-us', onClick: (path?: string) => handleNavigate(path), visible: true },
-    //     { label: 'Centro de ayuda', path: '/contact', onClick: (path?: string) => handleNavigate(path), visible: false },
-    //     { label: 'Cerrar sesión', onClick: handleLogout, visible: true },
-    //   ]
-    // } else {
-    //   return [
-    //     { label: 'Iniciar sesión', onClick: () => { setIsAuthModal(true), setTypeForm('signin') }, visible: true },
-    //     { label: 'Registrate', onClick: () => { setIsAuthModal(true), setTypeForm('signup') }, visible: true },
-    //     { separator: true },
-    //     { label: 'Poné tu FreeWheels', path: '/freewheels', onClick: (path?: string) => handleNavigate(path), visible: true },
-    //     { label: 'Invita un FreeWheels', path: '/invite', onClick: (path?: string) => handleNavigate(path), visible: true },
-    //     { separator: true },
-    //     { ...boothItem },
-    //     { label: 'Acerca de nosotros', path: '/about-us', onClick: (path: string) => handleNavigate(path), visible: true },
-    //     { label: 'Centro de ayuda', path: '/contact', onClick: () => {}, visible: true },
-    //   ]
-    // }
-  }, [user, userRol, theme])
+    if (userRol === 'GUEST') {
+      return arrMenuGuest
+    } else if(userRol === 'AUTHENTICATED') {
+      return arrMenuAuthenticate
+    } else {
+      return arrMenuAdmin
+    }
+  }, [user, userRol, theme, type])
 
   const modePanelAdmin: Array<HeaderItemProps<TItems>> = [{
     id: 'setup',
@@ -241,9 +243,10 @@ export function useHeaderItems({
     label: 'Modo FreeWheels',
     path: '/',
     format: ({ label, path }) => (
-      <Button onClick={() => handleNavigate && handleNavigate(path)} variant='outline' className='hidden md:flex h-10 min-w-[100px]'>
+      <Button onClick={() => handleNavigate && handleNavigate(path)} variant='outline' className='relative hidden md:flex h-10 min-w-[100px]'>
         {label}
         <Wrench className='h-6 w-6 ml-2' />
+        <Dot />
       </Button>
     ),
     visible: true,
@@ -260,7 +263,7 @@ export function useHeaderItems({
     ),
     visible: true,
   }]
-  const itemsHeader: Array<HeaderItemProps<TItems>> = [
+  const goScan: Array<HeaderItemProps<TItems>> = [
     {
       id: 'scan',
       label: 'Patente Scan',
@@ -273,7 +276,6 @@ export function useHeaderItems({
       ),
       visible: true,
     },
-    // ...(userRol === 'FREEWHEELS' ? [...buttonAdmin] : userRol === 'AUTHENTICATED' ? [...buttonFreewheel] : [...buttonGuest])
   ]
   const dropDownMenu: Array<HeaderItemProps<TItems>> = [
     {
@@ -304,8 +306,9 @@ export function useHeaderItems({
             {label}
           </Button>
         ),
-        visible: true,
+        visible: userRol === 'GUEST',
       },
+      ...goScan,
       ...(userRol === 'AUTHENTICATED' ? [...modeFreewheel] : userRol === 'FREEWHEELS' ? [...modePanelAdmin] : [...goSetup]),
       ...dropDownMenu
     ],
@@ -333,8 +336,75 @@ export function useHeaderItems({
         visible: true,
       },
     ],
-    'detail': [],
-    'workshop': [],
+    'detail': [
+      ...goScan,
+      ...modePanelAdmin,
+      ...dropDownMenu
+    ],
+    'workshop': [
+      {
+        id: 'now',
+        label: 'Hoy',
+        format: ({ label }) => (
+          <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
+            {label}
+          </Button>
+        ),
+        visible: true
+      },
+      {
+        id: 'reservations',
+        label: 'Reservas',
+        format: ({ label }) => (
+          <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
+            {label}
+          </Button>
+        ),
+        visible: true
+      },
+      {
+        id: 'workshop',
+        label: 'Anuncios',
+        format: ({ label }) => (
+          <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
+            {label}
+          </Button>
+        ),
+        visible: true
+      },
+      {
+        id: 'message',
+        label: 'Mensajes',
+        format: ({ label })  => (
+          <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px] relative'>
+            {label}
+            <Dot />
+          </Button>
+        ),
+        visible: true
+      },
+      {
+        id: 'separator-div',
+        format: ()  => (
+          <div className='lg:w-1/5 md:w-1/5 lg:pr-10 md:pr-10 px-5 border border-red-500' />
+        ),
+        visible: true
+      },
+      ...modeFreewheel,
+      {
+        id: 'notification',
+        format: () => (
+          <Button variant='ghost' className="rounded-full h-10 w-10">
+            <div className="relative w-auto h-auto">
+              <Bell className="h-6 w-6 text-foreground" />
+              <Dot />
+            </div>
+          </Button>
+        ),
+        visible: true
+      },
+      ...dropDownMenu
+    ],
   }
 
   return  { itemsHeader: headersType[type] }
