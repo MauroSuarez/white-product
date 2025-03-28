@@ -58,7 +58,7 @@ const FormSignUp = ({
                 <FormInput name="password" label="Contraseña" type="password" className="py-6" placeholder="*****" />
               </div>
               <div className="grid gap-2">
-              <FormInput name="confirmPassword" label="Repetir contraseña" type="password" className="py-6" placeholder="*****" />
+                <FormInput name="confirmPassword" label="Repetir contraseña" type="password" className="py-6" placeholder="*****" />
               </div>
             </div>
             <FormCheckbox

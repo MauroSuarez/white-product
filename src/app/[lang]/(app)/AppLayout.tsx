@@ -37,9 +37,9 @@ export default function AppLayout({
   const signUpMutation = useCustomMutation(fetchSignUp, ['signUp'], { enabled: false })
   const resetPasswordMutation = useCustomMutation(fetchResetPassword, ['resetPassword'], { enabled: false })
 
-  const isLoadingFech = signInMutation.isPending || signOutMutation.isPending || resetPasswordMutation.isPending
-  const isSuccessFetch = signInMutation.isSuccess || signOutMutation.isSuccess || resetPasswordMutation.isSuccess
-  const isErrorFetch = signInMutation.isError || signOutMutation.isError || resetPasswordMutation.isError
+  const isLoadingFech = signInMutation.isPending || signOutMutation.isPending || resetPasswordMutation.isPending || signUpMutation.isPending
+  const isSuccessFetch = signInMutation.isSuccess || signOutMutation.isSuccess || resetPasswordMutation.isSuccess || signUpMutation.isSuccess
+  const isErrorFetch = signInMutation.isError || signOutMutation.isError || resetPasswordMutation.isError || signUpMutation.isError
 
   const handleNavigate = (path?: string) => router.push(`/es/${path}`)
   
@@ -73,19 +73,23 @@ export default function AppLayout({
   }
 
   const handleFormSignUp = async (data: any) => {
+    console.log(data, 'A VER')
     signUpMutation.mutateAsync(data)
-    .then((resp: any) => {
-      // setUser(resp?.user)
-      // setToken(resp?.access_token)
-      toast({
-        variant: "default",
-        title: "Bienvenido!! :)",
-        // description: "There was a problem with your request.",
+      .then((resp: any) => {
+        console.log(resp, 'RESPUESTA')
+        // setUser(resp?.user)
+        // setToken(resp?.access_token)
+        // toast({
+        //   variant: "default",
+        //   title: "Bienvenido!! :)",
+        //   // description: "There was a problem with your request.",
+        // })
+        // setAuthModal({ ...authModal, open: false })
+        // verifyRedirect()
+      }).catch((e) => {
+        console.log(e, 'ERROR')
       })
-      setAuthModal({ ...authModal, open: false })
-      // verifyRedirect()
-    }).catch((e) => {})
-    .finally(() => {})
+      .finally(() => {})
   }
 
   const handleFormResetPassword = async (email: any) => {
