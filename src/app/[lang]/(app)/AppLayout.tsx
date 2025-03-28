@@ -84,7 +84,7 @@ export default function AppLayout({
         //   title: "Bienvenido!! :)",
         //   // description: "There was a problem with your request.",
         // })
-        // setAuthModal({ ...authModal, open: false })
+        setAuthModal({ ...authModal, open: false })
         // verifyRedirect()
       }).catch((e) => {
         console.log(e, 'ERROR')
