@@ -7,6 +7,9 @@ import { useAuthStore } from "@/infraestructure/stores/authStore"
 import { useState } from "react"
 import { TypeAuthForm } from "./auth/Form"
 import { CustomModal } from "@/presentation/components/custom-modal"
+import { useCustomMutation } from "@/presentation/hooks/useCustomMutation"
+import { fetchSignOut } from "@/core/domain/services/fetchAuth"
+import { toast } from "@/presentation/hooks/useToast"
 
 export type THeaderType = 'basic' | 'empty' | 'default' | 'detail' | 'workshop'
 
@@ -29,14 +32,28 @@ export default function AppLayout({
   const { user, isLoggedIn, token, clearUser, isAuthModal, setIsAuthModal, setUser, setToken } = useAuthStore()
   const { userRol } = useRolUser(user, isLoggedIn)
   const [typeForm, setTypeForm] = useState<TypeAuthForm>('reset') 
+  const signOutMutation = useCustomMutation(fetchSignOut, ['signOut'], { enabled: false })
 
   const handleNavigate = (path?: string) => router.push(`/es/${path}`)
+  const handleLogout = () => {
+    signOutMutation.mutateAsync()
+      .then(() => {
+        clearUser()
+        toast({
+          variant: "default",
+          title: "Hasta luego, nos vemos pronto",
+          // description: "There was a problem with your request.",
+        })
+        handleNavigate('')
+      })
+  }
 
   const { itemsHeader } = useHeaderItems({
     type,
     user,
     userRol,
-    handleNavigate
+    handleNavigate,
+    handleLogout
   })
   
   return (

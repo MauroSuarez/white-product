@@ -63,12 +63,15 @@ export function useHeaderItems({
 
 
   const menu = useMemo(() => {
-    const boothItem: Array<HeaderItemProps<TItems>> = [
+    const separator: Array<HeaderItemProps<TItems>> = [
       {
-        id: 'them',
+        id: 'separator',
         visible: true,
         format: () => (<DropdownMenuSeparator />)
       },
+    ]
+    const boothItem: Array<HeaderItemProps<TItems>> = [
+      ...separator,
       {
         id: 'theme',
         label: 'Tema',
@@ -117,7 +120,7 @@ export function useHeaderItems({
     ]
     let arrMenu: Array<HeaderItemProps<TItems>> = []
     
-    arrMenu = [
+    const arrMenuAuthenticate: Array<HeaderItemProps<TItems>> = [
       {
         id: 'messages',
         label: 'Mensajes',
@@ -133,6 +136,52 @@ export function useHeaderItems({
         id: 'reservations',
         label: 'Reservas',
         path: '/reservations',
+        visible: true,
+        format: ({ label, path }) => (
+          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+            {label}
+          </DropdownMenuItem>
+        )
+      },
+      ...boothItem,
+    ]
+
+    const arrMenuGuest: Array<HeaderItemProps<TItems>> = [
+      {
+        id: 'sign-in',
+        label: 'Iniciar sesión',
+        visible: true,
+        format: ({ label, path }) => (
+          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+            {label}
+          </DropdownMenuItem>
+        )
+      },
+      {
+        id: 'sign-out',
+        label: 'Registrarse',
+        visible: true,
+        format: ({ label, path }) => (
+          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+            {label}
+          </DropdownMenuItem>
+        )
+      },
+      ...separator,
+      {
+        id: 'setup',
+        label: 'Abrí tu FreeWheel',
+        path: '/freewheels',
+        visible: true,
+        format: ({ label, path }) => (
+          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+            {label}
+          </DropdownMenuItem>
+        )
+      },
+      {
+        id: 'sign-out',
+        label: 'Registrarse',
         visible: true,
         format: ({ label, path }) => (
           <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
