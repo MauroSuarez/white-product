@@ -2,7 +2,7 @@
 
 import { Typography } from "@/presentation/ds/typography";
 import { Map } from '@/presentation/components/map'
-import { Header } from "../layout/Header";
+import AppLayout from "../AppLayout";
 
 export default function FreeWheel() {
     const center: [number, number] = [-34.600625, -58.563671]
@@ -30,10 +30,7 @@ export default function FreeWheel() {
       },
     ]
     return (
-      <>
-        <div className="sticky top-0 z-20 bg-background">
-          <Header type="basic" />
-        </div>
+      <AppLayout type="basic">
         <section className="w-full py-8 px-10 h-screen">
           <div className="h-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-2 grid-rows-1">
             <div className="lg:col-span-1 md:col-span-1 col-span-1">
@@ -50,6 +47,6 @@ export default function FreeWheel() {
             </div>
           </div>
         </section>
-      </>
+      </AppLayout>
   )
 }

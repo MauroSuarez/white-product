@@ -8,7 +8,8 @@ export default function Home() {
   return (
     <>
       <div className="sticky top-0 z-20 bg-background">
-        <Header type="freewheel" />
+        {/* <Header type="freewheel" /> */}
+        home
       </div>
     </>
   )

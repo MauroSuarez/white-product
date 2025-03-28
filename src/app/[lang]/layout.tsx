@@ -3,7 +3,7 @@ import localFont from "next/font/local"
 import "./globals.css"
 import { ThemeAppProvider } from "@/presentation/providers/ThemeProvider"
 import { Toaster } from "@/presentation/ds/toaster"
-import { AppProvider } from "@/presentation/providers/AppProvider"
+import { ClientCacheProvider } from "@/presentation/providers/ClientCacheProvider"
 import { BreakpointProvider } from "@/presentation/providers/BreakPointDeviceProvider"
 
 const geistSans = localFont({
@@ -36,12 +36,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeAppProvider>
-          <AppProvider>
+          <ClientCacheProvider>
             <BreakpointProvider>
               {children}
               <Toaster />
             </BreakpointProvider>
-          </AppProvider>
+          </ClientCacheProvider>
         </ThemeAppProvider>
       </body>
     </html>

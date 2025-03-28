@@ -9,6 +9,7 @@ import { Typography } from "@/presentation/ds/typography"
 import { useCurrentPath } from "@/presentation/hooks/useCurrentPath"
 import { CustomAvatar } from "@/presentation/components/custom-avatar"
 import { SkeletonButton } from "@/presentation/components/skeleton/button"
+import { Dot } from "@/presentation/components/dot"
 
 export type HeaderDefaultProps = {
   isLoading?: boolean
@@ -41,7 +42,7 @@ const HeaderDefault: React.FC<HeaderDefaultProps> = ({
     if (e.key === 'Enter') {
       handleOnSearch()
     }
-  };
+  }
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value)
@@ -102,9 +103,10 @@ const HeaderDefault: React.FC<HeaderDefaultProps> = ({
 
         {!isLoading && itemsButtons?.map((item, key) => {
           return item.visible ? (
-            <Button key={`button-header-${key}`} onClick={() => item.onClick(item.path)} variant={item.variant} className={item.classes}>
+            <Button key={`button-header-${key}`} onClick={() => item.onClick(item.path)} variant={item.variant} className={`${item.classes} ${item.dot ? 'relative' : ''}`}>
               {item.label}
               {item.icon && item.icon}
+              {item.dot && <Dot />}
             </Button>
           ) : null
         })}
