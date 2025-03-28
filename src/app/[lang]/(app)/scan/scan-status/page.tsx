@@ -1,36 +1,34 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Car,
   CheckCircle2,
-  AlertCircle,
-  Wrench,
   FileText,
-  Clock,
-  ChevronLeft,
+  Wrench,
   ShieldAlert,
   Fuel,
-  Moon,
-  Sun,
-  Download,
-  User,
   FileSearch,
+  User,
   BadgeCheck,
   Calendar,
-  Gauge,
   Share2,
-  Printer
+  AlertCircle
 } from "lucide-react";
-import { Button } from "@/presentation/ds/button";
-import { Typography } from "@/presentation/ds/typography";
-import { FadeIn } from "@/presentation/components/fade-in";
-import Link from "next/link";
 import AppLayout from "../../AppLayout";
 
-// Mock data (asegúrate de que esté correctamente definido)
-const mockVehicleData = {
+import { Typography } from "@/presentation/ds/typography";
+import { ActionButtons } from "@/presentation/components/status/ActionButtons";
+import { LoadingState } from "@/presentation/components/status/LoadingState";
+import { StatusCard } from "@/presentation/components/status/StatusCard";
+import { TabNavigation } from "@/presentation/components/status/TabNavigation";
+import { VehicleDetailsCard } from "@/presentation/components/status/VehicleDetailsCard";
+import { VehicleHeader } from "@/presentation/components/status/VehicleHeader";
+import { useTheme } from "next-themes";
+import { useVehicleStatus } from "@/presentation/hooks/useVehcleStatus";
+
+// Mock data para vehículos
+const mockVehicleData: Record<string, any> = {
   ABC123: {
     vehicle: {
       make: "Toyota",
@@ -77,49 +75,23 @@ const mockVehicleData = {
   }
 };
 
+// Función para obtener datos del vehículo
+const getVehicleData = (licensePlate: string) => {
+  const normalizedPlate = licensePlate.replace(/\s/g, "").toUpperCase();
+  return mockVehicleData[normalizedPlate] || null;
+};
+
 export default function ScanStatusPage() {
-  const searchParams = useSearchParams();
-  const licensePlate = searchParams.get("plate")?.toUpperCase() || "";
+  const { theme, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState("services");
-  const [data, setData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [isPrinting, setIsPrinting] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
 
-  // Detectar preferencia de tema
-  useEffect(() => {
-    const themePreference =
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-    document.documentElement.classList.toggle("dark", themePreference);
-    setTheme(themePreference ? "dark" : "light");
-  }, []);
-
-  // Cargar datos del vehículo
-  useEffect(() => {
-    if (!licensePlate) {
-      setIsLoading(false);
-      return;
-    }
-
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setData(
-        mockVehicleData[licensePlate as keyof typeof mockVehicleData] || null
-      );
-      setIsLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, [licensePlate]);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-    localStorage.theme = newTheme;
-    setTheme(newTheme);
-  };
+  // Corregimos la llamada al hook useVehicleStatus
+  const { licensePlate, data, isLoading, error } = useVehicleStatus<
+    (typeof mockVehicleData)[keyof typeof mockVehicleData]
+  >({
+    mockDataFn: getVehicleData
+  });
 
   const handlePrint = () => {
     setIsPrinting(true);
@@ -132,157 +104,102 @@ export default function ScanStatusPage() {
   // Estados de carga y error
   if (!licensePlate) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
-        <div className="text-center bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8 max-w-md border border-gray-200 dark:border-gray-700">
-          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <Typography variant="h3" className="mb-3">
-            No se proporcionó patente
-          </Typography>
-          <Typography variant="p" className="text-muted-foreground mb-6">
-            Por favor, ingresa una patente válida para continuar.
-          </Typography>
-          <Link href="/scan">
-            <Button className="gap-2">
-              <ChevronLeft className="h-4 w-4" />
-              Volver a verificación
-            </Button>
-          </Link>
-        </div>
-      </div>
+      <ErrorState
+        title="No se proporcionó patente"
+        message="Por favor, ingresa una patente válida para continuar."
+        backLink="/scan"
+        backText="Volver a verificación"
+        icon="error"
+      />
     );
   }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
-        <div className="text-center">
-          <Clock className="h-12 w-12 text-primary animate-spin mx-auto mb-4" />
-          <Typography variant="h3" className="mb-2">
-            Cargando información
-          </Typography>
-          <Typography variant="p" className="text-muted-foreground">
-            Verificando {licensePlate}...
-          </Typography>
-          <div className="w-48 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mt-4 mx-auto">
-            <div
-              className="h-full bg-primary animate-pulse"
-              style={{ width: "70%" }}
-            ></div>
-          </div>
-        </div>
-      </div>
+      <LoadingState
+        message="Cargando información"
+        submessage={`Verificando ${licensePlate}...`}
+        progress={70}
+      />
     );
   }
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
-        <div className="text-center bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8 max-w-md border border-gray-200 dark:border-gray-700">
-          <AlertCircle className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
-          <Typography variant="h3" className="mb-3">
-            No se encontraron datos
-          </Typography>
-          <Typography variant="p" className="text-muted-foreground mb-6">
-            No hay información disponible para la patente {licensePlate}
-          </Typography>
-          <Link href="/scan">
-            <Button variant="outline" className="gap-2">
-              <ChevronLeft className="h-4 w-4" />
-              Intentar con otra patente
-            </Button>
-          </Link>
-        </div>
-      </div>
+      <ErrorState
+        title="No se encontraron datos"
+        message={`No hay información disponible para la patente ${licensePlate}`}
+        backLink="/scan"
+        backText="Intentar con otra patente"
+        icon="warning"
+      />
     );
   }
+
+  const tabs = [
+    {
+      id: "services",
+      label: "Servicios",
+      icon: <Wrench className="h-4 w-4" />
+    },
+    {
+      id: "fines",
+      label: "Multas",
+      icon: <ShieldAlert className="h-4 w-4" />
+    },
+    {
+      id: "details",
+      label: "Detalles",
+      icon: <FileText className="h-4 w-4" />
+    }
+  ];
+
   return (
     <AppLayout type="services">
       <section>
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
           <main className="container mx-auto px-4 py-8">
             {/* Encabezado con estado */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 border border-gray-200 dark:border-gray-700">
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <Car className="h-5 w-5 text-primary" />
-                    <Typography variant="h2">
-                      {data.vehicle.make} {data.vehicle.model} (
-                      {data.vehicle.year})
-                    </Typography>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-sm font-medium dark:text-gray-300">
-                      {data.vehicle.licensePlate}
-                    </div>
-                    <Typography
-                      variant="small"
-                      className="text-muted-foreground"
-                    >
-                      Estado general: {data.status.overall}
-                    </Typography>
-                  </div>
-                </div>
-                <div className="flex flex-col items-end">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 px-3 py-1 rounded-full text-sm font-medium">
-                      Verificación completa
-                    </div>
-                  </div>
-                  <Typography
-                    variant="small"
-                    className="text-muted-foreground mt-1"
-                  >
-                    Actualizado: {new Date().toLocaleDateString()}
-                  </Typography>
-                </div>
-              </div>
-            </div>
+            <VehicleHeader
+              make={data.vehicle.make}
+              model={data.vehicle.model}
+              year={data.vehicle.year}
+              licensePlate={data.vehicle.licensePlate}
+              status={data.status.overall}
+              statusLabel="Estado general"
+              statusType="completed"
+              lastUpdated={new Date().toLocaleDateString()}
+            />
 
             {/* Pestañas de navegación */}
-            <div className="flex overflow-x-auto scrollbar-hide mb-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 p-1 shadow-inner">
-              <button
-                className={`px-4 py-2 font-medium text-sm flex items-center gap-2 rounded-md transition-colors ${
-                  activeTab === "services"
-                    ? "bg-primary text-white shadow-sm"
-                    : "text-muted-foreground hover:bg-gray-100 dark:hover:bg-gray-700"
-                }`}
-                onClick={() => setActiveTab("services")}
-              >
-                <Wrench className="h-4 w-4" />
-                Servicios
-              </button>
-              <button
-                className={`px-4 py-2 font-medium text-sm flex items-center gap-2 rounded-md transition-colors ${
-                  activeTab === "fines"
-                    ? "bg-primary text-white shadow-sm"
-                    : "text-muted-foreground hover:bg-gray-100 dark:hover:bg-gray-700"
-                }`}
-                onClick={() => setActiveTab("fines")}
-              >
-                <ShieldAlert className="h-4 w-4" />
-                Multas
-              </button>
-              <button
-                className={`px-4 py-2 font-medium text-sm flex items-center gap-2 rounded-md transition-colors ${
-                  activeTab === "details"
-                    ? "bg-primary text-white shadow-sm"
-                    : "text-muted-foreground hover:bg-gray-100 dark:hover:bg-gray-700"
-                }`}
-                onClick={() => setActiveTab("details")}
-              >
-                <FileText className="h-4 w-4" />
-                Detalles
-              </button>
-            </div>
+            <TabNavigation
+              tabs={tabs}
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+            />
 
             {/* Contenido de las pestañas */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700 mb-6">
+            <StatusCard
+              icon={
+                activeTab === "services" ? (
+                  <Wrench className="h-5 w-5 text-primary" />
+                ) : activeTab === "fines" ? (
+                  <ShieldAlert className="h-5 w-5 text-primary" />
+                ) : (
+                  <FileText className="h-5 w-5 text-primary" />
+                )
+              }
+              title={
+                activeTab === "services"
+                  ? "Historial de Servicios"
+                  : activeTab === "fines"
+                  ? "Historial de Multas"
+                  : "Detalles del Vehículo"
+              }
+            >
               {activeTab === "services" && (
                 <div className="space-y-6">
                   <div className="flex items-center gap-3">
-                    <Wrench className="h-5 w-5 text-primary" />
-                    <Typography variant="h3">Historial de Servicios</Typography>
                     <span className="ml-auto bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">
                       {data.services.length} registros
                     </span>
@@ -379,8 +296,6 @@ export default function ScanStatusPage() {
               {activeTab === "fines" && (
                 <div className="space-y-6">
                   <div className="flex items-center gap-3">
-                    <ShieldAlert className="h-5 w-5 text-primary" />
-                    <Typography variant="h3">Historial de Multas</Typography>
                     <span className="ml-auto bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">
                       {data.fines.length} registros
                     </span>
@@ -438,75 +353,43 @@ export default function ScanStatusPage() {
 
               {activeTab === "details" && (
                 <div className="space-y-6">
-                  <div className="flex items-center gap-3">
-                    <FileText className="h-5 w-5 text-primary" />
-                    <Typography variant="h3">Detalles del Vehículo</Typography>
-                  </div>
-
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-5">
-                      <Typography
-                        variant="h4"
-                        className="font-medium mb-4 flex items-center gap-2"
-                      >
-                        <Car className="h-5 w-5 text-primary" />
-                        Datos del Vehículo
-                      </Typography>
-
-                      <div className="space-y-4">
-                        {[
-                          {
-                            label: "Marca",
-                            value: data.vehicle.make,
-                            icon: null
-                          },
-                          {
-                            label: "Modelo",
-                            value: data.vehicle.model,
-                            icon: null
-                          },
-                          {
-                            label: "Año",
-                            value: data.vehicle.year,
-                            icon: <Calendar className="h-4 w-4" />
-                          },
-                          {
-                            label: "Color",
-                            value: data.vehicle.color,
-                            icon: null
-                          },
-                          {
-                            label: "Combustible",
-                            value: data.vehicle.fuelType,
-                            icon: <Fuel className="h-4 w-4" />
-                          },
-                          {
-                            label: "VIN",
-                            value: data.vehicle.vin,
-                            icon: <FileSearch className="h-4 w-4" />
-                          }
-                        ].map((item, index) => (
-                          <div
-                            key={index}
-                            className="flex justify-between items-center"
-                          >
-                            <Typography
-                              variant="small"
-                              className="text-muted-foreground flex items-center gap-2"
-                            >
-                              {item.icon && item.icon}
-                              {item.label}:
-                            </Typography>
-                            <Typography
-                              variant="small"
-                              className="font-medium text-right"
-                            >
-                              {item.value}
-                            </Typography>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                    <VehicleDetailsCard
+                      title="Datos del Vehículo"
+                      icon={<Car className="h-5 w-5 text-primary" />}
+                      details={[
+                        {
+                          label: "Marca",
+                          value: data.vehicle.make,
+                          icon: null
+                        },
+                        {
+                          label: "Modelo",
+                          value: data.vehicle.model,
+                          icon: null
+                        },
+                        {
+                          label: "Año",
+                          value: data.vehicle.year,
+                          icon: <Calendar className="h-4 w-4" />
+                        },
+                        {
+                          label: "Color",
+                          value: data.vehicle.color,
+                          icon: null
+                        },
+                        {
+                          label: "Combustible",
+                          value: data.vehicle.fuelType,
+                          icon: <Fuel className="h-4 w-4" />
+                        },
+                        {
+                          label: "VIN",
+                          value: data.vehicle.vin,
+                          icon: <FileSearch className="h-4 w-4" />
+                        }
+                      ]}
+                    />
 
                     <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-5">
                       <Typography
@@ -581,10 +464,10 @@ export default function ScanStatusPage() {
                   </div>
                 </div>
               )}
-            </div>
+            </StatusCard>
 
             {/* Sección de recomendaciones */}
-            <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/30 rounded-lg p-6 border border-blue-100 dark:border-blue-900/30 shadow-sm">
+            <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/30 rounded-lg p-6 border border-blue-100 dark:border-blue-900/30 shadow-sm mb-6">
               <Typography
                 variant="h3"
                 className="text-lg font-semibold mb-4 flex items-center gap-2"
@@ -651,47 +534,12 @@ export default function ScanStatusPage() {
             </div>
 
             {/* Acciones adicionales */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700 mt-6">
-              <div className="flex items-center gap-3 mb-6">
-                <Share2 className="h-5 w-5 text-primary" />
-                <Typography variant="h3">Acciones</Typography>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <Button
-                  variant="outline"
-                  className="gap-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-                  onClick={handlePrint}
-                  disabled={isPrinting}
-                >
-                  {isPrinting ? (
-                    <>
-                      <Clock className="h-4 w-4 animate-spin" />
-                      Generando...
-                    </>
-                  ) : (
-                    <>
-                      <Download className="h-4 w-4" />
-                      Exportar
-                    </>
-                  )}
-                </Button>
-                <Button
-                  variant="outline"
-                  className="gap-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-                >
-                  <Printer className="h-4 w-4" />
-                  Imprimir
-                </Button>
-                <Button
-                  variant="outline"
-                  className="gap-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-                >
-                  <Share2 className="h-4 w-4" />
-                  Compartir
-                </Button>
-              </div>
-            </div>
+            <StatusCard
+              icon={<Share2 className="h-5 w-5 text-primary" />}
+              title="Acciones"
+            >
+              <ActionButtons onPrint={handlePrint} />
+            </StatusCard>
           </main>
         </div>
       </section>

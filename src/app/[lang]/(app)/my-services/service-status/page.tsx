@@ -1,32 +1,68 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { useSearchParams } from "next/navigation";
-import {
-  Wrench,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  Calendar,
-  MapPin,
-  PenToolIcon as Tool,
-  Car,
-  Phone,
-  MessageSquare,
-  FileDown,
-  ChevronLeft,
-  Share2,
-  Printer,
-  Moon,
-  Sun
-} from "lucide-react";
-import { Button } from "@/presentation/ds/button";
-import Link from "next/link";
+import { useRef } from "react";
+import { Car, Wrench, Clock, AlertCircle, Share2 } from "lucide-react";
 import AppLayout from "../../AppLayout";
+import { ActionButtons } from "@/presentation/components/status/ActionButtons";
+import { DiagnosticResults } from "@/presentation/components/status/DiagnosticResults";
+import { LoadingState } from "@/presentation/components/status/LoadingState";
+import { ProgressBar } from "@/presentation/components/status/ProgressBar";
+import { ServiceProviderCard } from "@/presentation/components/status/ServiceProviderCard";
+import { ServiceSteps } from "@/presentation/components/status/ServiceSteps";
+import { StatusCard } from "@/presentation/components/status/StatusCard";
+import { VehicleHeader } from "@/presentation/components/status/VehicleHeader";
+
+// Definimos el tipo para los datos del vehículo
+interface VehicleData {
+  vehicle: {
+    make: string;
+    model: string;
+    year: string;
+    licensePlate: string;
+    vin: string;
+    lastService: string;
+    image: string;
+  };
+  service: {
+    id: string;
+    status: string;
+    startDate: string;
+    estimatedCompletion: string;
+    progress: number;
+    provider: {
+      name: string;
+      rating: number;
+      address: string;
+      phone: string;
+      image: string;
+    };
+    technician: {
+      name: string;
+      speciality: string;
+      image: string;
+    };
+  };
+  steps: {
+    id: number;
+    name: string;
+    status: string;
+    date: string;
+  }[];
+  diagnostics: {
+    id: number;
+    system: string;
+    status: string;
+    description: string;
+  }[];
+}
 
 // Mock data generator
-const generateMockData = (licensePlate: string) => {
-  const isABC123 = licensePlate === "ABC123";
+const generateMockData = (licensePlate: string): VehicleData | null => {
+  const isABC123 = licensePlate.replace(/\s/g, "").toUpperCase() === "ABC123";
+
+  if (!isABC123 && licensePlate.replace(/\s/g, "").toUpperCase() !== "XYZ789") {
+    return null;
+  }
 
   return {
     vehicle: {
@@ -144,93 +180,37 @@ const generateMockData = (licensePlate: string) => {
 };
 
 export default function ServiceStatusPage() {
-  const searchParams = useSearchParams();
-  const licensePlate = searchParams.get("plate") || "";
-  const [data, setData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isPrinting, setIsPrinting] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const contentRef = useRef<HTMLDivElement>(null);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
 
-  useEffect(() => {
-    // Check for user preference on component mount
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-      setTheme("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      setTheme("light");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    if (theme === "dark") {
-      document.documentElement.classList.remove("dark");
-      localStorage.theme = "light";
-      setTheme("light");
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.theme = "dark";
-      setTheme("dark");
-    }
-  };
-
-  useEffect(() => {
-    if (!licensePlate) return;
-
-    setIsLoading(true);
-    // Simular carga de datos
-    setTimeout(() => {
-      setData(generateMockData(licensePlate));
-      setIsLoading(false);
-    }, 800);
-  }, [licensePlate]);
+  // Corregimos la llamada al hook useVehicleStatus con el tipo correcto
+  const { licensePlate, data, isLoading, error } =
+    useVehicleStatus<VehicleData>({
+      mockDataFn: generateMockData
+    });
 
   const handlePrint = () => {
-    setIsPrinting(true);
-    setTimeout(() => {
-      window.print();
-      setIsPrinting(false);
-    }, 300);
+    window.print();
   };
 
   if (!licensePlate) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-xl shadow-sm max-w-md border border-gray-200 dark:border-gray-700">
-          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <h3 className="text-xl font-bold mb-2 dark:text-white">
-            No se proporcionó patente
-          </h3>
-          <p className="text-gray-500 dark:text-gray-400 mb-6">
-            No se ha especificado ninguna patente o número de seguimiento para
-            consultar.
-          </p>
-          <Link href="/scan">
-            <Button>Realizar una consulta</Button>
-          </Link>
-        </div>
-      </div>
+      <ErrorState
+        title="No se proporcionó patente"
+        message="No se ha especificado ninguna patente o número de seguimiento para consultar."
+        backLink="/my-services"
+        backText="Realizar una consulta"
+        icon="error"
+      />
     );
   }
 
   if (isLoading || !data) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="text-center p-8">
-          <Clock className="h-12 w-12 text-primary animate-spin mx-auto mb-4" />
-          <h3 className="text-xl font-bold mb-2 dark:text-white">
-            Cargando información
-          </h3>
-          <p className="text-gray-500 dark:text-gray-400">
-            Obteniendo datos del servicio...
-          </p>
-        </div>
-      </div>
+      <LoadingState
+        message="Cargando información"
+        submessage="Obteniendo datos del servicio..."
+      />
     );
   }
 
@@ -242,80 +222,31 @@ export default function ServiceStatusPage() {
           <div ref={contentRef} className="print:p-0">
             <main className="container mx-auto px-4 py-8">
               {/* Encabezado con estado */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <Car className="h-5 w-5 text-primary" />
-                      <h2 className="text-xl font-bold dark:text-white">
-                        {data.vehicle.make} {data.vehicle.model} (
-                        {data.vehicle.year})
-                      </h2>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-sm font-medium dark:text-gray-300">
-                        {data.vehicle.licensePlate}
-                      </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Servicio #{data.service.id}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end">
-                    <div
-                      className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        data.service.status === "en progreso"
-                          ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
-                          : "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-                      }`}
-                    >
-                      {data.service.status === "en progreso"
-                        ? "En progreso"
-                        : "Completado"}
-                    </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                      Actualizado:{" "}
-                      {data.service.status === "en progreso"
-                        ? "Hace 2 horas"
-                        : "16/03/2023"}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <VehicleHeader
+                make={data.vehicle.make}
+                model={data.vehicle.model}
+                year={data.vehicle.year}
+                licensePlate={data.vehicle.licensePlate}
+                serviceId={data.service.id}
+                statusType={
+                  data.service.status === "en progreso"
+                    ? "progress"
+                    : "completed"
+                }
+                lastUpdated={
+                  data.service.status === "en progreso"
+                    ? "Hace 2 horas"
+                    : "16/03/2023"
+                }
+              />
 
               {/* Barra de progreso principal */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-semibold dark:text-white">
-                    Progreso general
-                  </h3>
-                  <p className="text-lg font-bold dark:text-white">
-                    {data.service.progress}%
-                  </p>
-                </div>
-                <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-3 mb-4">
-                  <div
-                    className={`h-3 rounded-full ${
-                      data.service.status === "en progreso"
-                        ? "bg-primary"
-                        : "bg-green-500"
-                    }`}
-                    style={{ width: `${data.service.progress}%` }}
-                  ></div>
-                </div>
-                <div className="flex flex-wrap justify-between text-sm text-gray-500 dark:text-gray-400">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    Inicio: {data.service.startDate}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    {data.service.status === "en progreso"
-                      ? `Finalización estimada: ${data.service.estimatedCompletion}`
-                      : `Finalizado: ${data.service.estimatedCompletion}`}
-                  </div>
-                </div>
-              </div>
+              <ProgressBar
+                progress={data.service.progress}
+                startDate={data.service.startDate}
+                endDate={data.service.estimatedCompletion}
+                isCompleted={data.service.status !== "en progreso"}
+              />
 
               {/* Grid principal */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
@@ -368,255 +299,40 @@ export default function ServiceStatusPage() {
                 </div>
 
                 {/* Tarjeta del proveedor */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center gap-3 mb-6">
-                    <Wrench className="h-5 w-5 text-primary" />
-                    <h3 className="text-lg font-semibold dark:text-white">
-                      Proveedor de Servicio
-                    </h3>
-                  </div>
-
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
-                      <img
-                        src={data.service.provider.image || "/placeholder.svg"}
-                        alt={data.service.provider.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-medium dark:text-white">
-                        {data.service.provider.name}
-                      </p>
-                      <div className="flex items-center gap-1">
-                        <div className="flex">
-                          {[...Array(5)].map((_, i) => (
-                            <span
-                              key={i}
-                              className={`text-lg ${
-                                i < Math.floor(data.service.provider.rating)
-                                  ? "text-yellow-400"
-                                  : "text-gray-300 dark:text-gray-600"
-                              }`}
-                            >
-                              ★
-                            </span>
-                          ))}
-                        </div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {data.service.provider.rating}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4 mb-6">
-                    <div className="flex items-start gap-3">
-                      <MapPin className="h-5 w-5 text-gray-400 dark:text-gray-500 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {data.service.provider.address}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Phone className="h-5 w-5 text-gray-400 dark:text-gray-500" />
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {data.service.provider.phone}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Técnico asignado
-                    </p>
-                    <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                      <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-600 overflow-hidden">
-                        <img
-                          src={
-                            data.service.technician.image || "/placeholder.svg"
-                          }
-                          alt={data.service.technician.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium dark:text-white">
-                          {data.service.technician.name}
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {data.service.technician.speciality}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3 mt-6">
-                    <Button
-                      variant="outline"
-                      className="flex-1 gap-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-                    >
-                      <Phone className="h-4 w-4" />
-                      Llamar
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="flex-1 gap-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-                    >
-                      <MessageSquare className="h-4 w-4" />
-                      Mensaje
-                    </Button>
-                  </div>
-                </div>
+                <StatusCard
+                  icon={<Wrench className="h-5 w-5 text-primary" />}
+                  title="Proveedor de Servicio"
+                >
+                  <ServiceProviderCard
+                    provider={data.service.provider}
+                    technician={data.service.technician}
+                  />
+                </StatusCard>
               </div>
 
               {/* Progreso del servicio */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-3 mb-6">
-                  <Clock className="h-5 w-5 text-primary" />
-                  <h3 className="text-lg font-semibold dark:text-white">
-                    Etapas del Servicio
-                  </h3>
-                </div>
-
-                <div className="space-y-6">
-                  {data.steps.map((step: any, index: number) => (
-                    <div key={step.id} className="flex gap-4">
-                      <div className="flex flex-col items-center">
-                        <div
-                          className={`h-8 w-8 rounded-full flex items-center justify-center ${
-                            step.status === "completed"
-                              ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
-                              : step.status === "in-progress"
-                              ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
-                              : "bg-gray-100 text-gray-400 dark:bg-gray-700 dark:text-gray-500"
-                          }`}
-                        >
-                          {step.status === "completed" ? (
-                            <CheckCircle2 className="h-4 w-4" />
-                          ) : step.status === "in-progress" ? (
-                            <Tool className="h-4 w-4" />
-                          ) : (
-                            <Clock className="h-4 w-4" />
-                          )}
-                        </div>
-                        {index < data.steps.length - 1 && (
-                          <div
-                            className={`h-12 w-0.5 my-1 ${
-                              step.status === "completed"
-                                ? "bg-green-100 dark:bg-green-900/30"
-                                : "bg-gray-100 dark:bg-gray-700"
-                            }`}
-                          ></div>
-                        )}
-                      </div>
-
-                      <div className="flex-1 pb-6">
-                        <div className="flex justify-between flex-wrap gap-2">
-                          <p className="font-medium dark:text-white">
-                            {step.name}
-                          </p>
-                          {step.date && (
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                              {step.date}
-                            </p>
-                          )}
-                        </div>
-                        {step.status === "in-progress" && (
-                          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                            Este paso está actualmente en progreso
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <StatusCard
+                icon={<Clock className="h-5 w-5 text-primary" />}
+                title="Etapas del Servicio"
+              >
+                <ServiceSteps steps={data.steps} />
+              </StatusCard>
 
               {/* Resultados del diagnóstico */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-3 mb-6">
-                  <AlertCircle className="h-5 w-5 text-primary" />
-                  <h3 className="text-lg font-semibold dark:text-white">
-                    Resultados del Diagnóstico
-                  </h3>
-                </div>
-
-                <div className="space-y-4">
-                  {data.diagnostics.map((item: any) => (
-                    <div
-                      key={item.id}
-                      className={`p-4 rounded-lg border ${
-                        item.status === "ok"
-                          ? "border-green-100 bg-green-50 dark:border-green-900/30 dark:bg-green-900/10"
-                          : "border-yellow-100 bg-yellow-50 dark:border-yellow-900/30 dark:bg-yellow-900/10"
-                      }`}
-                    >
-                      <div className="flex gap-3">
-                        <div className="mt-0.5">
-                          {item.status === "ok" ? (
-                            <CheckCircle2 className="h-5 w-5 text-green-500 dark:text-green-400" />
-                          ) : (
-                            <AlertCircle className="h-5 w-5 text-yellow-500 dark:text-yellow-400" />
-                          )}
-                        </div>
-                        <div>
-                          <p className="font-medium mb-1 dark:text-white">
-                            {item.system}
-                          </p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">
-                            {item.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <StatusCard
+                icon={<AlertCircle className="h-5 w-5 text-primary" />}
+                title="Resultados del Diagnóstico"
+              >
+                <DiagnosticResults items={data.diagnostics} />
+              </StatusCard>
 
               {/* Acciones adicionales */}
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-3 mb-6">
-                  <Share2 className="h-5 w-5 text-primary" />
-                  <h3 className="text-lg font-semibold dark:text-white">
-                    Acciones
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <Button
-                    variant="outline"
-                    className="gap-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-                    onClick={handlePrint}
-                    disabled={isPrinting}
-                  >
-                    {isPrinting ? (
-                      <>
-                        <Clock className="h-4 w-4 animate-spin" />
-                        Generando...
-                      </>
-                    ) : (
-                      <>
-                        <FileDown className="h-4 w-4" />
-                        Descargar PDF
-                      </>
-                    )}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="gap-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-                  >
-                    <Printer className="h-4 w-4" />
-                    Imprimir
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="gap-2 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-                  >
-                    <Share2 className="h-4 w-4" />
-                    Compartir
-                  </Button>
-                </div>
-              </div>
+              <StatusCard
+                icon={<Share2 className="h-5 w-5 text-primary" />}
+                title="Acciones"
+              >
+                <ActionButtons onPrint={handlePrint} />
+              </StatusCard>
             </main>
           </div>
 
@@ -646,8 +362,17 @@ export default function ServiceStatusPage() {
               }
             }
           `}</style>
-        </div>{" "}
-      </section>{" "}
+        </div>
+      </section>
     </AppLayout>
   );
+}
+function useTheme(): { theme: any; toggleTheme: any } {
+  throw new Error("Function not implemented.");
+}
+
+function useVehicleStatus<T>(arg0: {
+  mockDataFn: (licensePlate: string) => VehicleData | null;
+}): { licensePlate: any; data: any; isLoading: any; error: any } {
+  throw new Error("Function not implemented.");
 }

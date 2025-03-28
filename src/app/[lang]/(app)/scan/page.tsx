@@ -1,27 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import {
-  Scan,
-  QrCode,
-  Keyboard,
-  Search,
-  Car,
-  Clock,
-  X,
-  AlertCircle,
-  CheckCircle2,
-  Wrench,
-  FileText,
-  Moon,
-  Sun
-} from "lucide-react";
+import { useState } from "react";
+import { CheckCircle2, FileText, Wrench, QrCode } from "lucide-react";
 import { Button } from "@/presentation/ds/button";
-import { Typography } from "@/presentation/ds/typography";
-import { FadeIn } from "@/presentation/components/fade-in";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 import AppLayout from "../AppLayout";
+import { InputMethodSelector } from "@/presentation/components/vehicle-input/InputMethodSelector";
+import { ScanInput } from "@/presentation/components/vehicle-input/ScanInput";
+import { VehicleInputForm } from "@/presentation/components/vehicle-input/VehicleInputForm";
+import { useMobileDetection } from "@/presentation/hooks/useMobileDetection";
+import { useVehicleSearch } from "@/presentation/hooks/useVehicleSearch";
 
 // Mock data para vehículos
 const mockVehicleData = {
@@ -88,50 +75,20 @@ const mockVehicleData = {
 };
 
 export default function ScanPage() {
+  const isMobile = useMobileDetection();
   const [inputMethod, setInputMethod] = useState<"scan" | "manual">("manual");
-  const [inputValue, setInputValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [isMobile, setIsMobile] = useState(false);
-  const router = useRouter();
 
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
-    return () => window.removeEventListener("resize", checkIsMobile);
-  }, []);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const plate = inputValue.replace(/\s/g, "").toUpperCase();
-    if (!plate) return;
-
-    setIsLoading(true);
-    setError("");
-
-    setTimeout(() => {
-      const vehicle = mockVehicleData[plate as keyof typeof mockVehicleData];
-
-      if (vehicle) {
-        router.push(`/scan/scan-status?plate=${plate}`);
-      } else {
-        setError("No se encontró información para esta patente");
-      }
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  const handleSimulatedScan = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setInputValue("ABC 123");
-      setIsLoading(false);
-    }, 1500);
-  };
+  const {
+    inputValue,
+    setInputValue,
+    isLoading,
+    error,
+    handleSearch,
+    handleSimulatedScan
+  } = useVehicleSearch({
+    mockData: mockVehicleData,
+    redirectPath: "/scan/scan-status"
+  });
 
   return (
     <AppLayout type="empty">
@@ -152,147 +109,44 @@ export default function ScanPage() {
               </div>
 
               {/* Selector de método */}
-              <div className="flex border rounded-lg overflow-hidden mb-6 shadow-sm dark:border-gray-700">
-                <button
-                  className={`flex-1 py-3 font-medium flex items-center justify-center gap-2 ${
-                    inputMethod === "scan"
-                      ? "bg-primary text-white"
-                      : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                  }`}
-                  onClick={() => setInputMethod("scan")}
-                >
-                  <Scan className="h-5 w-5" />
-                  Escanear
-                </button>
-                <button
-                  className={`flex-1 py-3 font-medium flex items-center justify-center gap-2 ${
-                    inputMethod === "manual"
-                      ? "bg-primary text-white"
-                      : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                  }`}
-                  onClick={() => setInputMethod("manual")}
-                >
-                  <Keyboard className="h-5 w-5" />
-                  Manual
-                </button>
-              </div>
+              <InputMethodSelector
+                inputMethod={inputMethod}
+                setInputMethod={setInputMethod}
+              />
 
               <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6 border border-gray-200 dark:border-gray-700">
-                <form onSubmit={handleSubmit}>
-                  {inputMethod === "scan" ? (
-                    <div className="space-y-4">
-                      <div
-                        className="relative h-64 w-full rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center bg-gray-50 dark:bg-gray-700/50 cursor-pointer"
-                        onClick={handleSimulatedScan}
-                      >
-                        {isLoading ? (
-                          <div className="flex flex-col items-center">
-                            <Clock className="h-10 w-10 mb-2 text-primary animate-spin" />
-                            <p className="text-gray-900 dark:text-white">
-                              Escaneando patente...
-                            </p>
-                          </div>
-                        ) : (
-                          <div className="text-center p-6">
-                            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                              <QrCode className="h-8 w-8 text-primary" />
-                            </div>
-                            <p className="font-medium mb-2 text-gray-900 dark:text-white">
-                              Escanea la patente
-                            </p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                              Toca para simular escaneo (Demo: ABC 123)
-                            </p>
-                          </div>
-                        )}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-64 h-16 border-2 border-primary rounded-md opacity-50"></div>
-                        </div>
-                      </div>
-                      <div className="text-center text-sm text-gray-500 dark:text-gray-400 my-4">
-                        o
-                      </div>
-                      <div className="relative">
-                        <Car className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                        <input
-                          type="text"
-                          value={inputValue}
-                          onChange={(e) => setInputValue(e.target.value)}
-                          placeholder="Ingresa la patente manualmente"
-                          className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                        />
-                        {inputValue && (
-                          <button
-                            type="button"
-                            className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                            onClick={() => setInputValue("")}
-                          >
-                            <X className="h-5 w-5" />
-                          </button>
-                        )}
-                      </div>
+                {inputMethod === "scan" ? (
+                  <div className="space-y-4">
+                    <ScanInput
+                      isLoading={isLoading}
+                      onScan={handleSimulatedScan}
+                    />
+                    <div className="text-center text-sm text-gray-500 dark:text-gray-400 my-4">
+                      o
                     </div>
-                  ) : (
-                    <div className="space-y-4">
-                      <label
-                        htmlFor="licensePlate"
-                        className="block text-gray-900 dark:text-white font-medium mb-2"
-                      >
-                        Patente del vehículo
-                      </label>
-                      <div className="relative">
-                        <Car className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                        <input
-                          id="licensePlate"
-                          type="text"
-                          value={inputValue}
-                          onChange={(e) => setInputValue(e.target.value)}
-                          placeholder="Ejemplo: ABC 123"
-                          className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                          required
-                        />
-                        {inputValue && (
-                          <button
-                            type="button"
-                            className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                            onClick={() => setInputValue("")}
-                          >
-                            <X className="h-5 w-5" />
-                          </button>
-                        )}
-                      </div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        Ingresá primero las letras en mayúscula y los números
-                        separados por un espacio
-                      </p>
+                    <div className="relative">
+                      <VehicleInputForm
+                        inputValue={inputValue}
+                        setInputValue={setInputValue}
+                        isLoading={isLoading}
+                        error={error}
+                        onSubmit={handleSearch}
+                        placeholder="Ingresa la patente manualmente"
+                        buttonText="Verificar vehículo"
+                      />
                     </div>
-                  )}
-
-                  {error && (
-                    <div className="text-red-500 dark:text-red-400 text-sm mt-4 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg flex items-center gap-2">
-                      <AlertCircle className="h-4 w-4" />
-                      {error}
-                    </div>
-                  )}
-
-                  <Button
-                    type="submit"
-                    className="w-full py-3 bg-primary hover:bg-primary/90 text-white flex items-center justify-center mt-6"
-                    disabled={isLoading || !inputValue.trim()}
-                  >
-                    {isLoading ? (
-                      <>
-                        <Clock className="h-5 w-5 mr-2 animate-spin" />
-                        Verificando...
-                      </>
-                    ) : (
-                      <>
-                        <Search className="h-5 w-5 mr-2" />
-                        Verificar vehículo
-                      </>
-                    )}
-                  </Button>
-                </form>
+                  </div>
+                ) : (
+                  <VehicleInputForm
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    isLoading={isLoading}
+                    error={error}
+                    onSubmit={handleSearch}
+                    placeholder="Ejemplo: ABC 123"
+                    buttonText="Verificar vehículo"
+                  />
+                )}
               </div>
 
               {/* Información adicional */}
@@ -347,72 +201,21 @@ export default function ScanPage() {
               {/* Formulario de verificación */}
               <div className="md:col-span-7">
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8 border border-gray-200 dark:border-gray-700">
-                  <form onSubmit={handleSubmit}>
-                    <div className="mb-6">
-                      <label
-                        htmlFor="licensePlate"
-                        className="block text-gray-900 dark:text-white font-medium mb-3"
-                      >
-                        Patente del vehículo
-                      </label>
-                      <div className="relative">
-                        <Car className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
-                        <input
-                          id="licensePlate"
-                          type="text"
-                          value={inputValue}
-                          onChange={(e) => setInputValue(e.target.value)}
-                          placeholder="Ejemplo: ABC 123 (letras mayúsculas)"
-                          className="w-full px-4 py-3.5 pl-12 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-lg"
-                          required
-                        />
-                        {inputValue && (
-                          <button
-                            type="button"
-                            className="absolute right-4 top-3.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-                            onClick={() => setInputValue("")}
-                          >
-                            <X className="h-5 w-5" />
-                          </button>
-                        )}
-                      </div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                        Ingresá primero las letras en mayúscula y los números
-                        separados por un espacio
-                      </p>
-                    </div>
-
-                    {error && (
-                      <div className="text-red-500 dark:text-red-400 text-sm mb-6 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg flex items-center gap-2">
-                        <AlertCircle className="h-4 w-4" />
-                        {error}
-                      </div>
-                    )}
-
-                    <Button
-                      type="submit"
-                      className="w-full py-3.5 bg-primary hover:bg-primary/90 text-white flex items-center justify-center text-lg"
-                      disabled={isLoading || !inputValue.trim()}
-                    >
-                      {isLoading ? (
-                        <>
-                          <Clock className="h-6 w-6 mr-3 animate-spin" />
-                          Verificando...
-                        </>
-                      ) : (
-                        <>
-                          <Search className="h-6 w-6 mr-3" />
-                          Verificar vehículo
-                        </>
-                      )}
-                    </Button>
-                  </form>
+                  <VehicleInputForm
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    isLoading={isLoading}
+                    error={error}
+                    onSubmit={handleSearch}
+                    placeholder="Ejemplo: ABC 123 (letras mayúsculas)"
+                    buttonText="Verificar vehículo"
+                  />
                 </div>
 
                 {/* Demo de escaneo para desktop */}
                 <div className="mt-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                   <h2 className="text-gray-900 dark:text-white font-medium mb-3 flex items-center gap-2">
-                    <Scan className="h-5 w-5 text-primary" />
+                    <QrCode className="h-5 w-5 text-primary" />
                     ¿Prefieres escanear?
                   </h2>
                   <p className="text-gray-600 dark:text-gray-400 mb-4">
@@ -425,11 +228,7 @@ export default function ScanPage() {
                     onClick={handleSimulatedScan}
                     disabled={isLoading}
                   >
-                    {isLoading ? (
-                      <Clock className="h-5 w-5 animate-spin" />
-                    ) : (
-                      <QrCode className="h-5 w-5" />
-                    )}
+                    <QrCode className="h-5 w-5" />
                     Simular escaneo (Demo)
                   </Button>
                 </div>
