@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import {
   Scan,
   QrCode,
@@ -15,13 +15,13 @@ import {
   FileText,
   Moon,
   Sun
-} from "lucide-react"
-import { Button } from "@/presentation/ds/button"
-import { Typography } from "@/presentation/ds/typography"
-import { FadeIn } from "@/presentation/components/fade-in"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import AppLayout from "../AppLayout"
+} from "lucide-react";
+import { Button } from "@/presentation/ds/button";
+import { Typography } from "@/presentation/ds/typography";
+import { FadeIn } from "@/presentation/components/fade-in";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import AppLayout from "../AppLayout";
 
 // Mock data para vehículos
 const mockVehicleData = {
@@ -85,56 +85,56 @@ const mockVehicleData = {
       fines: "Sin multas"
     }
   }
-}
+};
 
 export default function ScanPage() {
-  const [inputMethod, setInputMethod] = useState<"scan" | "manual">("manual")
-  const [inputValue, setInputValue] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-  const [isMobile, setIsMobile] = useState(false)
-  const router = useRouter()
+  const [inputMethod, setInputMethod] = useState<"scan" | "manual">("manual");
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
+      setIsMobile(window.innerWidth < 768);
+    };
 
-    checkIsMobile()
-    window.addEventListener("resize", checkIsMobile)
-    return () => window.removeEventListener("resize", checkIsMobile)
-  }, [])
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const plate = inputValue.replace(/\s/g, "").toUpperCase()
-    if (!plate) return
+    e.preventDefault();
+    const plate = inputValue.replace(/\s/g, "").toUpperCase();
+    if (!plate) return;
 
-    setIsLoading(true)
-    setError("")
+    setIsLoading(true);
+    setError("");
 
     setTimeout(() => {
-      const vehicle = mockVehicleData[plate as keyof typeof mockVehicleData]
+      const vehicle = mockVehicleData[plate as keyof typeof mockVehicleData];
 
       if (vehicle) {
-        router.push(`/scan/scan-status?plate=${plate}`)
+        router.push(`/scan/scan-status?plate=${plate}`);
       } else {
-        setError("No se encontró información para esta patente")
+        setError("No se encontró información para esta patente");
       }
-      setIsLoading(false)
-    }, 1000)
-  }
+      setIsLoading(false);
+    }, 1000);
+  };
 
   const handleSimulatedScan = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     setTimeout(() => {
-      setInputValue("ABC 123")
-      setIsLoading(false)
-    }, 1500)
-  }
+      setInputValue("ABC 123");
+      setIsLoading(false);
+    }, 1500);
+  };
 
   return (
-    <AppLayout type='scan'>
+    <AppLayout type="empty">
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <main className="container mx-auto px-4 py-8 md:py-16">
           {isMobile ? (
@@ -416,7 +416,8 @@ export default function ScanPage() {
                     ¿Prefieres escanear?
                   </h2>
                   <p className="text-gray-600 dark:text-gray-400 mb-4">
-                    Usa nuestra app móvil para escanear la patente automáticamente
+                    Usa nuestra app móvil para escanear la patente
+                    automáticamente
                   </p>
                   <Button
                     variant="outline"
@@ -438,5 +439,5 @@ export default function ScanPage() {
         </main>
       </div>
     </AppLayout>
-  )
+  );
 }
