@@ -16,12 +16,12 @@ export const SignUpSchema = z.object({
   confirmPassword: z.string().min(8, {
     message: ''
   }),
-  // terms: z.boolean().refine(
-  //   (value) => value === true,
-  //   {
-  //     message: "Debe aceptar los términos y condiciones",
-  //   }
-  // ),
+  terms: z.boolean().refine(
+    (value) => value === true,
+    {
+      message: "Debe aceptar los términos y condiciones",
+    }
+  ),
 }).refine((data) => data.password === data.confirmPassword, {
   message: 'Las contraseñas deben ser iguales',
   path: ["confirm"],

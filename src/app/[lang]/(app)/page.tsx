@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from "react"
 import Link from "next/link"
 import {
   Card,
@@ -51,6 +50,10 @@ export default function App() {
       ),
     },
   ]
+
+  const handleSubmit = (data: any) => {
+    console.log(data, 'FORM')
+  }
 
   return (
     <AppLayout filters={<Filters />} showSearchBar type="default">

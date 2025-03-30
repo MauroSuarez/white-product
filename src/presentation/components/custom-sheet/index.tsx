@@ -12,43 +12,57 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/presentation/ds/sheet"
+import { Button } from "@/presentation/ds/button"
+import { cn } from "@/presentation/utils/uiHelpers"
 
 type CustomSheetProps = {
   isOpen: boolean
   isOpenChange: () => void
   children: React.ReactNode
-  footer: React.ReactNode
+  header?: React.ReactNode  
+  footer?: React.ReactNode | JSX.Element
+  title?: string
+  description?: string
 }
 
 const CustomSheet = ({
   isOpen = true,
   isOpenChange,
   children,
-  footer
+  header,
+  footer,
+  title,
+  description
 }: CustomSheetProps) => {
   return (
     <Sheet open={isOpen} onOpenChange={isOpenChange}>
-      <SheetContent side={'bottom'} className="h-screen max-h-screen flex flex-col [&>button]:hidden">
+      <SheetContent side={'bottom'} className={cn(`h-screen max-h-screen flex flex-col ${header ? '[&>button]:hidden' : ''}`)}>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you're done.
-          </SheetDescription>
+          {header ? header : (
+            <>
+              <SheetTitle>{title}</SheetTitle>
+              <SheetDescription>
+                {description}
+              </SheetDescription>
+            </>
+          )}
         </SheetHeader>
 
         {/* Content */}
         {children}
         
         {/* Footer */}
-        <div className="p-6 border-t">
-          {footer}
-        </div>
-        {/* <SheetFooter className="border border-blue-600">
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose> 
-          con piesidex
-        </SheetFooter> */}
+        {footer ? (
+          <div className="p-6">
+            {footer}
+          </div>
+        ) : (
+          <SheetFooter>
+            <SheetClose asChild>
+              <Button variant={'ghost'}>Cerrar</Button>
+            </SheetClose> 
+          </SheetFooter>
+        )}
       </SheetContent>
     </Sheet>
   )

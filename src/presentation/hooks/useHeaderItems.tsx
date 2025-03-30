@@ -345,7 +345,7 @@ export function useHeaderItems({
           label: 'Empezar',
           path: '/freewheels/onboarding',
           format: ({ label, path }) => (
-            <Button onClick={() => handleNavigate && handleNavigate(path)} className='hidden md:flex h-10 min-w-[100px]'>
+            <Button onClick={() => userRol === 'GUEST' ? handleAuthModal && handleAuthModal({ open: true, type: 'signin' }) : handleNavigate && handleNavigate(path)} className='hidden md:flex h-10 min-w-[100px]'>
               {label}
               <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />
             </Button>

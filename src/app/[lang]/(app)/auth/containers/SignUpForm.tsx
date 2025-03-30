@@ -63,6 +63,7 @@ const FormSignUp = ({
             </div>
             <FormCheckbox
               name="terms"
+              id="terms"
               label="Acepto términos y condiciones"
               classNameContainer="flex flex-row items-center space-x-3 space-y-0"
               className="h-6 w-6"
