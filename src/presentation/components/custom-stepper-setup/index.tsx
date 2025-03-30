@@ -43,7 +43,13 @@ const CustomStepperSetUp = ({
       <CustomSheet
         isOpen={isOpenSheet}
         isOpenChange={handleOpenChange || (() => {})}
-        header={<Header handleOpenChange={handleOpenChange || (() => {})} currentSubStep={currentMainStep} />}
+        header={
+          <Header
+            currentMainStep={currentMainStep}
+            currentSubStep={currentSubStep}
+            handleOpenChange={handleOpenChange || (() => {})}
+          />
+        }
         footer={
           <Footer
             steps={steps}

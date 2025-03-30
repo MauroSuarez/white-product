@@ -2,14 +2,17 @@ import { Button } from "@/presentation/ds/button"
 import { BrandLogo } from "../brand-logo"
 
 type HeaderProps = {
+  currentMainStep: number
   currentSubStep: number
   handleOpenChange: () => void
 }
 
 const Header = ({
+  currentMainStep,
   currentSubStep,
   handleOpenChange
 }: HeaderProps) => {
+  const isShow = (currentMainStep === 0 && currentSubStep > 0) || (currentMainStep > 0)
   return (
     <div className='flex w-full justify-between'>
       <BrandLogo
@@ -17,7 +20,7 @@ const Header = ({
         classNameIcon='text-neutral-500'
       />
       <div className='space-x-4'>
-        {currentSubStep > 0 && (
+        {isShow ? (
           <Button
             onClick={handleOpenChange}
             className='text-neutral-500'
@@ -25,12 +28,12 @@ const Header = ({
           >
             ¿Necesitas ayuda?
           </Button>
-        )}
+        ): null}
         <Button
           onClick={handleOpenChange}
           variant={'outline'}
         >
-          {currentSubStep > 0 ? 'Guardar y salir' : 'Salir'}
+          {isShow ? 'Guardar y salir' : 'Salir'}
         </Button>
       </div>
     </div>
