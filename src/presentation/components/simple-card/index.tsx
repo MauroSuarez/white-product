@@ -6,7 +6,7 @@ type SimpleCardProps = {
   item?: string
   title?: string
   description?: string
-  icon?: string
+  icon?: any
 }
 
 const SimpleCard = ({
@@ -14,9 +14,10 @@ const SimpleCard = ({
   item,
   title,
   description,
+  icon,
 }: SimpleCardProps) => {
   return (
-    <div className={cn(`flex min-h-10 space-y-8 mt-4 mb-4 py-8 items-center justify-center`, className)}>
+    <div className={cn(`flex min-h-10 space-y-8 mt-4 mb-4 py-6 items-center justify-center`, className)}>
       <div className="flex items-start gap-3">
         <div className="pt-0.5">
           <Typography variant={'h4'} className="w-full flex">{item}</Typography>
@@ -25,8 +26,8 @@ const SimpleCard = ({
           {title && <Typography variant={'h4'} className="w-full flex">{title}</Typography>}
           {description && <Typography variant={'muted'} className="w-full flex">{description}</Typography>}
         </div>
-        <div className="pt-0.5 flex-1 h-full min-h-12 border border-blue-600">
-          <div>fasdfasd</div>
+        <div className="pt-0.5 flex-1 h-full min-h-12 min-w-14">
+          <div>{icon}</div>
         </div>
       </div>
     </div>

@@ -85,7 +85,7 @@ export function useHeaderItems({
         id: 'setup',
         label: 'Abrí tu FreeWheel',
         path: '/freewheels',
-        visible: (type === 'default' || type === 'detail') && userRol === 'AUTHENTICATED',
+        visible: (type === 'default' || type === 'detail'),
         format: ({ label, path }) => (
           <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
             {label}

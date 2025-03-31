@@ -20,6 +20,9 @@ const Footer = ({
   const generatePercentBar = (index: number) => {
     const percentBar = Math.ceil(100 / steps[currentMainStep].subSteps?.length)
     const countBar = (currentSubStep + 1) === 1 ? percentBar : percentBar * currentSubStep
+
+    if(currentMainStep > index)
+      return <div className="w-full rounded-full bg-neutral-500" />
     
     
     if(index > currentMainStep) {
@@ -41,16 +44,14 @@ const Footer = ({
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <div className="flex space-x-2 w-full">
+        <div className={`flex ${currentMainStep === 0 && currentSubStep === 0 ? '' : 'space-x-2'} w-full`}>
           {steps.map((step, index) => {
             return (
               <div 
                 key={index}
                 className="flex border border-neutral-100 w-full rounded-full min-h-2 bg-neutral-100"
               >
-                {currentMainStep > index ? <Progress value={100} className="bg-neutral-500  rounded-full" /> : 
-                  generatePercentBar(index)
-                }
+                {generatePercentBar(index)}
               </div>
             )}
           )}
@@ -62,16 +63,16 @@ const Footer = ({
             variant="ghost"
             onClick={handleBack}
             disabled={currentMainStep === 0 && currentSubStep === 0}
-
+            className="h-12"
           >
-            Anterior
+            Atrás
           </Button>
         ) : null}
         <Button
           onClick={handleNext}
           variant={'ghost'}
           // disabled={currentMainStep === steps.length - 1 && currentSubStep === steps[currentMainStep].subSteps.length}
-          className={`py-4 uppercase h-12 text-white ${currentMainStep === 0 && currentSubStep === 0 ? 'bg-destructive' : 'bg-neutral-600 hover:bg-neutral-500 hover:text-neutral-50'} `}
+          className={`py-4 h-12 text-white ${currentMainStep === 0 && currentSubStep === 0 ? 'bg-destructive' : 'bg-neutral-600 hover:bg-neutral-500 hover:text-neutral-50'} `}
         >
           {currentMainStep === 0 && currentSubStep === 0 ? 'Empezar' : 'Siguiente'}
         </Button>

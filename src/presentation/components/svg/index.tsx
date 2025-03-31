@@ -22,4 +22,4 @@ const GlobalSvg: React.FC<GlobalSvgProps> = ({ size = 24, fill, color = "current
   )
 }
 
-export { GlobalSvg }
+export { GlobalSvg }
