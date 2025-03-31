@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { CustomStepperSetUp } from "@/presentation/components/custom-stepper-setup"
 import { SetupOnboarding } from "./containers/step-one/SetupOnboarding"
 import { AboutUsWorkShop } from "./containers/step-one/AboutUsWorkShop"
+import { ChoiseCategory } from "./containers/step-one/ChoiseCategory"
 
 export default function Onboarding() {
   const router = useRouter()
@@ -18,7 +19,7 @@ export default function Onboarding() {
       subSteps: [
         { content: <SetupOnboarding /> },
         { content: <AboutUsWorkShop /> },
-        { title: 'Subpaso 1.3', content: 'Contenido del subpaso 1.3' }
+        { content: <ChoiseCategory /> }
       ]
     },
     {

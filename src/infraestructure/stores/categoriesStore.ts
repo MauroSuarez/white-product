@@ -1,13 +1,14 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export type Category = {
   icon: string
   label: string
   category: number
-  isVisible?: boolean
+  is_visible?: boolean
 }
 
-const categoriesInitialState: Category[] = [
+export const categoriesInitialState: Category[] = [
   {
     icon: 'carRepair',
     label: 'Taller mécanico',
@@ -102,10 +103,19 @@ const categoriesInitialState: Category[] = [
 
 type CategoryState = {
   categories: Category[]
+  setCategories: (categories: Category[]) => void
 }
 
-export const useCategoriesStore = create<CategoryState>((set) => ({
-  categories: categoriesInitialState,
-}))
+export const useCategoriesStore = create(
+  persist<CategoryState>(
+    (set) => ({
+      categories: [],
+      setCategories: (categories) => set({ categories })
+    }),
+    {
+      name: 'categories-storage'
+    }
+  )
+)
 
 export type CategoryStore = ReturnType<typeof useCategoriesStore>
