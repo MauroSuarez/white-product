@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { Car, Wrench, Clock, AlertCircle, Share2 } from "lucide-react";
 import AppLayout from "../../AppLayout";
+
 import { ActionButtons } from "@/presentation/components/status/ActionButtons";
 import { DiagnosticResults } from "@/presentation/components/status/DiagnosticResults";
 import { LoadingState } from "@/presentation/components/status/LoadingState";
@@ -11,6 +12,9 @@ import { ServiceProviderCard } from "@/presentation/components/status/ServicePro
 import { ServiceSteps } from "@/presentation/components/status/ServiceSteps";
 import { StatusCard } from "@/presentation/components/status/StatusCard";
 import { VehicleHeader } from "@/presentation/components/status/VehicleHeader";
+import { ErrorState } from "@/presentation/components/status/ErrorState";
+import { useVehicleStatus } from "@/presentation/hooks/useVehcleStatus";
+import { useTheme } from "next-themes";
 
 // Definimos el tipo para los datos del vehículo
 interface VehicleData {
@@ -366,13 +370,4 @@ export default function ServiceStatusPage() {
       </section>
     </AppLayout>
   );
-}
-function useTheme(): { theme: any; toggleTheme: any } {
-  throw new Error("Function not implemented.");
-}
-
-function useVehicleStatus<T>(arg0: {
-  mockDataFn: (licensePlate: string) => VehicleData | null;
-}): { licensePlate: any; data: any; isLoading: any; error: any } {
-  throw new Error("Function not implemented.");
 }
