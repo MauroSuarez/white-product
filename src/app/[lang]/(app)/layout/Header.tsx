@@ -44,7 +44,7 @@ export function Header<T>({
     >
       <div className="mx-10 items-center flex w-full">
 
-        <div className="flex justify-start w-auto border border-red-500">
+        <div className="flex justify-start w-auto">
           <BrandLogo
             variant={isSmall ? 'secondary' : 'primary'}
             onClick={() => {}}
@@ -52,7 +52,7 @@ export function Header<T>({
         </div>
 
         {showSearchBar && (
-          <div className='flex justify-center w-auto lg:w-2/5 md:w-2/5 lg:px-10 md:px-10 px-4 border border-blue-500'>
+          <div className='flex justify-center w-auto lg:w-2/5 md:w-2/5 lg:px-10 md:px-10 px-4'>
             <SearchBox
               handleSearch={handleOnSearch}
               placeHolder='¿Qué servicio estas buscando para tu vehículo?'
@@ -62,7 +62,7 @@ export function Header<T>({
           </div>
         )}
 
-        <div className={`flex justify-end items-center ${containerButtons} space-x-2 sm:space-x-4 border border-black`}>
+        <div className={`flex justify-end items-center ${containerButtons} space-x-2 sm:space-x-4`}>
           {isLoading && (
             [...new Array(3)].map((_, key) => (
               <React.Fragment key={`skeleton-button-${key}`}>

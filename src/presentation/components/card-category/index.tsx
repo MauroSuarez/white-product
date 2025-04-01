@@ -1,21 +1,26 @@
 import { CategoryIcon } from '@/presentation/components/category-icon'
+import { cn } from '@/presentation/utils/uiHelpers'
 
-type CardCategoryProps = {
+export type CardCategoryProps = {
   category: string
   icon: string
+  className?: string
+  htmlFor: string
 }
 
 const CardCategory = ({
   category,
-  icon
+  icon,
+  className,
+  htmlFor
 }: CardCategoryProps) => {
   return (
-    <div className='flex flex-col items-center space-y-4 justify-center w-full h-32 bg-white border border-gray-200 rounded-md'>
+    <label htmlFor={htmlFor} className={cn(`flex flex-col items-center space-y-4 justify-center w-full h-32 bg-white border border-gray-200 rounded-md`, className)}>
       <CategoryIcon iconName={icon} />
       <div className='flex w-4/5 text-center justify-center text-wrap mx-auto'>
         {category}
       </div>
-    </div>
+    </label>
   )
 }
 

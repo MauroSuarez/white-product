@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export type Category = {
+  id: number
   icon: string
   label: string
   category: number

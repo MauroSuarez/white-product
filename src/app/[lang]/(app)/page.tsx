@@ -10,8 +10,7 @@ import {
   CardTitle,
 } from "@/presentation/ds/card"
 import { Icon } from "@/presentation/ds/icon"
-import { Filters } from "./layout/Filters"
-import { Header } from "./layout/Header"
+import { Filters } from "./Filters"
 import { Map } from '@/presentation/components/map'
 import { ScrollArea } from '@/presentation/ds/scroll-area'
 import { Separator } from '@/presentation/ds/separator'

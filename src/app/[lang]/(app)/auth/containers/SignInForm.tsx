@@ -30,6 +30,7 @@ const FormSignIn = ({ handleSubmit, handleTypeForm, isLoading = false }: FormSig
             <div className="w-full flex items-center justify-between">
               <FormCheckbox
                 name="remember"
+                id="remember"
                 label="Recordarme"
                 classNameContainer="flex flex-row items-center space-x-3 space-y-0"
                 className="h-6 w-6"
