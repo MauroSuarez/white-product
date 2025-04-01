@@ -1,23 +1,19 @@
 import { useCategoriesStore } from "@/infraestructure/stores/categoriesStore"
 import { Typography } from "@/presentation/ds/typography"
-import { CardCategory } from "@/presentation/components/card-category"
 
-import { z } from 'zod'
 import { Button } from '@/presentation/ds/button'
-import { FormContainer } from "@/presentation/components/form/FormContainer"
-import { CreditCard, Banknote, Bitcoin } from 'lucide-react'
 import { FormRadioGroupCardCategory } from "@/presentation/components/form/FormRadioGroupCardCategory"
 
 
-const paymentSchema = z.object({
-  paymentMethod: z.string().min(1),
-})
+interface ChoiseCategoryProps {
+  register: any
+  control: any
+  watch: any
+  setValue: any
+  [key: string]: any  // Replace 'any' with the specific type if known
+}
 
-const ChoiseCategory = () => {
-  const handleSubmit = (data: z.infer<typeof paymentSchema>) => {
-    console.log('Método de pago seleccionado:', data.paymentMethod)
-    // Lógica para procesar el formulario
-  }
+const ChoiseCategory = ({ register, control, watch, setValue, ...formMethods }: ChoiseCategoryProps) => {
   const { categories } = useCategoriesStore()
   return (
     <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto">
@@ -27,29 +23,14 @@ const ChoiseCategory = () => {
         </Typography>
       </div>
       <div className="flex w-full flex-wrap mt-4 justify-center">
-        <FormContainer
-          schema={paymentSchema}
-          onSubmit={handleSubmit}
-        >
-          {(methods) => (
-            <>
-              <FormRadioGroupCardCategory
-                name="paymentMethod"
-                options={categories}
-                className="flex w-full"
-              />
-              <Button 
-                type="submit" 
-                className="w-full mt-4"
-                disabled={!methods.formState.isValid}
-              >
-                Continuar con el pago
-              </Button> 
-            </>
-          )}
-        </FormContainer>
-        </div>
+        <FormRadioGroupCardCategory
+          name="category"
+          options={categories}
+          className="flex w-full"
+        />
+        <Button type="submit">Guardar</Button>
       </div>
+    </div>
   )
 }
 

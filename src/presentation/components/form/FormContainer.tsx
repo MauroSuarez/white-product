@@ -21,6 +21,7 @@ interface FormContainerProps<T extends z.ZodType<any, any>> {
   // children: React.ReactNode
   children: (methods: UseFormReturn<z.infer<T>>) => React.ReactNode
   className?: string
+  formProps: any
 }
 
 export function FormContainer<T extends z.ZodType<any, any>>({
@@ -29,6 +30,7 @@ export function FormContainer<T extends z.ZodType<any, any>>({
   onSubmit,
   children,
   className = '',
+  formProps,
 }: FormContainerProps<T>) {
   const form = useForm<z.infer<T>>({
     resolver: zodResolver(schema),
@@ -36,7 +38,7 @@ export function FormContainer<T extends z.ZodType<any, any>>({
   })
 
   return (
-    <FormProvider {...form}>
+    <FormProvider {...form} {...formProps}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className={className}>
           {children(form)}

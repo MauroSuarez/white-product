@@ -6,6 +6,8 @@ import { CustomSheet } from "../custom-sheet"
 import { FadeIn } from "../fade-in"
 import { Header } from "./Header"
 import { Footer } from './Footer'
+import { FormContainer } from '../form/FormContainer'
+import { SetUpDTO, SetUpSchema } from '@/application/validators/setUpSchema'
 
 type CustomStepperSetUpProps = {
   isOpenSheet?: boolean
@@ -36,6 +38,11 @@ const CustomStepperSetUp = ({
   const handleBack = () => {
     setDirection("backward")
     goBack && goBack()
+  }
+
+  const handleSubmit = (data: SetUpDTO) => {
+    console.log('Método de pago seleccionado:', data)
+    // Lógica para procesar el formulario
   }
 
   return (
@@ -74,12 +81,20 @@ const CustomStepperSetUp = ({
             }}
             transition={{ duration: 0.3 }}
           >
-            <div className={`w-full h-screen`}>
-              <div className="space-y-4">
-                {steps[currentMainStep].subSteps[currentSubStep].content}
-                <p>step: {currentMainStep}, substep: {currentSubStep}, cantSubstep: {steps[currentMainStep].subSteps?.length}</p>
-              </div>
-            </div>
+            <FormContainer
+              schema={SetUpSchema}
+              onSubmit={handleSubmit}
+              formProps={{ id: 'setup-form' }}
+            >
+              {(methods) => (
+                <div className={`w-full h-screen`}>
+                  <div className="space-y-4">
+                    {steps[currentMainStep].subSteps[currentSubStep].content(methods)}
+                    <p>step: {currentMainStep}, substep: {currentSubStep}, cantSubstep: {steps[currentMainStep].subSteps?.length}</p>
+                  </div>
+                </div>
+              )}
+            </FormContainer>
           </FadeIn>
         </div>
       </CustomSheet>

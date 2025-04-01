@@ -49,7 +49,7 @@ const Footer = ({
             return (
               <div 
                 key={index}
-                className="flex border border-neutral-100 w-full rounded-full min-h-2 bg-neutral-100"
+                className={`flex border border-neutral-100 w-full ${currentMainStep === 0 && currentSubStep === 0 ? '' : 'rounded-full'} min-h-2 bg-neutral-100`}
               >
                 {generatePercentBar(index)}
               </div>
@@ -69,8 +69,10 @@ const Footer = ({
           </Button>
         ) : null}
         <Button
-          onClick={handleNext}
+          // onClick={handleNext}
           variant={'ghost'}
+          type="submit"
+          form="setup-form"
           // disabled={currentMainStep === steps.length - 1 && currentSubStep === steps[currentMainStep].subSteps.length}
           className={`py-4 h-12 text-white ${currentMainStep === 0 && currentSubStep === 0 ? 'bg-destructive' : 'bg-neutral-600 hover:bg-neutral-500 hover:text-neutral-50'} `}
         >

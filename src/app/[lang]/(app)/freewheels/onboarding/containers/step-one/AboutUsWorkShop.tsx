@@ -13,7 +13,7 @@ const icons: Record<'rocket' | 'workshop' | 'services', React.FC<React.SVGAttrib
 const AboutUsWorkShop = () => {
   return (
     <div className="flex flex-col h-screen md:flex-row gap-6">
-      <div className="w-full h-[70%] md:w-1/2 bg-white p-6 flex items-center justify-center">
+      <div className="w-full h-[70%] md:w-1/2 bg-background p-6 flex items-center justify-center">
         <div className="flex-wrap w-4/5 flex h-auto">
           <Typography variant={'p'} className="text-left w-full font-semibold">
             Paso 1

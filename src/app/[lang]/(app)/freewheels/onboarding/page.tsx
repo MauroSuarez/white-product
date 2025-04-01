@@ -17,9 +17,9 @@ export default function Onboarding() {
     {
       title: 'Paso 1',
       subSteps: [
-        { content: <SetupOnboarding /> },
-        { content: <AboutUsWorkShop /> },
-        { content: <ChoiseCategory /> }
+        { content: (methods: any) =><SetupOnboarding {...methods} /> },
+        { content: (methods: any) =><AboutUsWorkShop {...methods} /> },
+        { content: (methods: any) => <ChoiseCategory {...methods} /> }
       ]
     },
     {

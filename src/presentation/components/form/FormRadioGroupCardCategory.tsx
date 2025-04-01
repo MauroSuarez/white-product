@@ -38,8 +38,8 @@ export function FormRadioGroupCardCategory({
     <FormField
       control={control}
       name={name}
-      render={({ field }) => {
-        console.log(field.value)
+      render={({ field, formState }) => {
+        console.log(formState, 'A VER')
         return (
         <FormItem className={className}>
           {label && <FormLabel>{label}</FormLabel>}
@@ -49,7 +49,6 @@ export function FormRadioGroupCardCategory({
               onValueChange={field.onChange}
               value={field.value}
               className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
-              // className={`flex ${orientation === 'horizontal' ? 'flex-row flex-wrap gap-4' : 'flex-col gap-3'}`}
             >
               {options.map((option) => {
                 return option.is_visible ? (
@@ -59,13 +58,12 @@ export function FormRadioGroupCardCategory({
                       id={`${option.id}`}
                       className="peer hidden"
                     />
-                    
                     <Label htmlFor={option.label} className="cursor-pointer">
                       <CardCategory
                         className={cn(
-                          'p-3 rounded-md border transition-colors',
+                          'p-3 rounded-md border transition-colors cursor-pointer',
                           field.value === option.id.toString()
-                            ? 'border-primary bg-primary/5' 
+                            ? 'border-primary' 
                             : 'border-muted hover:border-primary/30'
                         )}
                         category={option.label}

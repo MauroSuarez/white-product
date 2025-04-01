@@ -31,7 +31,7 @@ const SetupOnboarding = () => {
   return (
     <div className="flex flex-col h-screen md:flex-row gap-6">
 
-      <div className="w-full h-[70%] md:w-1/2 bg-white p-6 flex items-center justify-center">
+      <div className="w-full h-[70%] md:w-1/2 bg-brackground p-6 flex items-center justify-center">
         <div className="flex-wrap w-4/5 flex h-auto space-y-8">
           <Typography variant={'h1'} className="border-0 text-center leading-8">
             Comenzar a usar
