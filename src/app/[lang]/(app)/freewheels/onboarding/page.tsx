@@ -93,12 +93,14 @@ export default function Onboarding() {
           formProps={{ id: 'setup-form' }}
         >
           {(methods) => (
-            <div className={`w-full h-screen`}>
-              <div className="space-y-4">
-                {steps[currentMainStep].subSteps[currentSubStep].content(methods)}
-                <p>step: {currentMainStep}, substep: {currentSubStep}, cantSubstep: {steps[currentMainStep].subSteps?.length}</p>
+            <>
+              <div className={`w-full h-screen`}>
+                <div className="space-y-4">
+                  {steps[currentMainStep].subSteps[currentSubStep].content(methods)}
+                  <p>step: {currentMainStep}, substep: {currentSubStep}, cantSubstep: {steps[currentMainStep].subSteps?.length}</p>
+                </div>
               </div>
-            </div>
+            </>
           )}
       </FormContainer>
     </CustomStepperSetUp>

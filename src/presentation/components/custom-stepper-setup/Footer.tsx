@@ -41,7 +41,7 @@ const Footer = ({
   }
 
   return (
-    <div>
+    <div className="">
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div className={`flex ${currentMainStep === 0 && currentSubStep === 0 ? '' : 'space-x-2'} w-full`}>
           {steps.map((step, index) => {
