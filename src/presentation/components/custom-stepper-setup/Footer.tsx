@@ -1,5 +1,4 @@
 import { Button } from "@/presentation/ds/button"
-import { Progress } from "@/presentation/ds/progress"
 
 type FooterProps = {
   currentMainStep: number

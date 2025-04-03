@@ -13,10 +13,10 @@ interface ChoiseCategoryProps {
   [key: string]: any  // Replace 'any' with the specific type if known
 }
 
-const ChoiseCategory = ({ register, control, watch, setValue, ...formMethods }: ChoiseCategoryProps) => {
+const ChoiseCategory = () => {
   const { categories } = useCategoriesStore()
   return (
-    <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto">
+    <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto border border-red-500">
       <div className="flex-wrap w-full flex h-auto">
         <Typography variant={'h2'} className="text-center w-full font-semibold border-none">
           ¿Cuál de estas opciones describe mejor tu taller?
@@ -26,7 +26,7 @@ const ChoiseCategory = ({ register, control, watch, setValue, ...formMethods }: 
         <FormRadioGroupCardCategory
           name="category"
           options={categories}
-          className="flex w-full"
+          className="flex w-full border border-pink-500"
         />
         <Button type="submit">Guardar</Button>
       </div>

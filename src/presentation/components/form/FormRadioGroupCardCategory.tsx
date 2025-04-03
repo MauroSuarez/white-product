@@ -39,47 +39,51 @@ export function FormRadioGroupCardCategory({
       control={control}
       name={name}
       render={({ field, formState }) => {
-        console.log(formState, 'A VER')
+        console.log(field, formState.errors, 'A VER')
         return (
-        <FormItem className={className}>
-          {label && <FormLabel>{label}</FormLabel>}
-          
-          <FormControl>
-            <RadioGroup
-              onValueChange={field.onChange}
-              value={field.value}
-              className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
-            >
-              {options.map((option) => {
-                return option.is_visible ? (
-                  <div key={option.id}>
-                    <RadioGroupItem
-                      value={`${option.id}`}
-                      id={`${option.id}`}
-                      className="peer hidden"
-                    />
-                    <Label htmlFor={option.label} className="cursor-pointer">
-                      <CardCategory
-                        className={cn(
-                          'p-3 rounded-md border transition-colors cursor-pointer',
-                          field.value === option.id.toString()
-                            ? 'border-primary' 
-                            : 'border-muted hover:border-primary/30'
-                        )}
-                        category={option.label}
-                        icon={option.icon}
-                        htmlFor={`${option.id}`}
-                      />
-                    </Label>
-                  </div>
-              ) : null })}
-            </RadioGroup>
-          </FormControl>
-          
-          {description && <FormDescription>{description}</FormDescription>}
-          <FormMessage />
-        </FormItem>
-      )}}
+          <div className='flex flex-wrap w-full'>
+            <div className='flex w-full border h-auto py-5'>
+              {description && <FormDescription>{description}</FormDescription>}
+              <FormMessage />
+            </div>
+            <FormItem className={className}>
+              {label && <FormLabel>{label}</FormLabel>}
+              
+              <FormControl>
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto'
+                >
+                  {options.map((option) => {
+                    return option.is_visible ? (
+                      <div key={option.id}>
+                        <RadioGroupItem
+                          value={`${option.id}`}
+                          id={`${option.id}`}
+                          className="peer hidden"
+                        />
+                        <Label htmlFor={option.label} className="cursor-pointer">
+                          <CardCategory
+                            className={cn(
+                              'p-3 rounded-md border transition-colors cursor-pointer',
+                              field.value === option.id.toString()
+                                ? 'border-primary' 
+                                : 'border-muted hover:border-primary/30'
+                            )}
+                            category={option.label}
+                            icon={option.icon}
+                            htmlFor={`${option.id}`}
+                          />
+                        </Label>
+                      </div>
+                  ) : null })}
+                </RadioGroup>
+              </FormControl>
+            </FormItem>
+          </div>
+        )
+     }}
     />
   )
 }

@@ -8,6 +8,19 @@ import { Header } from "./Header"
 import { Footer } from './Footer'
 import { FormContainer } from '../form/FormContainer'
 import { SetUpDTO, SetUpSchema } from '@/application/validators/setUpSchema'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/presentation/ds/sheet"
+import { cn } from '@/presentation/utils/uiHelpers'
+import { BrandLogo } from '../brand-logo'
+import { useFormContext } from 'react-hook-form'
 
 type CustomStepperSetUpProps = {
   isOpenSheet?: boolean
@@ -17,6 +30,7 @@ type CustomStepperSetUpProps = {
   currentMainStep: number
   currentSubStep: number
   steps: Array<any>
+  children: React.ReactNode
 }
 
 const CustomStepperSetUp = ({
@@ -26,7 +40,8 @@ const CustomStepperSetUp = ({
   handleOpenChange,
   currentMainStep,
   currentSubStep,
-  steps
+  steps,
+  children
 }: CustomStepperSetUpProps) => {
   const [direction, setDirection] = useState<"forward" | "backward">("forward")
 
@@ -38,11 +53,6 @@ const CustomStepperSetUp = ({
   const handleBack = () => {
     setDirection("backward")
     goBack && goBack()
-  }
-
-  const handleSubmit = (data: SetUpDTO) => {
-    console.log('Método de pago seleccionado:', data)
-    // Lógica para procesar el formulario
   }
 
   return (
@@ -81,20 +91,7 @@ const CustomStepperSetUp = ({
             }}
             transition={{ duration: 0.3 }}
           >
-            <FormContainer
-              schema={SetUpSchema}
-              onSubmit={handleSubmit}
-              formProps={{ id: 'setup-form' }}
-            >
-              {(methods) => (
-                <div className={`w-full h-screen`}>
-                  <div className="space-y-4">
-                    {steps[currentMainStep].subSteps[currentSubStep].content(methods)}
-                    <p>step: {currentMainStep}, substep: {currentSubStep}, cantSubstep: {steps[currentMainStep].subSteps?.length}</p>
-                  </div>
-                </div>
-              )}
-            </FormContainer>
+            {children}
           </FadeIn>
         </div>
       </CustomSheet>
