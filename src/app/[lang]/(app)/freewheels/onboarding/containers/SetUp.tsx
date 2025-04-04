@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { SetupOnboarding } from "./step-one/SetupOnboarding"
 import { AboutUsWorkShop } from "./step-one/AboutUsWorkShop"
 import { ChoiseCategory } from "./step-one/ChoiseCategory"
+import { LocationAddress } from "./step-one/LocationAddress"
 import { SetUpSchema } from "@/application/validators/setUpSchema"
 import { FormContainer } from "@/presentation/components/form/FormContainer"
 import { Header } from "./Header"
@@ -30,7 +31,7 @@ export default function SetUp({
 }: SetUpProps) {
   const router = useRouter()
   const [currentMainStep, setCurrentMainStep] = useState(0)
-  const [currentSubStep, setCurrentSubStep] = useState(0)
+  const [currentSubStep, setCurrentSubStep] = useState(3)
   const [isNextDisabled, setIsNextDisabled] = useState(false)
   const [direction, setDirection] = useState<"forward" | "backward">("forward")
 
@@ -53,7 +54,8 @@ export default function SetUp({
       subSteps: [
         { content: ({methods}) => <SetupOnboarding {...methods} /> },
         { content: ({methods}) => <AboutUsWorkShop {...methods} /> },
-        { content: ({methods}) => <ChoiseCategory handleNext={(value) => handleValidNext(value)} /> }
+        { content: ({methods}) => <ChoiseCategory handleNext={(value) => handleValidNext(value)} /> },
+        { content: ({methods}) => <LocationAddress handleNext={(value) => handleValidNext(value)} {...methods} /> },
       ]
     },
     {

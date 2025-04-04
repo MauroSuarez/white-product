@@ -7,6 +7,7 @@ import { FormRadioGroupCardCategory } from "../../components/FormRadioGroupCardC
 import { ZodType } from "zod"
 import { useFormContext } from "react-hook-form"
 import { CategorySchema } from "@/application/validators/setUpSchema"
+import { PanelSetup } from "../../components/PanelSetup"
 
 
 interface ChoiseCategoryProps {
@@ -34,20 +35,18 @@ const ChoiseCategory = ({ schema, handleNext }: ChoiseCategoryProps) => {
 
   return (
     <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto">
-      <div className="flex-wrap w-full flex h-auto">
-        <Typography variant={'h2'} className="text-center w-full font-semibold border-none">
-          ¿Cuál de estas opciones describe mejor tu taller?
-        </Typography>
-      </div>
-      <div className="flex w-full flex-wrap mt-4 justify-center">
+      <PanelSetup
+        title="¿Cuál de estas opciones describe mejor tu taller?"
+      >
         <FormRadioGroupCardCategory
           name="category"
           options={categories}
           className="flex w-full"
         />
-      </div>
+      </PanelSetup>
     </div>
   )
 }
 
 export { ChoiseCategory }
+// ¿Cuál de estas opciones describe mejor tu taller?
