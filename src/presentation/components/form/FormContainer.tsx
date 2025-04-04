@@ -38,7 +38,7 @@ export function FormContainer<T extends z.ZodType<any, any>>({
   })
 
   return (
-    <FormProvider {...form} {...formProps}>
+    <FormProvider {...form}>
       <Form {...form}>
         <form {...formProps} onSubmit={form.handleSubmit(onSubmit)} className={className}>
           {children(form)}

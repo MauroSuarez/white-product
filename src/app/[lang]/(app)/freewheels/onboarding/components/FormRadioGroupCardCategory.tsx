@@ -12,7 +12,7 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/presentation/ds/radio-group'
 import { Label } from '@/presentation/ds/label'
 import { cn } from '@/presentation/utils/uiHelpers'
-import { CardCategory } from '../card-category'
+import { CardCategory } from '../../../../../../presentation/components/card-category'
 import { Category } from '@/infraestructure/stores/categoriesStore'
 
 interface FormRadioGroupProps {
@@ -39,13 +39,12 @@ export function FormRadioGroupCardCategory({
       control={control}
       name={name}
       render={({ field, formState }) => {
-        console.log(field, formState.errors, 'A VER')
         return (
           <div className='flex flex-wrap w-full'>
-            <div className='flex w-full border h-auto py-5'>
+            {/* <div className='flex w-full border h-auto py-5'>
               {description && <FormDescription>{description}</FormDescription>}
               <FormMessage />
-            </div>
+            </div> */}
             <FormItem className={className}>
               {label && <FormLabel>{label}</FormLabel>}
               

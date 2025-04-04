@@ -1,22 +1,39 @@
+
+import React, { useEffect } from "react"
 import { useCategoriesStore } from "@/infraestructure/stores/categoriesStore"
 import { Typography } from "@/presentation/ds/typography"
 
-import { Button } from '@/presentation/ds/button'
-import { FormRadioGroupCardCategory } from "@/presentation/components/form/FormRadioGroupCardCategory"
+import { FormRadioGroupCardCategory } from "../../components/FormRadioGroupCardCategory"
+import { ZodType } from "zod"
+import { useFormContext } from "react-hook-form"
+import { CategorySchema } from "@/application/validators/setUpSchema"
 
 
 interface ChoiseCategoryProps {
-  register: any
-  control: any
-  watch: any
-  setValue: any
-  [key: string]: any  // Replace 'any' with the specific type if known
+  schema?: ZodType
+  handleNext: (value: boolean) => void
 }
 
-const ChoiseCategory = () => {
+const ChoiseCategory = ({ schema, handleNext }: ChoiseCategoryProps) => {
   const { categories } = useCategoriesStore()
+  const { watch, formState: { errors }  } = useFormContext()
+
+  const category = watch('category')
+
+  useEffect(() => {
+    const validationResult = CategorySchema.safeParse({
+      category: category
+    })
+
+    if(!validationResult.success) {
+      handleNext(true)
+    } else {
+      handleNext(false)
+    }
+  }, [category])
+
   return (
-    <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto border border-red-500">
+    <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto">
       <div className="flex-wrap w-full flex h-auto">
         <Typography variant={'h2'} className="text-center w-full font-semibold border-none">
           ¿Cuál de estas opciones describe mejor tu taller?
@@ -26,9 +43,8 @@ const ChoiseCategory = () => {
         <FormRadioGroupCardCategory
           name="category"
           options={categories}
-          className="flex w-full border border-pink-500"
+          className="flex w-full"
         />
-        <Button type="submit">Guardar</Button>
       </div>
     </div>
   )
