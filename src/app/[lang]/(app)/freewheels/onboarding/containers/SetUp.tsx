@@ -31,7 +31,7 @@ export default function SetUp({
 }: SetUpProps) {
   const router = useRouter()
   const [currentMainStep, setCurrentMainStep] = useState(0)
-  const [currentSubStep, setCurrentSubStep] = useState(3)
+  const [currentSubStep, setCurrentSubStep] = useState(0)
   const [isNextDisabled, setIsNextDisabled] = useState(false)
   const [direction, setDirection] = useState<"forward" | "backward">("forward")
 
