@@ -32,7 +32,6 @@ const FormSetup = ({
         >
         <div className="space-y-4">
           {content({})}
-          <p>step: {currentMainStep}, substep: {currentSubStep}, cantSubstep: {steps[currentMainStep].subSteps?.length}</p>
         </div>
       </FadeIn>
     </div>

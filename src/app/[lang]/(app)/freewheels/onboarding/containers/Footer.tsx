@@ -1,5 +1,4 @@
 import { Button } from "@/presentation/ds/button"
-import { useFormContext } from "react-hook-form"
 
 type FooterProps = {
   currentMainStep: number
@@ -72,6 +71,7 @@ const Footer = ({
         <Button
           onClick={handleNext}
           variant={'ghost'}
+          type="button"
           // type="submit"
           // form="setup-form"
           disabled={isNextDisabled}

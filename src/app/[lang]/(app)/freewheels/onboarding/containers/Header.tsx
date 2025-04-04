@@ -29,7 +29,7 @@ const Header = ({
         <Button
           onClick={!isShow ? handleOpenChange : undefined}
           variant={'outline'}
-          // type={isShow ? 'submit' : 'button'}
+          type={isShow ? 'submit' : 'button'}
           // form={isShow ? 'setup-form' : undefined}
         >
           {isShow ? 'Guardar y salir' : 'Salir'}
