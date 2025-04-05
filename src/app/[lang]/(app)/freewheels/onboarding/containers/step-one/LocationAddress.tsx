@@ -8,6 +8,7 @@ import { GooglePlaceSchema } from '@/application/validators/setUpSchema'
 import { useFormContext } from 'react-hook-form'
 import { FormLocationPlaces } from '../../components/FormLocationPlace'
 import { useGeolocation } from '@/presentation/hooks/useLocation'
+import { APPLICATION } from '@/config/constants'
 
 interface LocationAddressProps {
   schema?: ZodType
@@ -64,7 +65,7 @@ const LocationAddress = ({ schema, handleNext }: LocationAddressProps) => {
           lng: location?.lng || -58.563671,
           tooltip: (
             <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
-              <h3 style={{ color: 'blue' }}>Tooltip con React</h3>
+              <h3 style={{ color: 'blue' }}>Tu {APPLICATION.appName} esta aquí</h3>
               <p>{location?.address}</p>
             </div>
           ),
