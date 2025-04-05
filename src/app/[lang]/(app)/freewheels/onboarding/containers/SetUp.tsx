@@ -13,6 +13,7 @@ import { Footer } from "./Footer"
 import { FormSetup } from "./FormSetup"
 import { ZodType } from "zod"
 import { FadeIn } from "@/presentation/components/fade-in"
+import { ConfirmLocationAddress } from "./step-one/ConfirmLocationAddress"
 
 type OnboardingStepsProps = {
   title?: string
@@ -31,7 +32,7 @@ export default function SetUp({
 }: SetUpProps) {
   const router = useRouter()
   const [currentMainStep, setCurrentMainStep] = useState(0)
-  const [currentSubStep, setCurrentSubStep] = useState(0)
+  const [currentSubStep, setCurrentSubStep] = useState(3)
   const [isNextDisabled, setIsNextDisabled] = useState(false)
   const [direction, setDirection] = useState<"forward" | "backward">("forward")
 
@@ -56,6 +57,7 @@ export default function SetUp({
         { content: ({methods}) => <AboutUsWorkShop {...methods} /> },
         { content: ({methods}) => <ChoiseCategory handleNext={(value) => handleValidNext(value)} /> },
         { content: ({methods}) => <LocationAddress handleNext={(value) => handleValidNext(value)} {...methods} /> },
+        { content: ({methods}) => <ConfirmLocationAddress handleNext={(value) => handleValidNext(value)} {...methods} /> },
       ]
     },
     {

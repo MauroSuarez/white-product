@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { ZodType } from "zod"
 import { PanelSetup } from "../../components/PanelSetup"
 import { Map } from '@/presentation/components/map'
@@ -23,16 +23,24 @@ placeId: "ChIJOcTMwIO5vJURIIj8Os9tXdI"
 */
 
 const LocationAddress = ({ schema, handleNext }: LocationAddressProps) => {
-  const center: [number, number] = [-34.600625, -58.563671]
+  const [center, setCenter] = useState<[number, number]>([-34.600625, -58.563671])
   const { position, error, isLoading, requestPermission } = useGeolocation({
     enableHighAccuracy: true,
     timeout: 100000,
     autoRequest: true // Solicitar automáticamente al montar el componente
   })
 
-  const { watch, formState: { errors }  } = useFormContext()
+  const { watch } = useFormContext()
   
   const location = watch('location')
+
+  useEffect(() => {
+    if(!location) {
+      setCenter([position?.coords?.latitude || -34.600625, position?.coords?.longitude || -58.563671])
+    }else {
+      setCenter([location?.lat, location?.lng])
+    }
+  }, [location, position])
 
   useEffect(() => {
     const validationResult = GooglePlaceSchema.safeParse({
@@ -46,18 +54,24 @@ const LocationAddress = ({ schema, handleNext }: LocationAddressProps) => {
     }
   }, [location])
   
-  const markers = [
-    {
-      lat: position?.coords?.altitude ||  -34.600625,
-      lng: position?.coords?.longitude || -58.563671,
-      tooltip: (
-        <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
-          <h3 style={{ color: 'blue' }}>Tooltip con React</h3>
-          <p>Este es un tooltip hecho con un componente de React.</p>
-        </div>
-      ),
-    },
-  ]
+  const markers: any = useMemo(() => {
+    if(!location)
+      return []
+    else
+      return [
+        {
+          lat: location?.lat ||  -34.600625,
+          lng: location?.lng || -58.563671,
+          tooltip: (
+            <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
+              <h3 style={{ color: 'blue' }}>Tooltip con React</h3>
+              <p>{location?.address}</p>
+            </div>
+          ),
+        },
+    ]
+  }, [location])
+
   return (
     <PanelSetup
       title="¿Dónde está tu taller?"
@@ -70,7 +84,7 @@ const LocationAddress = ({ schema, handleNext }: LocationAddressProps) => {
         />
         {position ? (
           <Map
-            center={[position?.coords?.altitude || -34.600625, position?.coords?.longitude || -58.563671]}
+            center={center}
             zoom={13}
             markers={markers}
             styleContainer={{ height: '450px', width: '100%' }}
