@@ -9,18 +9,23 @@ import 'leaflet/dist/leaflet.css'
 interface Marker {
   lat: number
   lng: number
-  tooltip: React.ReactNode | string // Puede ser un ReactNode o un string
+  tooltip: React.ReactNode | string
+  tooltipPermanent?: boolean // Nueva prop: determina si el tooltip es permanente
+  popup?: React.ReactNode | string // Nueva prop: contenido del popup
+  popupPermanent?: boolean // Nueva prop: determina si el popup es permanente
 }
 
 // Definir las props del componente
 interface MapWithMarkersProps {
-  center: [number, number] // [lat, lng]
+  center: [number, number]
   zoom: number
   markers: Marker[]
   styleContainer: {
     height: string
     width: string
   }
+  tooltipOptions?: L.TooltipOptions // Opciones adicionales para tooltips
+  popupOptions?: L.PopupOptions // Opciones adicionales para popups
 }
 
 const svgString = `
@@ -29,57 +34,85 @@ const svgString = `
   </svg>
 `
 
-const Map: React.FC<MapWithMarkersProps> = ({ center, zoom, markers, styleContainer }) => {
+const Map: React.FC<MapWithMarkersProps> = ({ 
+  center, 
+  zoom, 
+  markers, 
+  styleContainer,
+  tooltipOptions = {},
+  popupOptions = {}
+}) => {
   const mapRef = useRef<L.Map | null>(null)
   const tooltipRefs = useRef<{ [key: string]: L.Tooltip }>({})
+  const popupRefs = useRef<{ [key: string]: L.Popup }>({})
 
   useEffect(() => {
     // Inicializar el mapa
     mapRef.current = L.map('map').setView(center, zoom)
 
     const customIcon = L.icon({
-      iconUrl: `data:image/svg+xml;base64,${btoa(svgString)}`, // Convertir SVG a base64
-      iconSize: [32, 32], // Tamaño del icono
-      iconAnchor: [16, 32], // Punto de anclaje del icono
+      iconUrl: `data:image/svg+xml;base64,${btoa(svgString)}`,
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
     })
 
-    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //   attribution: '© OpenStreetMap contributors',
-    // }).addTo(map)
-
-     L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
       subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
       attribution: '© Google Maps',
     }).addTo(mapRef.current)
 
-    // Añadir un marcador
-    // L.marker([-34.598954, -58.5712246]).addTo(map)
-    //   .bindTooltip('¡Hola! Este es un marcador.')
-    //   //.bindPopup('¡Hola! Este es un marcador.')
-    //   //.openPopup()
-    // Agregar marcadores con tooltips
+    // Agregar marcadores con tooltips y popups
     markers.forEach((marker) => {
-      const { lat, lng, tooltip } = marker;
+      const { lat, lng, tooltip, tooltipPermanent, popup, popupPermanent } = marker
 
-      // Crear un contenedor para el tooltip
-      const tooltipContainer = document.createElement('div');
-      ReactDOM.render(<>{tooltip}</>, tooltipContainer); // Renderizar el contenido del tooltip
+      const leafletMarker = L.marker([lat, lng], { icon: customIcon }).addTo(mapRef.current!)
 
-      // Agregar el marcador con tooltip
-      const leafletMarker = L.marker([lat, lng], { icon: customIcon }).addTo(mapRef.current!);
-      leafletMarker.bindTooltip(tooltipContainer, { permanent: false, direction: 'top' });
+      // Configurar tooltip si existe
+      if (tooltip) {
+        const tooltipContainer = document.createElement('div')
+        ReactDOM.render(<>{tooltip}</>, tooltipContainer)
+        
+        const tooltipInstance = leafletMarker.bindTooltip(tooltipContainer, {
+          permanent: tooltipPermanent || false,
+          direction: 'top',
+          ...tooltipOptions // Opciones adicionales
+        }).getTooltip()!
 
-      // Guardar una referencia al tooltip
-      tooltipRefs.current[`${lat}-${lng}`] = leafletMarker.getTooltip()!;
+        tooltipRefs.current[`${lat}-${lng}`] = tooltipInstance
+
+        // Abrir tooltip si es permanente
+        if (tooltipPermanent) {
+          leafletMarker.openTooltip()
+        }
+      }
+
+      // Configurar popup si existe
+      if (popup) {
+        const popupContainer = document.createElement('div')
+        ReactDOM.render(<>{popup}</>, popupContainer)
+        
+        const popupInstance = leafletMarker.bindPopup(popupContainer, {
+          autoClose: !popupPermanent,
+          closeOnClick: !popupPermanent,
+          ...popupOptions // Opciones adicionales
+        }).getPopup()!
+
+        popupRefs.current[`${lat}-${lng}`] = popupInstance
+
+        // Abrir popup si es permanente
+        if (popupPermanent) {
+          leafletMarker.openPopup()
+        }
+      }
     })
 
     return () => {
       if (mapRef.current) {
-        mapRef.current.remove(); // Eliminar el mapa
-        mapRef.current = null; // Limpiar la referencia
+        mapRef.current.remove()
+        mapRef.current = null
       }
-    } // Limpiar el mapa al desmontar el componente
-  }, [center, zoom, markers])
+    }
+  }, [center, zoom, markers, tooltipOptions, popupOptions])
 
   return <div id="map" style={{ ...styleContainer, zIndex: 10 }} />
 }

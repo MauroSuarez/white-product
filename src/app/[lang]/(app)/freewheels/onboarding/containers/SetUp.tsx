@@ -6,6 +6,7 @@ import { SetupOnboarding } from "./step-one/SetupOnboarding"
 import { AboutUsWorkShop } from "./step-one/AboutUsWorkShop"
 import { ChoiseCategory } from "./step-one/ChoiseCategory"
 import { LocationAddress } from "./step-one/LocationAddress"
+import { BasicData } from "./step-one/BasicData"
 import { SetUpSchema } from "@/application/validators/setUpSchema"
 import { FormContainer } from "@/presentation/components/form/FormContainer"
 import { Header } from "./Header"
@@ -14,6 +15,10 @@ import { FormSetup } from "./FormSetup"
 import { ZodType } from "zod"
 import { FadeIn } from "@/presentation/components/fade-in"
 import { ConfirmLocationAddress } from "./step-one/ConfirmLocationAddress"
+import { WorkShopDetail } from "./step-two/WorkShopDetail"
+import { ChoiseServices } from "./step-two/ChoiseServices"
+import { WorkShopPothos } from "./step-two/WorkShopPothos"
+import { WorkShopSocialName } from "./step-two/WorkShopSocialName"
 
 type OnboardingStepsProps = {
   title?: string
@@ -31,8 +36,8 @@ export default function SetUp({
   handleSubmit
 }: SetUpProps) {
   const router = useRouter()
-  const [currentMainStep, setCurrentMainStep] = useState(0)
-  const [currentSubStep, setCurrentSubStep] = useState(4)
+  const [currentMainStep, setCurrentMainStep] = useState(1)
+  const [currentSubStep, setCurrentSubStep] = useState(1)
   const [isNextDisabled, setIsNextDisabled] = useState(false)
   const [direction, setDirection] = useState<"forward" | "backward">("forward")
 
@@ -58,15 +63,16 @@ export default function SetUp({
         { content: ({methods}) => <ChoiseCategory handleNext={(value) => handleValidNext(value)} /> },
         { content: ({methods}) => <LocationAddress handleNext={(value) => handleValidNext(value)} {...methods} /> },
         { content: ({methods}) => <ConfirmLocationAddress handleNext={(value) => handleValidNext(value)} {...methods} /> },
+        { content: ({methods}) => <BasicData handleNext={(value) => handleValidNext(value)} {...methods} /> },
       ]
     },
     {
       title: 'Paso 2',
       subSteps: [
-        { content: (methods: any) => <AboutUsWorkShop {...methods} /> },
-        // { title: 'Subpaso 2.2', content: 'Contenido del subpaso 2.2' },
-        // { title: 'Subpaso 2.3', content: 'Contenido del subpaso 2.3' },
-        // { title: 'Subpaso 2.4', content: 'Contenido del subpaso 2.4' }
+        { content: (methods: any) => <WorkShopDetail {...methods} /> },
+        { content: (methods: any) => <ChoiseServices handleNext={(value) => handleValidNext(value)} {...methods} /> },
+        { content: (methods: any) => <WorkShopPothos handleNext={(value) => handleValidNext(value)} {...methods} /> },
+        { content: (methods: any) => <WorkShopSocialName handleNext={(value) => handleValidNext(value)} {...methods} /> },
       ]
     },
     {
