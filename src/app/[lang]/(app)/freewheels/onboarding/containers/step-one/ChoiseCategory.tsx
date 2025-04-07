@@ -17,11 +17,14 @@ interface ChoiseCategoryProps {
 
 const ChoiseCategory = ({ schema, handleNext }: ChoiseCategoryProps) => {
   const { categories } = useCategoriesStore()
-  const { watch, formState: { errors }  } = useFormContext()
+  const { watch, formState: { errors }, setValue } = useFormContext()
 
   const category = watch('category')
 
   useEffect(() => {
+    if(category)
+      setValue('category', category)
+
     const validationResult = CategorySchema.safeParse({
       category: category
     })

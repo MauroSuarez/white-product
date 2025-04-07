@@ -31,7 +31,7 @@ const LocationAddress = ({ schema, handleNext }: LocationAddressProps) => {
     autoRequest: true // Solicitar automáticamente al montar el componente
   })
 
-  const { watch } = useFormContext()
+  const { watch, setValue } = useFormContext()
   
   const location = watch('location')
 

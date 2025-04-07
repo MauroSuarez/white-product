@@ -1,5 +1,7 @@
 
+import LottieAnimation from "@/presentation/components/lottie-animation"
 import { Typography } from "@/presentation/ds/typography"
+import animationWorkshop from '@/presentation/assets/lotties/Animation-WorkShop.json'
 
 const AboutUsWorkShop = () => {
   return (
@@ -22,7 +24,10 @@ const AboutUsWorkShop = () => {
       </div>
 
       <div className="w-full h-full md:w-1/2 p-6">
-        fasdfasd
+        <LottieAnimation
+          animationData={animationWorkshop}
+          className="w-full h-full"
+        />
       </div>
     </div>
   )

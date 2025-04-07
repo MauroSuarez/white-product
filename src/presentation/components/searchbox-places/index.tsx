@@ -26,7 +26,8 @@ declare global {
 const SearchBoxPlaces = ({ 
   onPlaceSelected, 
   placeholder = 'Buscar dirección o lugar...',
-  className = ''
+  className = '',
+  ...props
 }: GooglePlacesSearchProps) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const autocompleteRef = useRef<any>(null)
@@ -90,6 +91,7 @@ const SearchBoxPlaces = ({
           type="text"
           placeholder={placeholder}
           className="w-full p-2 border border-gray-300 rounded-full py-4 shadow-sm focus:outline-none focus:ring focus:ring-primary"
+          {...props}
         />
       </div>
     )

@@ -36,8 +36,8 @@ export default function SetUp({
   handleSubmit
 }: SetUpProps) {
   const router = useRouter()
-  const [currentMainStep, setCurrentMainStep] = useState(1)
-  const [currentSubStep, setCurrentSubStep] = useState(1)
+  const [currentMainStep, setCurrentMainStep] = useState(0)
+  const [currentSubStep, setCurrentSubStep] = useState(0)
   const [isNextDisabled, setIsNextDisabled] = useState(false)
   const [direction, setDirection] = useState<"forward" | "backward">("forward")
 
