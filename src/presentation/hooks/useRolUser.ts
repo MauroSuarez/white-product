@@ -20,6 +20,8 @@ export function useRolUser(user: User | null, isLoggedIn: boolean) {
         setUserRol('AUTHENTICATED')
       else
         setUserRol('FREEWHEELS')
+    } else {
+      setUserRol('GUEST')
     }
   }, [user, existsWs])
 

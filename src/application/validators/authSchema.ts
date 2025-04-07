@@ -22,7 +22,6 @@ export const SignUpSchema = z.object({
       message: "Debe aceptar los términos y condiciones",
     }
   ),
-  roleId: z.number().refine((value) => value === 1 || value === 2),
 }).refine((data) => data.password === data.confirmPassword, {
   message: 'Las contraseñas deben ser iguales',
   path: ["confirm"],

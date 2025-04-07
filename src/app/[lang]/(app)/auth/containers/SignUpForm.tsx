@@ -7,13 +7,14 @@ import { FormInput } from "@/presentation/components/form/FormInput"
 import { Button } from "@/presentation/ds/button"
 import { FadeIn } from "@/presentation/components/fade-in"
 import { CustomAlert } from '@/presentation/components/custom-alert'
+import { TAuthModal } from "@/infraestructure/stores/authStore"
 
 type FormSignInProps = {
   isLoading: boolean
   isSuccess: boolean
   isError: boolean | string
   handleSubmit?: (form: any) => void
-  handleTypeForm: (type: string) => void
+  handleTypeForm: (modalAuth: TAuthModal) => void
 }
 
 const FormSignUp = ({
@@ -57,11 +58,12 @@ const FormSignUp = ({
                 <FormInput name="password" label="Contraseña" type="password" className="py-6" placeholder="*****" />
               </div>
               <div className="grid gap-2">
-              <FormInput name="confirmPassword" label="Repetir contraseña" type="password" className="py-6" placeholder="*****" />
+                <FormInput name="confirmPassword" label="Repetir contraseña" type="password" className="py-6" placeholder="*****" />
               </div>
             </div>
             <FormCheckbox
               name="terms"
+              id="terms"
               label="Acepto términos y condiciones"
               classNameContainer="flex flex-row items-center space-x-3 space-y-0"
               className="h-6 w-6"
@@ -69,7 +71,7 @@ const FormSignUp = ({
             <Button isLoading={isLoading} disabled={isLoading} type="submit" className="w-full py-6">
               Registrame
             </Button>
-            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm('signin')}>
+            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signin' })}>
               Ya tengo cuenta, iniciar sesión
             </Button>
           </>

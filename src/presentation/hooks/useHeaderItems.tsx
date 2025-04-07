@@ -13,6 +13,7 @@ import { useTheme } from "next-themes"
 import { DropDown as DropdownMenu } from "@/presentation/components/dropdown-menu"
 import { DropdownMenuItem, DropdownMenuSeparator } from "@/presentation/ds/dropdown-menu"
 import { CustomAvatar } from "../components/custom-avatar"
+import { TAuthModal, TAuthModalType } from "@/infraestructure/stores/authStore"
 
 type TItems = {
   label?: string,
@@ -23,8 +24,9 @@ type useHeaderItemsProps = {
   type?: THeaderType
   user?: User | null
   userRol: TUserRol
+  handleAuthModal: (modalAuth: TAuthModal) => void
   handleNavigate: (path?: string) => void
-  handleLogout: () => void
+  handleSignOut: () => void
 }
 
 // type DropDownMenu = {
@@ -38,6 +40,8 @@ export function useHeaderItems({
   user,
   userRol = 'GUEST',
   handleNavigate,
+  handleSignOut,
+  handleAuthModal,
 }: useHeaderItemsProps): { itemsHeader: Array<HeaderItemProps<TItems>> } {
   const { pathname } = useCurrentPath()
   const { theme, setTheme } = useTheme()
@@ -81,7 +85,7 @@ export function useHeaderItems({
         id: 'setup',
         label: 'Abrí tu FreeWheel',
         path: '/freewheels',
-        visible: (type === 'default' || type === 'detail') && userRol === 'AUTHENTICATED',
+        visible: (type === 'default' || type === 'detail'),
         format: ({ label, path }) => (
           <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
             {label}
@@ -139,8 +143,8 @@ export function useHeaderItems({
         id: 'signout',
         label: 'Cerrar sesión',
         visible: userRol !== 'GUEST',
-        format: ({ label, path }) => (
-          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+        format: ({ label }) => (
+          <DropdownMenuItem onClick={handleSignOut}>
             {label}
           </DropdownMenuItem>
         )
@@ -197,17 +201,17 @@ export function useHeaderItems({
         label: 'Iniciar sesión',
         visible: true,
         format: ({ label, path }) => (
-          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+          <DropdownMenuItem onClick={() => handleAuthModal && handleAuthModal({ open: true, type: 'signin' })}>
             {label}
           </DropdownMenuItem>
         )
       },
       {
-        id: 'sign-out',
+        id: 'sign-up',
         label: 'Registrarse',
         visible: true,
         format: ({ label, path }) => (
-          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
+          <DropdownMenuItem onClick={() =>  handleAuthModal && handleAuthModal({ open: true, type: 'signup' })}>
             {label}
           </DropdownMenuItem>
         )
@@ -225,187 +229,204 @@ export function useHeaderItems({
     }
   }, [user, userRol, theme, type])
 
-  const modePanelAdmin: Array<HeaderItemProps<TItems>> = [{
-    id: 'setup',
-    label: 'Modo panel',
-    path: '/freewheels/home',
-    format: ({ label, path }) => (
-      <Button onClick={() => handleNavigate && handleNavigate(path)} variant='outline' className='relative hidden md:flex h-10 min-w-[100px]'>
-        {label}
-        <Wrench className='h-6 w-6 ml-2' />
-        <Dot />
-      </Button>
-    ),
-    visible: true,
-  }]
-  const modeFreewheel: Array<HeaderItemProps<TItems>> = [{
-    id: 'setup',
-    label: 'Modo FreeWheels',
-    path: '/',
-    format: ({ label, path }) => (
-      <Button onClick={() => handleNavigate && handleNavigate(path)} variant='outline' className='relative hidden md:flex h-10 min-w-[100px]'>
-        {label}
-        <Wrench className='h-6 w-6 ml-2' />
-        <Dot />
-      </Button>
-    ),
-    visible: true,
-  }]
-  const goSetup: Array<HeaderItemProps<TItems>> = [{
-    id: 'setup',
-    label: 'Abri tu FreeWheels',
-    path: '/freewheels',
-    format: ({ label, path }) => (
-      <Button onClick={() => handleNavigate && handleNavigate(path)} className='hidden md:flex h-10 min-w-[100px]'>
-        {label}
-        <Wrench className='h-6 w-6 ml-2' />
-      </Button>
-    ),
-    visible: true,
-  }]
-  const goScan: Array<HeaderItemProps<TItems>> = [
-    {
-      id: 'scan',
-      label: 'Patente Scan',
-      path: '/scan',
+  const headersType: { [key in THeaderType]: Array<HeaderItemProps<TItems>> } = useMemo(() => {
+    const modePanelAdmin: Array<HeaderItemProps<TItems>> = [{
+      id: 'setup',
+      label: 'Modo panel',
+      path: '/freewheels/home',
       format: ({ label, path }) => (
-        <Button onClick={() => handleNavigate && handleNavigate(path)} variant='gradient' className='hidden md:flex h-10 min-w-[100px]'>
+        <Button onClick={() => handleNavigate && handleNavigate(path)} variant='outline' className='relative hidden md:flex h-10 min-w-[100px]'>
           {label}
-          <ScanSearch className='h-6 w-6 ml-2' />
+          <Wrench className='h-6 w-6 ml-2' />
+          <Dot />
         </Button>
       ),
       visible: true,
-    },
-  ]
-  const dropDownMenu: Array<HeaderItemProps<TItems>> = [
-    {
-      id: 'drop-down-menu',
+    }]
+    const modeFreewheel: Array<HeaderItemProps<TItems>> = [{
+      id: 'setup',
+      label: 'Modo FreeWheels',
+      path: '/',
+      format: ({ label, path }) => (
+        <Button onClick={() => handleNavigate && handleNavigate(path)} variant='outline' className='relative hidden md:flex h-10 min-w-[100px]'>
+          {label}
+          <Wrench className='h-6 w-6 ml-2' />
+          <Dot />
+        </Button>
+      ),
       visible: true,
-      format: () => (
-        <DropdownMenu items={menu}>
-          <div className="rounded-full px-2 border border-gray-300 items-center h-12 flex justify-center cursor-pointer">
-            <div className="flex justify-center space-x-2 items-center">
-              <Icon name="HamburgerMenuIcon" className="h-5 w-5 text-foreground" />
-              <CustomAvatar user={user as User} />
-            </div>
-          </div>
-        </DropdownMenu>
-      )
-    }
-  ]
-
-  const headersType: { [key in THeaderType]: Array<HeaderItemProps<TItems>> } = {
-    'empty': [],
-    'default': [
+    }]
+    const goSetup: Array<HeaderItemProps<TItems>> = [{
+      id: 'setup',
+      label: 'Abri tu FreeWheels',
+      path: '/freewheels',
+      format: ({ label, path }) => (
+        <Button onClick={() => handleNavigate && handleNavigate(path)} className='hidden md:flex h-10 min-w-[100px]'>
+          {label}
+          <Wrench className='h-6 w-6 ml-2' />
+        </Button>
+      ),
+      visible: true,
+    }]
+    const goScan: Array<HeaderItemProps<TItems>> = [
       {
-        id: 'about-us',
-        label: 'Acerca de nosotros',
-        path: '/about-us',
+        id: 'scan',
+        label: 'Patente Scan',
+        path: '/scan',
         format: ({ label, path }) => (
-          <Button onClick={() => handleNavigate && handleNavigate(path)} variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
+          <Button onClick={() => handleNavigate && handleNavigate(path)} variant='gradient' className='hidden md:flex h-10 min-w-[100px]'>
             {label}
-          </Button>
-        ),
-        visible: userRol === 'GUEST',
-      },
-      ...goScan,
-      ...(userRol === 'AUTHENTICATED' ? [...modeFreewheel] : userRol === 'FREEWHEELS' ? [...modePanelAdmin] : [...goSetup]),
-      ...dropDownMenu
-    ],
-    'basic': [
-      {
-        id: 'text-start',
-        label: '¿Todo listo para poner tu FreeWheels?',
-        format: ({ label, path }) => (
-          <Typography className='font-semibold' variant='h4'>
-            {label}
-          </Typography>
-        ),
-        visible: true,
-      },
-      {
-        id: 'setup',
-        label: 'Empezar',
-        path: '/freewheels/onboarding',
-        format: ({ label, path }) => (
-          <Button onClick={() => handleNavigate && handleNavigate(path)} className='hidden md:flex h-10 min-w-[100px]'>
-            {label}
-            <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />
+            <ScanSearch className='h-6 w-6 ml-2' />
           </Button>
         ),
         visible: true,
       },
-    ],
-    'detail': [
-      ...goScan,
-      ...modePanelAdmin,
-      ...dropDownMenu
-    ],
-    'workshop': [
+    ]
+    const dropDownMenu: Array<HeaderItemProps<TItems>> = [
       {
-        id: 'now',
-        label: 'Hoy',
-        format: ({ label }) => (
-          <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
-            {label}
-          </Button>
-        ),
-        visible: true
-      },
-      {
-        id: 'reservations',
-        label: 'Reservas',
-        format: ({ label }) => (
-          <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
-            {label}
-          </Button>
-        ),
-        visible: true
-      },
-      {
-        id: 'workshop',
-        label: 'Anuncios',
-        format: ({ label }) => (
-          <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
-            {label}
-          </Button>
-        ),
-        visible: true
-      },
-      {
-        id: 'message',
-        label: 'Mensajes',
-        format: ({ label })  => (
-          <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px] relative'>
-            {label}
-            <Dot />
-          </Button>
-        ),
-        visible: true
-      },
-      {
-        id: 'separator-div',
-        format: ()  => (
-          <div className='lg:w-1/5 md:w-1/5 lg:pr-10 md:pr-10 px-5 border border-red-500' />
-        ),
-        visible: true
-      },
-      ...modeFreewheel,
-      {
-        id: 'notification',
+        id: 'drop-down-menu',
+        visible: true,
         format: () => (
-          <Button variant='ghost' className="rounded-full h-10 w-10">
-            <div className="relative w-auto h-auto">
-              <Bell className="h-6 w-6 text-foreground" />
-              <Dot />
+          <DropdownMenu items={menu}>
+            <div className="rounded-full px-2 border border-gray-300 items-center h-12 flex justify-center cursor-pointer">
+              <div className="flex justify-center space-x-2 items-center">
+                <Icon name="HamburgerMenuIcon" className="h-5 w-5 text-foreground" />
+                <CustomAvatar user={user as User} />
+              </div>
             </div>
-          </Button>
-        ),
-        visible: true
-      },
-      ...dropDownMenu
-    ],
-  }
+          </DropdownMenu>
+        )
+      }
+    ]
+
+    return {
+      'empty': [],
+      'default': [
+        {
+          id: 'about-us',
+          label: 'Acerca de nosotros',
+          path: '/about-us',
+          format: ({ label, path }) => (
+            <Button onClick={() => handleNavigate && handleNavigate(path)} variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
+              {label}
+            </Button>
+          ),
+          visible: userRol === 'GUEST',
+        },
+        ...goScan,
+        {
+          id: 'my-services',
+          label: 'Mis servicios',
+          path: '/my-services',
+          format: ({ label, path }) => (
+            <Button onClick={() => handleNavigate && handleNavigate(path)} variant={'outline'} className='relative hidden md:flex h-10 min-w-[100px]'>
+              {label}
+              <Dot />
+            </Button>
+          ),
+          visible: userRol !== 'GUEST',
+        },
+        ...(userRol === 'AUTHENTICATED' ? [...modeFreewheel] : userRol === 'FREEWHEELS' ? [...modePanelAdmin] : [...goSetup]),
+        ...dropDownMenu
+      ],
+      'basic': [
+        {
+          id: 'text-start',
+          label: '¿Todo listo para poner tu FreeWheels?',
+          format: ({ label, path }) => (
+            <Typography className='font-semibold' variant='h4'>
+              {label}
+            </Typography>
+          ),
+          visible: true,
+        },
+        {
+          id: 'setup',
+          label: 'Empezar',
+          path: '/freewheels/onboarding',
+          format: ({ label, path }) => (
+            <Button onClick={() => userRol === 'GUEST' ? handleAuthModal && handleAuthModal({ open: true, type: 'signin' }) : handleNavigate && handleNavigate(path)} className='hidden md:flex h-10 min-w-[100px]'>
+              {label}
+              <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />
+            </Button>
+          ),
+          visible: true,
+        },
+      ],
+      'detail': [
+        ...goScan,
+        ...modePanelAdmin,
+        ...dropDownMenu
+      ],
+      'workshop': [
+        {
+          id: 'now',
+          label: 'Hoy',
+          format: ({ label }) => (
+            <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
+              {label}
+            </Button>
+          ),
+          visible: true
+        },
+        {
+          id: 'reservations',
+          label: 'Reservas',
+          format: ({ label }) => (
+            <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
+              {label}
+            </Button>
+          ),
+          visible: true
+        },
+        {
+          id: 'workshop',
+          label: 'Anuncios',
+          format: ({ label }) => (
+            <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px]'>
+              {label}
+            </Button>
+          ),
+          visible: true
+        },
+        {
+          id: 'message',
+          label: 'Mensajes',
+          format: ({ label })  => (
+            <Button variant='ghost' className='hidden md:flex h-10 min-w-[100px] relative'>
+              {label}
+              <Dot />
+            </Button>
+          ),
+          visible: true
+        },
+        {
+          id: 'separator-div',
+          format: ()  => (
+            <div className='lg:w-1/5 md:w-1/5 lg:pr-10 md:pr-10 px-5 border border-red-500' />
+          ),
+          visible: true
+        },
+        ...modeFreewheel,
+        {
+          id: 'notification',
+          format: () => (
+            <Button variant='ghost' className="rounded-full h-10 w-10">
+              <div className="relative w-auto h-auto">
+                <Bell className="h-6 w-6 text-foreground" />
+                <Dot />
+              </div>
+            </Button>
+          ),
+          visible: true
+        },
+        ...dropDownMenu
+      ],
+      'scan': [
+        ...dropDownMenu
+      ]
+    }
+  }, [user, userRol, theme, type])
 
   return  { itemsHeader: headersType[type] }
 }

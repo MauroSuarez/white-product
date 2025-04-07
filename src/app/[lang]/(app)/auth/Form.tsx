@@ -2,24 +2,25 @@ import { FormSignIn } from "./containers/SignInForm"
 import { FormSignUp } from "./containers/SignUpForm"
 import { ResetPasswordForm } from "./containers/ResetPasswordForm"
 import { ISignIn, ISignUp } from "@/core/domain/entities/Auth"
+import { TAuthModalType, TAuthModal } from "@/infraestructure/stores/authStore"
 
-export type TypeAuthForm = 'signin' | 'signup' | 'reset'
+
 
 type AuthFormProps = {
   handleSignIn?: (form: ISignIn) => void
   handleSignUp?: (form: ISignUp) => void
   handleResetPassword?: (email: string) => void
-  handleTypeForm?: (typeForm: TypeAuthForm) => void
+  handleTypeForm?: (autModal: TAuthModal) => void
   isLoading: boolean
   isSuccess: boolean
   isError: boolean | string
-  typeForm?: TypeAuthForm
+  typeForm?: TAuthModalType
 }
 
 type AuthFormComponent = React.FC<any>
 
 type AuthFormDictionary = {
-  [key in TypeAuthForm]: AuthFormComponent;
+  [key in TAuthModalType]: AuthFormComponent;
 }
 
 const authForm: AuthFormDictionary = {

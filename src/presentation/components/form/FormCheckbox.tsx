@@ -19,6 +19,7 @@ interface FormCheckboxProps {
   disabled?: boolean
   classNameContainer?: string
   className?: string
+  id?: string
 }
 
 export function FormCheckbox({
@@ -28,13 +29,14 @@ export function FormCheckbox({
   disabled = false,
   classNameContainer = '',
   className = '',
+  id
 }: FormCheckboxProps) {
   const { control } = useFormContext()
   return (
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field }) =>  (
         <FormItem className={`flex flex-row items-start space-x-3 space-y-0 ${classNameContainer}`}>
           <FormControl>
             <Checkbox
@@ -42,15 +44,17 @@ export function FormCheckbox({
               onCheckedChange={field.onChange}
               disabled={disabled}
               className={className}
+              id={id}
             />
           </FormControl>
           <div className="space-y-1 leading-none">
-            <Label>{label}</Label>
+            <Label htmlFor={id}>{label}</Label>
             {description && <FormDescription>{description}</FormDescription>}
           </div>
           <FormMessage />
         </FormItem>
-      )}
+        )
+      }
     />
   )
 }

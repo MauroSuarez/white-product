@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from "react"
 import Link from "next/link"
 import {
   Card,
@@ -11,8 +10,7 @@ import {
   CardTitle,
 } from "@/presentation/ds/card"
 import { Icon } from "@/presentation/ds/icon"
-import { Filters } from "./layout/Filters"
-import { Header } from "./layout/Header"
+import { Filters } from "./Filters"
 import { Map } from '@/presentation/components/map'
 import { ScrollArea } from '@/presentation/ds/scroll-area'
 import { Separator } from '@/presentation/ds/separator'
@@ -25,7 +23,7 @@ const tags = Array.from({ length: 50 }).map(
 )
 
 export default function App() {
-  const { user, isLoggedIn, setIsAuthModal } = useAuthStore()
+  const { user, isLoggedIn, authModal } = useAuthStore()
   const viewType = useViewTypeStore((state) => state.viewType)
   const center: [number, number] = [-34.600625, -58.563671]
 
@@ -33,7 +31,7 @@ export default function App() {
   const handleAddFavorite = () => {
     if(!user) {
       console.log("no estoy logueado")
-      setIsAuthModal(true)
+      // setIsAuthModal(true)
     }else {
       console.log("si estoy logueado")
     }
@@ -51,6 +49,10 @@ export default function App() {
       ),
     },
   ]
+
+  const handleSubmit = (data: any) => {
+    console.log(data, 'FORM')
+  }
 
   return (
     <AppLayout filters={<Filters />} showSearchBar type="default">

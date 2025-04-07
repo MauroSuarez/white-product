@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { Button } from '@/presentation/ds/button'
@@ -15,11 +15,13 @@ import { CategoryIcon } from '@/presentation/components/category-icon'
 import { Category } from '@/core/domain/entities/Category'
 import { fetchCategories } from '@/core/domain/services/fetchCategories'
 import { SkeletonFilter } from '@/presentation/components/skeleton/filters'
+import { useCategoriesStore } from '@/infraestructure/stores/categoriesStore'
 
 const viewTypeController = new ViewTypeController()
 const filtersController = new FiltersController()
 
 const Filters = () => {
+  const { setCategories } = useCategoriesStore()
   const viewType = useViewTypeStore((state) => state.viewType)
 
   const { category } = useFilterstore((state) => state.filters)
@@ -34,6 +36,12 @@ const Filters = () => {
     queryKey: ['categories'], // Identificador único para la consulta
     queryFn: fetchCategories, // Función que obtiene los datos
   })
+
+  useEffect(() => {
+    if (categories) {
+      setCategories(categories)
+    }
+  }, [categories])
 
   const handleViewType = () => {
     const type = viewType === 'grid' ? 'map' : 'grid'
