@@ -21,6 +21,7 @@ import { WorkShopPothos } from "./step-two/WorkShopPothos"
 import { WorkShopSocialName } from "./step-two/WorkShopSocialName"
 import { WorkShopDescription } from "./step-two/WorkShopDescription"
 import { ReadyToPublish } from "./step-three/ReadyToPublish"
+import { WorkShopSchedule } from "./step-three/WorkShopSchedule"
 
 type OnboardingStepsProps = {
   title?: string
@@ -38,8 +39,8 @@ export default function SetUp({
   handleSubmit
 }: SetUpProps) {
   const router = useRouter()
-  const [currentMainStep, setCurrentMainStep] = useState(0)
-  const [currentSubStep, setCurrentSubStep] = useState(0)
+  const [currentMainStep, setCurrentMainStep] = useState(2)
+  const [currentSubStep, setCurrentSubStep] = useState(1)
   const [isNextDisabled, setIsNextDisabled] = useState(false)
   const [direction, setDirection] = useState<"forward" | "backward">("forward")
 
@@ -82,8 +83,7 @@ export default function SetUp({
       title: 'Paso 3',
       subSteps: [
         { content: (methods: any) => <ReadyToPublish {...methods} /> },
-        // { title: 'Subpaso 3.2', content: 'Contenido del subpaso 3.2' },
-        // { title: 'Subpaso 3.3', content: 'Contenido del subpaso 3.3' }
+        { content: (methods: any) => <WorkShopSchedule handleNext={(value) => handleValidNext(value)} {...methods} /> },
       ]
     }
   ]

@@ -19,9 +19,6 @@ const WorkShopDescription = ({ schema, handleNext }: WorkShopDescriptionProps) =
   const description = watch('description')
 
   useEffect(() => {
-    if(description)
-      setValue('description', description)
-
     const validationResult = DescriptionSchema.safeParse({
       description: description
     })

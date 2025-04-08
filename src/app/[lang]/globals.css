@@ -606,6 +606,23 @@ body {
   background: rgba(0, 0, 0, 0.3);
 }
 
+.workshop-day-card {
+  transition: all 0.2s ease;
+}
+
+.workshop-day-card:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.workshop-day-checkbox:checked ~ .workshop-day-content {
+  opacity: 1;
+  max-height: 120px;
+}
+
+.workshop-day-content {
+  transition: all 0.3s ease;
+}
+
 @layer base {
   * {
     @apply border-border;
