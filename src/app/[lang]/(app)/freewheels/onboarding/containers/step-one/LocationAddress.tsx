@@ -31,7 +31,7 @@ const LocationAddress = ({ schema, handleNext }: LocationAddressProps) => {
     autoRequest: true // Solicitar automáticamente al montar el componente
   })
 
-  const { watch, setValue } = useFormContext()
+  const { watch } = useFormContext()
   
   const location = watch('location')
 
@@ -55,14 +55,15 @@ const LocationAddress = ({ schema, handleNext }: LocationAddressProps) => {
     }
   }, [location])
   
+  
   const markers: any = useMemo(() => {
     if(!location)
       return []
     else
       return [
         {
-          lat: location?.lat ||  -34.600625,
-          lng: location?.lng || -58.563671,
+          lat: location?.lat,
+          lng: location?.lng,
           tooltip: (
             <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
               <h3 style={{ color: 'blue' }}>Tu {APPLICATION.appName} esta aquí</h3>
@@ -74,25 +75,28 @@ const LocationAddress = ({ schema, handleNext }: LocationAddressProps) => {
   }, [location])
 
   return (
-    <PanelSetup
-      title="¿Dónde está tu taller?"
-      description="Vamos a compartir tu dirección con los clientes para que puedan encontrarte fácilmente."
-    >
-      <div className="relative flex flex-wrap w-3/5 mx-auto mt-4 rounded-lg border border-gray-300 shadow-sm">
-        <FormLocationPlaces
-          name="location"
-          description="Escribe la dirección de tu taller"
-        />
-        {position ? (
-          <Map
-            center={center}
-            zoom={13}
-            markers={markers}
-            styleContainer={{ height: '450px', width: '100%' }}
+    <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto">
+      <PanelSetup
+        title="¿Dónde está tu taller?"
+        description="Vamos a compartir tu dirección con los clientes para que puedan encontrarte fácilmente."
+      >
+        <div className="relative flex flex-wrap w-3/5 mx-auto mt-4 rounded-lg border border-gray-300 shadow-sm">
+          <FormLocationPlaces
+            name="location"
+            description="Escribe la dirección de tu taller"
+            defaultValue={location?.address}
           />
-        ) : null}
-      </div>
-    </PanelSetup>
+          {position ? (
+            <Map
+              center={center}
+              zoom={13}
+              markers={markers}
+              styleContainer={{ height: '450px', width: '100%' }}
+            />
+          ) : null}
+        </div>
+      </PanelSetup>
+    </div>
   )
 }
 

@@ -1,5 +1,5 @@
 
-import LottieAnimation from "@/presentation/components/lottie-animation"
+import { LottieAnimation } from "@/presentation/components/lottie-animation"
 import { Typography } from "@/presentation/ds/typography"
 import animationWorkshop from '@/presentation/assets/lotties/Animation-WorkShop.json'
 
@@ -12,13 +12,13 @@ const AboutUsWorkShop = () => {
             Paso 1
           </Typography>
           <Typography variant={'h1'} className="text-left py-2 border-0 w-full leading-8">
-            Contanos aceca de
+            Contanos acerca de
           </Typography>
           <Typography variant={'h1'} className="text-left border-0 w-full leading-8">
             tu FreeWheel (taller, gomería, lavadero, etc.)
           </Typography>
           <Typography variant={'p'} className="text-left mt-4 border-0 w-full leading-8">
-            FreeWheels es fácil. Con nuestra plataforma, puedes gestionar tus vehículos, optimizar rutas y ahorrar tiempo de manera sencilla. ¡Comienza hoy mismo!
+            FreeWheels es fácil. Con nuestra plataforma, puedes gestionar historial de vehículos, reservas, horarios y mucho más de manera sencilla y eficiente. ¡Empieza hoy mismo!
           </Typography>
         </div>
       </div>
@@ -27,6 +27,7 @@ const AboutUsWorkShop = () => {
         <LottieAnimation
           animationData={animationWorkshop}
           className="w-full h-full"
+          loop={false}
         />
       </div>
     </div>

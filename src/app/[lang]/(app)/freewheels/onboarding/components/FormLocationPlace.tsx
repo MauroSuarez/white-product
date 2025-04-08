@@ -9,17 +9,13 @@ import {
   FormLabel,
   FormMessage,
 } from '@/presentation/ds/form'
-import { RadioGroup, RadioGroupItem } from '@/presentation/ds/radio-group'
-import { Label } from '@/presentation/ds/label'
-import { cn } from '@/presentation/utils/uiHelpers'
-import { CardCategory } from '../../../../../../presentation/components/card-category'
-import { Category } from '@/infraestructure/stores/categoriesStore'
 import { PlaceResult, SearchBoxPlaces } from '@/presentation/components/searchbox-places'
 
 interface FormLocationPlacesProps {
   name: string
   label?: string
   description?: string
+  defaultValue?: string
   className?: string
 }
 
@@ -27,6 +23,7 @@ export function FormLocationPlaces({
   name,
   label,
   description,
+  defaultValue,
   className = '',
 }: FormLocationPlacesProps) {
   const { control } = useFormContext()
@@ -53,6 +50,7 @@ export function FormLocationPlaces({
                   })
                 }}
                 placeholder="Escribe una dirección..."
+                defaultValue={defaultValue}
                 className="mb-4"
               />
               

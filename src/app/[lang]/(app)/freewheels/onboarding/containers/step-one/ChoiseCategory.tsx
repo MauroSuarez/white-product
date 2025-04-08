@@ -22,9 +22,6 @@ const ChoiseCategory = ({ schema, handleNext }: ChoiseCategoryProps) => {
   const category = watch('category')
 
   useEffect(() => {
-    if(category)
-      setValue('category', category)
-
     const validationResult = CategorySchema.safeParse({
       category: category
     })
@@ -45,6 +42,7 @@ const ChoiseCategory = ({ schema, handleNext }: ChoiseCategoryProps) => {
           name="category"
           options={categories}
           className="flex w-full"
+          // defaultValue={category}
         />
       </PanelSetup>
     </div>

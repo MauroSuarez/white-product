@@ -22,6 +22,7 @@ interface FormRadioGroupProps {
   options: Category[]
   className?: string
   orientation?: 'horizontal' | 'vertical'
+  defaultValue?: string
 }
 
 export function FormRadioGroupCardCategory({
@@ -31,6 +32,7 @@ export function FormRadioGroupCardCategory({
   options,
   className = '',
   orientation = 'horizontal',
+  defaultValue
 }: FormRadioGroupProps) {
   const { control } = useFormContext()
 
@@ -58,7 +60,7 @@ export function FormRadioGroupCardCategory({
                     return option.is_visible ? (
                       <div key={option.id}>
                         <RadioGroupItem
-                          value={`${option.id}`}
+                          value={defaultValue || `${option.id}`}
                           id={`${option.id}`}
                           className="peer hidden"
                         />

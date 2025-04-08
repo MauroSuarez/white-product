@@ -19,6 +19,7 @@ interface FormInputProps {
   type?: string
   classNameContainer?: string
   className?: string
+  defaultValue?: string
 }
 
 export function FormInput({
@@ -29,6 +30,7 @@ export function FormInput({
   type = 'text',
   classNameContainer= '',
   className = '',
+  defaultValue,
 }: FormInputProps) {
   const { control } = useFormContext()
   return (
@@ -39,7 +41,7 @@ export function FormInput({
         <FormItem className={classNameContainer}>
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-            <Input {...field} type={type} placeholder={placeholder} className={className} />
+            <Input {...field} defaultValue={defaultValue} type={type} placeholder={placeholder} className={className} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

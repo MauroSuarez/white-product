@@ -3,11 +3,12 @@
 import { Typography } from "@/presentation/ds/typography";
 import { Map } from '@/presentation/components/map'
 import AppLayout from "../AppLayout";
+import { MapPin } from "lucide-react";
 
 export default function FreeWheel() {
     const center: [number, number] = [-34.600625, -58.563671]
 
-    const markers = [
+    const markers: { lat: number; lng: number; tooltip: JSX.Element | string; iconName: "pin"; iconSize?: number }[] = [
       {
         lat: -34.600625,
         lng: -58.563671,
@@ -17,16 +18,22 @@ export default function FreeWheel() {
             <p>Este es un tooltip hecho con un componente de React.</p>
           </div>
         ),
+        iconName: 'pin',
+        iconSize: 28
       },
       {
         lat: -34.600537,
         lng: -58.570565,
         tooltip: '<b>Tooltip con HTML</b><br><a href="#">Enlace</a>', // Tooltip con HTML
+        iconName: 'pin' ,
+        iconSize: 28
       },
       {
         lat: -34.595529,
         lng: -58.564390,
         tooltip: 'Tooltip de texto simple', // Tooltip con string
+        iconName: 'pin',
+        iconSize: 28
       },
     ]
     return (

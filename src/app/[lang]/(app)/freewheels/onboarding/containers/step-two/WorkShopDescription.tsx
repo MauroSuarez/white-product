@@ -3,24 +3,27 @@ import React, { useEffect } from "react"
 
 import { ZodType } from "zod"
 import { useFormContext } from "react-hook-form"
-import { SocialNameSchema } from "@/application/validators/setUpSchema"
+import { DescriptionSchema } from "@/application/validators/setUpSchema"
 import { PanelSetup } from "../../components/PanelSetup"
 import { FormTextArea } from "@/presentation/components/form/FormTextArea"
 
 
-interface WorkShopSocialNameProps {
+interface WorkShopDescriptionProps {
   schema?: ZodType
   handleNext: (value: boolean) => void
 }
 
-const WorkShopSocialName = ({ schema, handleNext }: WorkShopSocialNameProps) => {
+const WorkShopDescription = ({ schema, handleNext }: WorkShopDescriptionProps) => {
   const { watch, formState: { errors }, setValue  } = useFormContext()
 
-  const socialName = watch('socialName')
+  const description = watch('description')
 
   useEffect(() => {
-    const validationResult = SocialNameSchema.safeParse({
-      socialName: socialName
+    if(description)
+      setValue('description', description)
+
+    const validationResult = DescriptionSchema.safeParse({
+      description: description
     })
 
     if(!validationResult.success) {
@@ -28,22 +31,21 @@ const WorkShopSocialName = ({ schema, handleNext }: WorkShopSocialNameProps) => 
     } else {
       handleNext(false)
     }
-  }, [socialName])
+  }, [description])
 
   return (
     <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto">
       <PanelSetup
-        title="Ponelé el nombre a tu taller"
-        description="Los nombres cortos funcionan mejor. Podés usar el nombre de tu taller o uno que lo represente."
+        title="Describe tu taller"
+        description="Contá que hace que tu taller sea especial."
       >
         <div className="w-3/5 flex justify-center mt-8">
           <FormTextArea
-            name="socialName"
-            maxLength={120}
-            className="w-full mx-auto mt-8 min-h-20"
+            name="description"
+            maxLength={500}
+            className="w-full mx-auto mt-8 min-h-32"
             classNameContainer="mb-4 w-full"
-            placeholder="Escribe el nombre tu taller, gomería, etc."
-            // defaultValue={socialName}
+            placeholder="Creá tu descripción."
           />
         </div>
       </PanelSetup>
@@ -51,4 +53,4 @@ const WorkShopSocialName = ({ schema, handleNext }: WorkShopSocialNameProps) => 
   )
 }
 
-export { WorkShopSocialName }
+export { WorkShopDescription }

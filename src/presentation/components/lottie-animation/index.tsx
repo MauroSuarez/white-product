@@ -6,7 +6,6 @@ interface LottieAnimationProps {
   className?: string
   loop?: boolean
   autoplay?: boolean
-  speed?: number
 }
 
 const LottieAnimation: FC<LottieAnimationProps> = ({
@@ -14,7 +13,6 @@ const LottieAnimation: FC<LottieAnimationProps> = ({
   className = '',
   loop = true,
   autoplay = true,
-  speed = 1,
   ...props
 }) => {
   return (
@@ -23,11 +21,10 @@ const LottieAnimation: FC<LottieAnimationProps> = ({
         animationData={animationData}
         loop={loop}
         autoplay={autoplay}
-        // speed property removed as it is not supported
         {...props}
       />
     </div>
   )
 }
 
-export default LottieAnimation
+export { LottieAnimation }

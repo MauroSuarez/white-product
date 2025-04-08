@@ -8,7 +8,22 @@ export const SetUpSchema = z.object({
     lng: z.number().optional(),
     name: z.string().optional(),
     placeId: z.string().optional(),
-  }),
+  }).optional(),
+  images: z.array(
+    z.object({
+      id: z.string().optional(),
+      file: z.instanceof(File, { message: 'Debe ser un archivo válido' }).optional(),
+      url: z.string().url().optional(),
+      preview: z.string().optional()
+    })
+  )
+  .min(1, 'Debes subir 4 imágenes')
+  .max(4, 'Máximo 4 imágenes permitidas')
+  .refine(files => files.every(file => 
+    !file.file || file.file.size <= 5 * 1024 * 1024
+  ), 'Cada imagen debe ser menor a 5MB').optional(),
+  socialName: z.string().optional(),
+  description: z.string().optional(),
 })
 
 export const CategorySchema = z.object({
@@ -56,6 +71,29 @@ export const GooglePlaceSchema = z.object({
       message: "El placeId debe tener al menos 5 caracteres"
     }),
   })
+})
+
+export const SocialNameSchema = z.object({
+  socialName: z.string().min(3, 'Debe completar el nombre de la razón social.'),
+})
+
+export const DescriptionSchema = z.object({
+  description: z.string().min(3, 'Debe completar la descripción.'),
+})
+
+export const ImageUploadSchema = z.object({
+  images: z.array(
+    z.object({
+      id: z.string(),
+      file: z.instanceof(File, { message: 'Debe ser un archivo válido' }).optional(),
+      url: z.string().url().optional(),
+      preview: z.string().optional()
+    })
+  )
+  .min(4, 'Debes subir 4 imágenes')
+  .refine(files => files.every(file => 
+    !file.file || file.file.size <= 5 * 1024 * 1024
+  ), 'Cada imagen debe ser menor a 5MB')
 })
 
 export const partialSetUpSchema = SetUpSchema.partial()
