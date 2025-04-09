@@ -26,12 +26,24 @@ const icons: IconDictionary = {
   'chair': ChairIcon
 }
 
-export const AmenitieIcon: React.FC<{ iconName: string }> = ({ iconName }) => {
+type AmenitiesIconProps = {
+  iconName: string
+  width?: number
+  height?: number
+  className?: string
+}
+
+export const AmenitieIcon: React.FC<AmenitiesIconProps> = ({
+  iconName,
+  width = 30,
+  height = 30,
+  className
+}) => {
   const ComponentIcon = icons[iconName]
 
   if (!ComponentIcon) {
     return null
   }
 
-  return <ComponentIcon width={30} height={30}  />
+  return <ComponentIcon width={width} height={height} className={className}  />
 }

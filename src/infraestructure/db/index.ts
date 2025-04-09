@@ -2,20 +2,20 @@ import { createClient } from '@supabase/supabase-js'
 import config from '@/config'
 
 const supabaseUrl = config.db.supabaseUrl
-const supabaseKey = config.db.supabaseKey
+const supabaseAnonKey = config.db.supabaseKey
 
-// export const db = (accessToken?: string) => {
-//   const options = accessToken
-//     ? {
-//         global: {
-//           headers: {
-//             Authorization: `Bearer ${accessToken}`,
-//           },
-//         },
-//       }
-//     : {}
+const dbAuth = (token: string) => {
+  const client = createClient(supabaseUrl, supabaseAnonKey, {
+    global: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  })
+  
+  return client
+}
 
-//   return createClient(supabaseUrl, supabaseKey, options)
-// }
+const db = createClient(supabaseUrl, supabaseAnonKey)
 
-export const db = createClient(supabaseUrl, supabaseKey)
+export { db, dbAuth }

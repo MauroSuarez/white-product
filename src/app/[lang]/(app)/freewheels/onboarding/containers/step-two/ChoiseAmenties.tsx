@@ -2,56 +2,54 @@
 import React, { useEffect } from "react"
 
 import { useFormContext } from "react-hook-form"
-import { SubCategorySchema } from "@/application/validators/setUpSchema"
+import { AmanitiesSchema } from "@/application/validators/setUpSchema"
 import { PanelSetup } from "../../components/PanelSetup"
-import { FormToggleGroupSubCategory } from "../../components/FormToggleGroupSubCategory"
+import { FormToggleGroupAmenities } from "../../components/FormToggleGroupAmenities"
+import { useAuthStore } from "@/infraestructure/stores/authStore"
+import { useCustomQuery } from "@/presentation/hooks/useCustomQuery"
+import { fetchAmenities } from "@/core/domain/services/fetchAmenities"
 
 interface BasicDataProps {
   handleNext: (value: boolean) => void
 }
 
 const ChoiseAmenities = ({ handleNext }: BasicDataProps) => {
-  // const { watch, formState: { errors }  } = useFormContext()
+  const { token } = useAuthStore()
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+  } = useCustomQuery(
+    () => fetchAmenities(token as string), // Función que obtiene los datos
+    ['amenities'], // Identificador único para la consulta
+  )
 
-  // const subCategory = watch('subCategory')
+  const { watch, formState: { errors }  } = useFormContext()
 
-  // useEffect(() => {
-  //   const validationResult = SubCategorySchema.safeParse({
-  //     subCategory: subCategory
-  //   })
+  const amenities = watch('amenities')
 
-  //   if(!validationResult.success) {
-  //     handleNext(true)
-  //   } else {
-  //     handleNext(false)
-  //   }
-  // }, [subCategory])
+  useEffect(() => {
+    const validationResult = AmanitiesSchema.safeParse({
+      amenities: amenities
+    })
+
+    if(!validationResult.success) {
+      handleNext(true)
+    } else {
+      handleNext(false)
+    }
+  }, [amenities])
 
   return (
     <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto">
       <PanelSetup
-        title="Agrega algunos datos básicos sobre tu taller"
-        description="No te preocupes, puedes agregar o cambiarlo más adelante"
+        title="Agrega algunos servicios extras"
+        description="Contale a tus clientes con los beneficios que cuentas."
       >
-        <FormToggleGroupSubCategory
+        <FormToggleGroupAmenities
           name="amenities"
-          options={[
-            {
-              id: 1,
-              value: 'light',
-              label: 'Claro',
-            },
-            {
-              id: 2,
-              value: 'dark',
-              label: 'Oscuro',
-            },
-            {
-              id: 3,
-              value: 'system',
-              label: 'Sistema',
-            }
-          ]}
+          options={data || []}
           type="multiple" 
         />
       </PanelSetup>

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
+// import { useQuery } from '@tanstack/react-query'
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
 import { Button } from '@/presentation/ds/button'
 import { Typography } from '@/presentation/ds/typography'
@@ -16,6 +16,7 @@ import { Category } from '@/core/domain/entities/Category'
 import { fetchCategories } from '@/core/domain/services/fetchCategories'
 import { SkeletonFilter } from '@/presentation/components/skeleton/filters'
 import { useCategoriesStore } from '@/infraestructure/stores/categoriesStore'
+import { useCustomQuery } from '@/presentation/hooks/useCustomQuery'
 
 const viewTypeController = new ViewTypeController()
 const filtersController = new FiltersController()
@@ -32,10 +33,10 @@ const Filters = () => {
     isLoading,
     isError,
     error,
-  } = useQuery({
-    queryKey: ['categories'], // Identificador único para la consulta
-    queryFn: fetchCategories, // Función que obtiene los datos
-  })
+  } = useCustomQuery(
+    fetchCategories, // Función que obtiene los datos
+    ['categories'], // Identificador único para la consulta
+  )
 
   useEffect(() => {
     if (categories) {

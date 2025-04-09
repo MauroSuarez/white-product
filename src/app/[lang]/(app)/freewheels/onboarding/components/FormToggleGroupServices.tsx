@@ -21,7 +21,7 @@ interface ToggleOption {
   className?: string
 }
 
-interface FormToggleGroupSubCategoryProps {
+interface FormToggleServicesProps {
   name: string
   label?: string
   description?: string
@@ -31,7 +31,7 @@ interface FormToggleGroupSubCategoryProps {
   type?: 'single' | 'multiple'
 }
 
-export function FormToggleGroupSubCategory({
+export function FormToggleGroupServices({
   name,
   label,
   description,
@@ -39,7 +39,7 @@ export function FormToggleGroupSubCategory({
   className = '',
   orientation = 'horizontal',
   type = 'single',
-}: FormToggleGroupSubCategoryProps) {
+}: FormToggleServicesProps) {
   const { control } = useFormContext()
 
   return (
