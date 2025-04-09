@@ -49,7 +49,7 @@ const ChoiseAmenities = ({ handleNext }: BasicDataProps) => {
       >
         <FormToggleGroupAmenities
           name="amenities"
-          options={data || []}
+          options={data as Array<any> || []}
           type="multiple" 
         />
       </PanelSetup>
