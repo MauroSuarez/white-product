@@ -10,22 +10,22 @@ interface BasicDataProps {
   handleNext: (value: boolean) => void
 }
 
-const BasicData = ({ handleNext }: BasicDataProps) => {
-  const { watch, formState: { errors }  } = useFormContext()
+const ChoiseAmenities = ({ handleNext }: BasicDataProps) => {
+  // const { watch, formState: { errors }  } = useFormContext()
 
-  const subCategory = watch('subCategory')
+  // const subCategory = watch('subCategory')
 
-  useEffect(() => {
-    const validationResult = SubCategorySchema.safeParse({
-      subCategory: subCategory
-    })
+  // useEffect(() => {
+  //   const validationResult = SubCategorySchema.safeParse({
+  //     subCategory: subCategory
+  //   })
 
-    if(!validationResult.success) {
-      handleNext(true)
-    } else {
-      handleNext(false)
-    }
-  }, [subCategory])
+  //   if(!validationResult.success) {
+  //     handleNext(true)
+  //   } else {
+  //     handleNext(false)
+  //   }
+  // }, [subCategory])
 
   return (
     <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto">
@@ -34,7 +34,7 @@ const BasicData = ({ handleNext }: BasicDataProps) => {
         description="No te preocupes, puedes agregar o cambiarlo más adelante"
       >
         <FormToggleGroupSubCategory
-          name="subCategory"
+          name="amenities"
           options={[
             {
               id: 1,
@@ -59,4 +59,4 @@ const BasicData = ({ handleNext }: BasicDataProps) => {
   )
 }
 
-export { BasicData }
+export { ChoiseAmenities }

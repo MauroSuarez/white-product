@@ -124,6 +124,20 @@ export const WorkshopScheduleSchema = z.object({
   }
 })
 
+export const SubCategorySchema =  z.object({
+  subCategory: z.array(
+    z.string()
+  )
+  .min(1, "Debes seleccionar al menos una subcategoría")
+})
+
+export const AmanitiesSchema =  z.object({
+  amenities: z.array(
+    z.string()
+  )
+  .min(1, "Debes seleccionar al menos una subcategoría")
+})
+
 export const SetUpSchema = z.object({
   category: z.string().optional(),
   location: z.object({
@@ -156,7 +170,17 @@ export const SetUpSchema = z.object({
     friday: DayScheduleSchema,
     saturday: DayScheduleSchema,
     sunday: DayScheduleSchema
-  }).optional()
+  }).optional(),
+  subCategory: z.array(
+    z.string()
+  )
+  .min(1, "Debes seleccionar al menos una subcategoría")
+  .optional(),
+  amenities: z.array(
+    z.string()
+  )
+  .min(1, "Debes seleccionar al menos una")
+  .optional()
 })
 
 export const partialSetUpSchema = SetUpSchema.partial()
