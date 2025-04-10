@@ -69,7 +69,7 @@ export function FormToggleGroupAmenities({
                     value={`${option.id}`}
                     aria-label={option.amenity}
                     className={cn(
-                      'flex items-center space-y-2 h-auto py-2 gap-2 px-4 border rounded-lg data-[state=on]:border-primary data-[state=on]:bg-primary/10',
+                      'flex items-center h-auto py-2 gap-2 px-4 border rounded-lg data-[state=on]:border-primary data-[state=on]:bg-primary/10',
                       option.className
                     )}
                   >
