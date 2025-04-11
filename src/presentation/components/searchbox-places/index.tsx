@@ -13,6 +13,7 @@ export interface PlaceResult {
 export interface GooglePlacesSearchProps {
   onPlaceSelected: (place: PlaceResult) => void
   placeholder?: string
+  defaultValue?: string
   className?: string
 }
 
@@ -27,6 +28,7 @@ const SearchBoxPlaces = ({
   onPlaceSelected, 
   placeholder = 'Buscar dirección o lugar...',
   className = '',
+  defaultValue = '',
   ...props
 }: GooglePlacesSearchProps) => {
     const inputRef = useRef<HTMLInputElement>(null)
@@ -90,6 +92,7 @@ const SearchBoxPlaces = ({
           ref={inputRef}
           type="text"
           placeholder={placeholder}
+          defaultValue={defaultValue}
           className="w-full p-2 border border-gray-300 rounded-full py-4 shadow-sm focus:outline-none focus:ring focus:ring-primary"
           {...props}
         />

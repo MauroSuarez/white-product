@@ -1,31 +1,31 @@
 
 import { LottieAnimation } from "@/presentation/components/lottie-animation"
 import { Typography } from "@/presentation/ds/typography"
-import animationServices from '@/presentation/assets/lotties/Animation-Services.json'
+import animationPublish from '@/presentation/assets/lotties/Animation-Publish.json'
 
-const WorkShopDetail = () => {
+const ReadyToPublish = () => {
   return (
     <div className="flex flex-col h-screen md:flex-row gap-6">
       <div className="w-full h-[70%] md:w-1/2 bg-background p-6 flex items-center justify-center">
         <div className="flex-wrap w-4/5 flex h-auto">
           <Typography variant={'p'} className="text-left w-full font-semibold">
-            Paso 2
+            Paso 3
           </Typography>
           <Typography variant={'h1'} className="text-left py-2 border-0 w-full leading-8">
-            Hacé que tu espacio
+            Terminá todo y
           </Typography>
           <Typography variant={'h1'} className="text-left border-0 w-full leading-8">
-            se destaque
+            publicá tu taller
           </Typography>
           <Typography variant={'p'} className="text-left mt-4 border-0 w-full leading-8">
-            En este paso, podrás personalizar tu espacio de trabajo. Agrega detalles como el nombre de tu taller, una breve descripción y fotos. Esto ayudará a tus clientes a conocerte mejor y a encontrar tu taller más fácilmente.
+            Por último, vas a elegir horarios, establecer presupuestos y publicar tu taller. Una vez que lo hagas, tus clientes podrán encontrarte y contactarte para pedir turnos. ¡Listo para empezar!
           </Typography>
         </div>
       </div>
 
       <div className="w-full h-full md:w-1/2 p-6">
         <LottieAnimation
-          animationData={animationServices}
+          animationData={animationPublish}
           className="w-full h-full"
           loop={false}
         />
@@ -34,4 +34,4 @@ const WorkShopDetail = () => {
   )
 }
 
-export { WorkShopDetail }
+export { ReadyToPublish }

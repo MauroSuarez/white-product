@@ -1,37 +1,34 @@
 
 import React, { useEffect } from "react"
-import { useCategoriesStore } from "@/infraestructure/stores/categoriesStore"
-import { Typography } from "@/presentation/ds/typography"
 
-import { FormRadioGroupCardCategory } from "../../components/FormRadioGroupCardCategory"
-import { ZodType } from "zod"
 import { useFormContext } from "react-hook-form"
-import { CategorySchema } from "@/application/validators/setUpSchema"
+import { ImageUploadSchema } from "@/application/validators/setUpSchema"
 import { PanelSetup } from "../../components/PanelSetup"
+import { FormUploadImages } from "../../components/FormUploadImages"
 
 
 interface ChoiseServicesProps {
-  schema?: ZodType
   handleNext: (value: boolean) => void
 }
 
-const WorkShopPothos = ({ schema, handleNext }: ChoiseServicesProps) => {
-  // const { categories } = useCategoriesStore()
-  // const { watch, formState: { errors }  } = useFormContext()
+const WorkShopPothos = ({ handleNext }: ChoiseServicesProps) => {
+  const { watch, formState: { errors }  } = useFormContext()
 
-  // const category = watch('category')
+  const images = watch('images')
 
-  // useEffect(() => {
-  //   const validationResult = CategorySchema.safeParse({
-  //     category: category
-  //   })
+  console.log(images, 'PHOTOS')
 
-  //   if(!validationResult.success) {
-  //     handleNext(true)
-  //   } else {
-  //     handleNext(false)
-  //   }
-  // }, [category])
+  useEffect(() => {
+    const validationResult = ImageUploadSchema.safeParse({
+      images: images
+    })
+
+    if(!validationResult.success) {
+      handleNext(true)
+    } else {
+      handleNext(false)
+    }
+  }, [images])
 
   return (
     <div className="flex items-start flex-wrap justify-center w-4/5 mx-auto min-h-10 h-auto">
@@ -39,7 +36,12 @@ const WorkShopPothos = ({ schema, handleNext }: ChoiseServicesProps) => {
         title="Agregá algunas fotos de tu taller"
         description="Necesitarás al menos 4 fotos para que tu taller sea visible en la app"
       >
-        
+        <FormUploadImages
+          name="images"
+          description="Sube 4 imágenes de tu taller"
+          maxFiles={4}
+          maxSizeMB={5}
+        />
       </PanelSetup>
     </div>
   )

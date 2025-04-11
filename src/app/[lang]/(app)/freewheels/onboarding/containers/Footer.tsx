@@ -71,13 +71,18 @@ const Footer = ({
         <Button
           onClick={handleNext}
           variant={'ghost'}
-          type="button"
-          // type="submit"
+          type={currentMainStep === steps.length - 1 && currentSubStep === steps[currentMainStep].subSteps.length - 1 ? "submit" : "button"}
           // form="setup-form"
+          // cuando el boton debe transformarse en submit
+          // disabled={currentMainStep === steps.length - 1 && currentSubStep === steps[currentMainStep].subSteps.length - 1}
           disabled={isNextDisabled}
           className={`py-4 h-12 text-white ${currentMainStep === 0 && currentSubStep === 0 ? 'bg-destructive' : 'bg-neutral-600 hover:bg-neutral-500 hover:text-neutral-50'} `}
         >
-          {currentMainStep === 0 && currentSubStep === 0 ? 'Empezar' : 'Siguiente'}
+          {currentMainStep === 0 && currentSubStep === 0
+            ? 'Empezar'
+              : currentMainStep === steps.length - 1 && currentSubStep === steps[currentMainStep].subSteps.length - 1
+                ? 'Listo, terminamos'
+                  : 'Siguiente'}
         </Button>
       </div>
     </div>

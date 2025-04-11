@@ -13,7 +13,7 @@ import { RadioGroup, RadioGroupItem } from '@/presentation/ds/radio-group'
 import { Label } from '@/presentation/ds/label'
 import { cn } from '@/presentation/utils/uiHelpers'
 
-interface CardOption {
+interface Options {
   value: string
   label: string
   description?: string
@@ -24,7 +24,7 @@ interface FormRadioGroupProps {
   name: string
   label?: string
   description?: string
-  options: CardOption[]
+  options: Options[]
   className?: string
   orientation?: 'horizontal' | 'vertical'
 }

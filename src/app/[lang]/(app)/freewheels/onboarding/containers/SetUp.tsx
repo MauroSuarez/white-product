@@ -19,6 +19,10 @@ import { WorkShopDetail } from "./step-two/WorkShopDetail"
 import { ChoiseServices } from "./step-two/ChoiseServices"
 import { WorkShopPothos } from "./step-two/WorkShopPothos"
 import { WorkShopSocialName } from "./step-two/WorkShopSocialName"
+import { WorkShopDescription } from "./step-two/WorkShopDescription"
+import { ReadyToPublish } from "./step-three/ReadyToPublish"
+import { WorkShopSchedule } from "./step-three/WorkShopSchedule"
+import { ChoiseAmenities } from "./step-two/ChoiseAmenties"
 
 type OnboardingStepsProps = {
   title?: string
@@ -36,8 +40,8 @@ export default function SetUp({
   handleSubmit
 }: SetUpProps) {
   const router = useRouter()
-  const [currentMainStep, setCurrentMainStep] = useState(0)
-  const [currentSubStep, setCurrentSubStep] = useState(0)
+  const [currentMainStep, setCurrentMainStep] = useState(1)
+  const [currentSubStep, setCurrentSubStep] = useState(5)
   const [isNextDisabled, setIsNextDisabled] = useState(false)
   const [direction, setDirection] = useState<"forward" | "backward">("forward")
 
@@ -61,9 +65,9 @@ export default function SetUp({
         { content: ({methods}) => <SetupOnboarding {...methods} /> },
         { content: ({methods}) => <AboutUsWorkShop {...methods} /> },
         { content: ({methods}) => <ChoiseCategory handleNext={(value) => handleValidNext(value)} /> },
+        { content: ({methods}) => <BasicData handleNext={(value) => handleValidNext(value)} {...methods} /> },
         { content: ({methods}) => <LocationAddress handleNext={(value) => handleValidNext(value)} {...methods} /> },
         { content: ({methods}) => <ConfirmLocationAddress handleNext={(value) => handleValidNext(value)} {...methods} /> },
-        { content: ({methods}) => <BasicData handleNext={(value) => handleValidNext(value)} {...methods} /> },
       ]
     },
     {
@@ -73,14 +77,15 @@ export default function SetUp({
         { content: (methods: any) => <ChoiseServices handleNext={(value) => handleValidNext(value)} {...methods} /> },
         { content: (methods: any) => <WorkShopPothos handleNext={(value) => handleValidNext(value)} {...methods} /> },
         { content: (methods: any) => <WorkShopSocialName handleNext={(value) => handleValidNext(value)} {...methods} /> },
+        { content: (methods: any) => <WorkShopDescription handleNext={(value) => handleValidNext(value)} {...methods} /> },
+        { content: (methods: any) => <ChoiseAmenities handleNext={(value) => handleValidNext(value)} {...methods} /> },
       ]
     },
     {
       title: 'Paso 3',
       subSteps: [
-        // { title: 'Subpaso 3.1', content: 'Contenido del subpaso 3.1' },
-        // { title: 'Subpaso 3.2', content: 'Contenido del subpaso 3.2' },
-        // { title: 'Subpaso 3.3', content: 'Contenido del subpaso 3.3' }
+        { content: (methods: any) => <ReadyToPublish {...methods} /> },
+        { content: (methods: any) => <WorkShopSchedule handleNext={(value) => handleValidNext(value)} {...methods} /> },
       ]
     }
   ]
@@ -123,8 +128,10 @@ export default function SetUp({
         onSubmit={handleSubmit}
         formProps={{ id: 'setup-form' }}
       >
-        {(methods) => (
-          <div className="h-screen max-h-screen flex flex-col p-10">
+        {(methods) => {
+          // console.log(methods.formState.errors, 'ERRORS')
+          return (
+          <div className="h-screen max-h-screen flex flex-col p-6">
             <Header isShow={isShow} handleOpenChange={handleOpenChange} />
             <FormSetup
               direction={direction}
@@ -141,7 +148,7 @@ export default function SetUp({
               handleBack={handleBack}
             />
           </div>
-        )}
+        )}}
       </FormContainer>
     </FadeIn>
   )

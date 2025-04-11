@@ -20,6 +20,7 @@ interface FormCheckboxProps {
   classNameContainer?: string
   className?: string
   id?: string
+  defaultValue?: string
 }
 
 export function FormCheckbox({
@@ -29,7 +30,8 @@ export function FormCheckbox({
   disabled = false,
   classNameContainer = '',
   className = '',
-  id
+  id,
+  defaultValue
 }: FormCheckboxProps) {
   const { control } = useFormContext()
   return (
@@ -44,6 +46,7 @@ export function FormCheckbox({
               onCheckedChange={field.onChange}
               disabled={disabled}
               className={className}
+              defaultValue={defaultValue}
               id={id}
             />
           </FormControl>
