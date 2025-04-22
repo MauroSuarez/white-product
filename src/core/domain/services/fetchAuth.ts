@@ -1,5 +1,6 @@
 import { db } from '@/infraestructure/db'
 import { ISignIn, ISignUp } from '../entities/Auth'
+import { fetchInsertUser } from './fetchUsers'
 
 export const fetchSignIn = async (credentials: ISignIn) => {
   const { data, error } = await db.auth.signInWithPassword({
@@ -14,21 +15,12 @@ export const fetchSignIn = async (credentials: ISignIn) => {
   return { ...data.user, ...data.session }
 }
 
-export const fetchSignUp = async (dataUser: ISignUp) => {
+export const fetchSignUp = async (email: string, password: string) => {
   const { data, error } = await db.auth.signUp({
-    email: dataUser.email,
-    password: dataUser.password,
-    options: {
-      data: {
-        first_name: dataUser.firstName,
-        last_name: dataUser.lastName,
-        terms: dataUser.terms,
-        username: dataUser.userName,
-        avatar: ''
-      },
-    },
+    email,
+    password,
   })
-  console.log(data, 'SERVICIO')
+
   if (error || !data.user) throw new Error(error?.message ?? 'Signup failed')
 
   return { ...data.user, ...data.session }

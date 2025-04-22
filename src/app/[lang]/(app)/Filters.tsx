@@ -29,7 +29,7 @@ const Filters = () => {
   const { isSmall } = usePositionScroll()
 
   const {
-    data: categories,
+    data,
     isLoading,
     isError,
     error,
@@ -39,10 +39,10 @@ const Filters = () => {
   )
 
   useEffect(() => {
-    if (categories) {
-      setCategories(categories)
+    if (data) {
+      setCategories(data)
     }
-  }, [categories])
+  }, [data])
 
   const handleViewType = () => {
     const type = viewType === 'grid' ? 'map' : 'grid'
@@ -78,7 +78,7 @@ const Filters = () => {
             : (
               <Swipper>
                 <div className='flex flex-nowrap h-full w-full'>
-                  {categories?.map((item: Category, key: number) => (
+                  {data?.map((item: Category, key: number) => (
                     <div key={`item-filter-${key}`} className='flex h-full p-0 w-[80px]'>
                       <div
                         onClick={() => handleCategory(item.id)}

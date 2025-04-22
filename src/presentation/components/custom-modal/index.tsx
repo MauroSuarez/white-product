@@ -50,7 +50,7 @@ const CustomModal: FunctionComponent<CustomModalProps> = (props) => {
             exit={{ opacity: 0, transition: { ease: 'easeOut', duration: 0.4 } }}
           />
           <motion.div
-            className="w-full h-full flex p-8 border-2 border-gray-300"
+            className="w-full h-full flex border-2 border-gray-300"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { ease: 'easeIn', duration: 0.4 } }}
             exit={{ opacity: 0, transition: { ease: 'easeOut', duration: 0.2 } }}

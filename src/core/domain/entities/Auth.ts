@@ -4,7 +4,6 @@ export interface ISignUp {
   firstName: string
   lastName: string
   password: string
-  userName: string
   terms: boolean
 }
 

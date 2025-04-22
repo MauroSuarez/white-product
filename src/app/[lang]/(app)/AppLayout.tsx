@@ -7,17 +7,19 @@ import { TAuthModal, useAuthStore } from "@/infraestructure/stores/authStore"
 import { AuthForm } from "./auth/Form"
 import { CustomModal } from "@/presentation/components/custom-modal"
 import { useCustomMutation } from "@/presentation/hooks/useCustomMutation"
-import { fetchResetPassword, fetchSignIn, fetchSignOut, fetchSignUp } from "@/core/domain/services/fetchAuth"
+import { fetchResetPassword, fetchSignIn, fetchSignOut } from "@/core/domain/services/fetchAuth"
+import { signUpWithMailUseCase } from "@/core/domain/use-cases/auth/signUpWithMailUseCase"
 import { toast } from "@/presentation/hooks/useToast"
 import { useCurrentPath } from "@/presentation/hooks/useCurrentPath"
 import { displayName } from '@/presentation/utils/stringHelper'
+import { useAppStore } from "@/infraestructure/stores/appStore"
 
 export type THeaderType = 'basic' | 'empty' | 'default' | 'detail' | 'workshop' | 'scan'
 
 interface AppLayoutProps {
   children: React.ReactNode
   header?: React.ReactNode
-  filters?: React.ReactNode
+  subHeader?: React.ReactNode
   showSearchBar?: boolean
   type?: THeaderType
 }
@@ -25,22 +27,23 @@ interface AppLayoutProps {
 export default function AppLayout({
   children,
   header,
-  filters,
+  subHeader,
   showSearchBar = false,
   type,
 }: AppLayoutProps) {
   const router = useRouter()
   const { user, isLoggedIn, token, clearUser, authModal, setAuthModal, setUser, setToken } = useAuthStore()
+  const { breakpoint } = useAppStore()
   const { userRol } = useRolUser(user, isLoggedIn)
   const { pathname } = useCurrentPath()
   const signInMutation = useCustomMutation(fetchSignIn, ['signin'], { enabled: false })
   const signOutMutation = useCustomMutation(fetchSignOut, ['signOut'], { enabled: false })
-  const signUpMutation = useCustomMutation(fetchSignUp, ['signUp'], { enabled: false })
+  const signUpMutationUseCase = useCustomMutation(signUpWithMailUseCase, ['signUp'], { enabled: false })
   const resetPasswordMutation = useCustomMutation(fetchResetPassword, ['resetPassword'], { enabled: false })
 
-  const isLoadingFech = signInMutation.isPending || signOutMutation.isPending || resetPasswordMutation.isPending || signUpMutation.isPending
-  const isSuccessFetch = signInMutation.isSuccess || signOutMutation.isSuccess || resetPasswordMutation.isSuccess || signUpMutation.isSuccess
-  const isErrorFetch = signInMutation.isError || signOutMutation.isError || resetPasswordMutation.isError || signUpMutation.isError
+  const isLoadingFech = signInMutation.isPending || signOutMutation.isPending || resetPasswordMutation.isPending || signUpMutationUseCase.isPending
+  const isSuccessFetch = signInMutation.isSuccess || signOutMutation.isSuccess || resetPasswordMutation.isSuccess || signUpMutationUseCase.isSuccess
+  const isErrorFetch = signInMutation.isError || signOutMutation.isError || resetPasswordMutation.isError || signUpMutationUseCase.isError
 
   const handleNavigate = (path?: string) => router.push(`/es/${path}`)
 
@@ -82,8 +85,7 @@ export default function AppLayout({
   }
 
   const handleFormSignUp = async (data: any) => {
-    console.log(data, 'A sign up joya')
-    signUpMutation.mutateAsync(data)
+    signUpMutationUseCase.mutateAsync(data)
       .then((resp: any) => {
         console.log(resp, 'RESPUESTA')
         // setUser(resp?.user)
@@ -132,7 +134,7 @@ export default function AppLayout({
               isLoading={false}
             />
           )}
-          {filters}
+          {subHeader}
         </div>
         {children}
         <Footer />
@@ -141,6 +143,7 @@ export default function AppLayout({
         isOpen={authModal.open}
         onClose={() => setAuthModal({ ...authModal, open: false })}
         title={`${authModal.type === 'reset' ? 'Recupear contraseña' : authModal.type === 'signin' ? 'Inicia sesión' : 'Registrate'}`}
+        showFullscreenWhenMobile={breakpoint.device === 'mobile'}
       >
         <AuthForm
           isLoading={isLoadingFech}

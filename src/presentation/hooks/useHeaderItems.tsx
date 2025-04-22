@@ -156,20 +156,6 @@ export function useHeaderItems({
     
     const arrMenuAuthenticate: Array<HeaderItemProps<TItems>> = [
       {
-        id: 'messages',
-        label: 'Mensajes',
-        path: '/messages',
-        visible: true,
-        format: ({ label, path }) => (
-          <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
-            <div className="flex flex-wrap justify-between w-full items-center">
-              {label}
-              <Dot className="relative" />
-            </div>
-          </DropdownMenuItem>
-        )
-      },
-      {
         id: 'reservations',
         label: 'Reservas',
         path: '/reservations',
@@ -403,7 +389,7 @@ export function useHeaderItems({
         {
           id: 'separator-div',
           format: ()  => (
-            <div className='lg:w-1/5 md:w-1/5 lg:pr-10 md:pr-10 px-5 border border-red-500' />
+            <div className='lg:w-1/5 md:w-1/5 lg:pr-10 md:pr-10 px-5' />
           ),
           visible: true
         },

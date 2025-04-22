@@ -23,6 +23,7 @@ import { WorkShopDescription } from "./step-two/WorkShopDescription"
 import { ReadyToPublish } from "./step-three/ReadyToPublish"
 import { WorkShopSchedule } from "./step-three/WorkShopSchedule"
 import { ChoiseAmenities } from "./step-two/ChoiseAmenties"
+import { Promotions } from "./step-three/Promotions"
 
 type OnboardingStepsProps = {
   title?: string
@@ -40,8 +41,8 @@ export default function SetUp({
   handleSubmit
 }: SetUpProps) {
   const router = useRouter()
-  const [currentMainStep, setCurrentMainStep] = useState(1)
-  const [currentSubStep, setCurrentSubStep] = useState(5)
+  const [currentMainStep, setCurrentMainStep] = useState(0)
+  const [currentSubStep, setCurrentSubStep] = useState(0)
   const [isNextDisabled, setIsNextDisabled] = useState(false)
   const [direction, setDirection] = useState<"forward" | "backward">("forward")
 
@@ -60,7 +61,7 @@ export default function SetUp({
 
   const steps: OnboardingStepsProps[] = [
     {
-      title: 'Paso 1',
+      title: 'Contanos acerca de tu FreeWheel',
       subSteps: [
         { content: ({methods}) => <SetupOnboarding {...methods} /> },
         { content: ({methods}) => <AboutUsWorkShop {...methods} /> },
@@ -71,7 +72,7 @@ export default function SetUp({
       ]
     },
     {
-      title: 'Paso 2',
+      title: 'Hacé que tu espacio se destaque',
       subSteps: [
         { content: (methods: any) => <WorkShopDetail {...methods} /> },
         { content: (methods: any) => <ChoiseServices handleNext={(value) => handleValidNext(value)} {...methods} /> },
@@ -82,10 +83,11 @@ export default function SetUp({
       ]
     },
     {
-      title: 'Paso 3',
+      title: 'Terminá todo y publicá tu taller',
       subSteps: [
         { content: (methods: any) => <ReadyToPublish {...methods} /> },
         { content: (methods: any) => <WorkShopSchedule handleNext={(value) => handleValidNext(value)} {...methods} /> },
+        { content: (methods: any) => <Promotions handleNext={(value) => handleValidNext(value)} {...methods} /> },
       ]
     }
   ]

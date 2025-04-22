@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
-type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
-type ScreenSize = {
+export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+export type ScreenSize = {
   device: 'mobile' | 'tablet' | 'desktop'
   breakpoint: Breakpoint
   width: number

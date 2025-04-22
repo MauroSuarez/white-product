@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { User } from '@/core/domain/entities/User'
+import { TUsers, TAuth } from '@/core/domain/entities/User'
 
 export type TAuthModalType = 'signin' | 'signup' | 'reset'
 export type TAuthModal = {
@@ -8,13 +8,18 @@ export type TAuthModal = {
   type: TAuthModalType
 }
 
+interface IUser {
+  auth: TAuth
+  user: TUsers
+}
+
 export type AuthState = {
-  user: User | null
+  user: TAuth | null
   token: string | null
   isLoggedIn: boolean
   authModal: TAuthModal
   setAuthModal: (authModal: TAuthModal) => void
-  setUser: (user: User) => void
+  setUser: (user: TAuth) => void
   setToken: (token: string) => void
   clearUser: () => void
 }

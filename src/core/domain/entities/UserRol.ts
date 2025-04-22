@@ -1,1 +1,1 @@
-export type TUserRol = 'GUEST' | 'AUTHENTICATED' | 'FREEWHEELS'
+export type TUserRol = 'GUEST' | 'FREEWHEELS' | 'WORKSHOP'

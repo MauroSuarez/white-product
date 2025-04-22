@@ -30,7 +30,7 @@ const FormSignUp = ({
 
   return (
     <FadeIn>
-      <FormContainer schema={authSchema.signup} onSubmit={onSubmit} className="min-w-[500px] w-full space-y-4 mt-8">
+      <FormContainer schema={authSchema.signup} onSubmit={onSubmit} className="lg:min-w-[500px] md:min-w-[500px] w-full space-y-4 mt-8">
         {(methods) => (
           <>
             {isSuccess || isError && (

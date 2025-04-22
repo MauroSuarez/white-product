@@ -22,7 +22,7 @@ const FormSignIn = ({ handleSubmit, handleTypeForm, isLoading = false }: FormSig
   }
   return (
     <FadeIn>
-      <FormContainer schema={authSchema.signin} onSubmit={onSubmit} className="min-w-[500px] w-full space-y-4 mt-8">
+      <FormContainer schema={authSchema.signin} onSubmit={onSubmit} className="lg:min-w-[500px] md:min-w-[500px] w-full space-y-4 mt-8">
         {(methods) => (
           <>
             <FormInput name="email" label="Email" className="py-6" placeholder="Ingrese su email" />

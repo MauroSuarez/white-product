@@ -41,7 +41,7 @@ const ModalDefault: FunctionComponent<ModalProps> = ({
 
   return (
     <div
-      className={`relative bg-background border border-gray-300 shadow-sm sm:rounded-md
+      className={`relative bg-background border border-gray-300 p-4 shadow-sm lg:rounded-[2rem] md:rounded-[2rem]
         ${showFullscreenWhenMobile ? 'w-full h-full' : 'w-auto h-auto'}
         ${
           showFullscreenWhenMobile

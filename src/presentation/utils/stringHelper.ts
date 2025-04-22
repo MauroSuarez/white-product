@@ -10,3 +10,13 @@ export function getFirstLettersRegex(text: string): string {
 export function displayName(user: User): string {
   return `${user?.user_metadata?.first_name} ${user?.user_metadata?.last_name}`
 }
+
+export const capitalizeString = (str: string) => {
+  if (!str || typeof str !== 'string') return str
+  
+  return str
+    .trim()
+    .split(/\s+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+}

@@ -124,8 +124,8 @@ export const WorkshopScheduleSchema = z.object({
   }
 })
 
-export const ServicesSchema =  z.object({
-  services: z.array(
+export const BasicServicesSchema =  z.object({
+  basicServices: z.array(
     z.string()
   )
   .min(1, "Debes seleccionar al menos una subcategoría")
@@ -171,7 +171,7 @@ export const SetUpSchema = z.object({
     saturday: DayScheduleSchema,
     sunday: DayScheduleSchema
   }).optional(),
-  services: z.array(
+  basicServices: z.array(
     z.string()
   )
   .min(1, "Debes seleccionar al menos un servicio")
