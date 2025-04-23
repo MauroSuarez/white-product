@@ -7,8 +7,9 @@ import { TAuthModal, useAuthStore } from "@/infraestructure/stores/authStore"
 import { AuthForm } from "./auth/Form"
 import { CustomModal } from "@/presentation/components/custom-modal"
 import { useCustomMutation } from "@/presentation/hooks/useCustomMutation"
-import { fetchResetPassword, fetchSignIn, fetchSignOut } from "@/core/domain/services/fetchAuth"
+import { fetchResetPassword, fetchSignOut } from "@/core/domain/services/fetchAuth"
 import { signUpWithMailUseCase } from "@/core/domain/use-cases/auth/signUpWithMailUseCase"
+import { signInWithMailUseCase } from "@/core/domain/use-cases/auth/signInWithMailUseCase"
 import { toast } from "@/presentation/hooks/useToast"
 import { useCurrentPath } from "@/presentation/hooks/useCurrentPath"
 import { displayName } from '@/presentation/utils/stringHelper'
@@ -36,7 +37,7 @@ export default function AppLayout({
   const { breakpoint } = useAppStore()
   const { userRol } = useRolUser(user, isLoggedIn)
   const { pathname } = useCurrentPath()
-  const signInMutation = useCustomMutation(fetchSignIn, ['signin'], { enabled: false })
+  const signInMutation = useCustomMutation(signInWithMailUseCase, ['signin'], { enabled: false })
   const signOutMutation = useCustomMutation(fetchSignOut, ['signOut'], { enabled: false })
   const signUpMutationUseCase = useCustomMutation(signUpWithMailUseCase, ['signUp'], { enabled: false })
   const resetPasswordMutation = useCustomMutation(fetchResetPassword, ['resetPassword'], { enabled: false })
@@ -71,8 +72,8 @@ export default function AppLayout({
   const handleFormSignIn = async (credentials: any) => {
     signInMutation.mutateAsync(credentials)
       .then((resp: any) => {
-        setUser(resp?.user)
-        setToken(resp?.access_token)
+        setUser({ auth: resp?.auth, user: resp?.user })
+        setToken(resp?.auth?.access_token)
         toast({
           variant: "default",
           title: `Bienvenido de nuevo ${displayName(resp?.user)}`,
@@ -115,7 +116,7 @@ export default function AppLayout({
 
   const { itemsHeader } = useHeaderItems({
     type,
-    user,
+    user: user?.user,
     userRol,
     handleAuthModal,
     handleNavigate,

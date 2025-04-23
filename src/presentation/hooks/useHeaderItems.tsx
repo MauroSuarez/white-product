@@ -3,7 +3,7 @@ import { Button } from "../ds/button"
 import { Dot } from "../components/dot"
 import { Bell, ScanSearch, Wrench } from "lucide-react"
 import { TUserRol } from "@/core/domain/entities/UserRol"
-import { User } from "@/core/domain/entities/User"
+import { TUsers } from "@/core/domain/entities/User"
 import { useCurrentPath } from "./useCurrentPath"
 import { THeaderType } from "@/app/[lang]/(app)/AppLayout"
 import { Typography } from "../ds/typography"
@@ -22,7 +22,7 @@ type TItems = {
 
 type useHeaderItemsProps = {
   type?: THeaderType
-  user?: User | null
+  user?: TUsers | null
   userRol: TUserRol
   handleAuthModal: (modalAuth: TAuthModal) => void
   handleNavigate: (path?: string) => void
@@ -45,7 +45,6 @@ export function useHeaderItems({
 }: useHeaderItemsProps): { itemsHeader: Array<HeaderItemProps<TItems>> } {
   const { pathname } = useCurrentPath()
   const { theme, setTheme } = useTheme()
-  console.log(userRol, pathname, type, 'ROL')
 
   const handleChangeTheme = () => theme == "dark" ? setTheme("light") : setTheme("dark")
 

@@ -26,3 +26,14 @@ export const fetchInsertUser = async (user: Partial<TUsers>) => {
 
   return data
 }
+
+export const fetchUserById = async (userId: string) => {
+  const { data, error } = await db
+    .from('users')
+    .select('*')
+    .eq('id_user', userId)
+
+  if (error || !data) throw new Error(error?.message ?? 'Get user by id failed')
+
+  return data
+}

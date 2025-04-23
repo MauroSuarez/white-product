@@ -14,12 +14,12 @@ interface IUser {
 }
 
 export type AuthState = {
-  user: TAuth | null
+  user: IUser | null
   token: string | null
   isLoggedIn: boolean
   authModal: TAuthModal
   setAuthModal: (authModal: TAuthModal) => void
-  setUser: (user: TAuth) => void
+  setUser: (user: IUser) => void
   setToken: (token: string) => void
   clearUser: () => void
 }

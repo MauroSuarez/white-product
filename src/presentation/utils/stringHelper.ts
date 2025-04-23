@@ -1,4 +1,4 @@
-import { User } from "@/core/domain/entities/User";
+import { TUsers } from "@/core/domain/entities/User";
 
 export function getFirstLettersRegex(text: string): string {
   return text
@@ -7,8 +7,9 @@ export function getFirstLettersRegex(text: string): string {
     || ''; // Fallback para strings vacíos
 }
 
-export function displayName(user: User): string {
-  return `${user?.user_metadata?.first_name} ${user?.user_metadata?.last_name}`
+export function displayName(user: TUsers): string {
+  console.log(user, 'USER DISPLAY NAME')
+  return `${user?.first_name} ${user?.last_name}`
 }
 
 export const capitalizeString = (str: string) => {
