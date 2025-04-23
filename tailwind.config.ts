@@ -80,11 +80,40 @@ const config: Config = {
 				"0%, 100%": { opacity: "1" },
 				"50%": { opacity: "0.5" },
 			},
+			flip3D: {
+				'0%': { transform: 'rotateY(0deg)' },
+				'100%': { transform: 'rotateY(360deg)' },
+			},
+			flip: {
+				'0%, 100%': { transform: 'rotateY(0deg)' },
+				'50%': { transform: 'rotateY(180deg)' },
+			},
+			customBounce: {
+				'0%, 100%': { 
+					transform: 'translateY(-30%) scale(1.1)',
+					opacity: '0.8'
+				},
+				'50%': { 
+					transform: 'translateY(0) scale(0.9)',
+					opacity: '1'
+				},
+			},
+			'move-out': {
+				'0%, 100%': { transform: 'translateY(0)' },
+				'50%': { transform: 'translateY(-20px)' },
+			},
+			bounce: {
+				'0%, 100%': { transform: 'translateY(0)' },
+				'50%': { transform: 'translateY(-20px)' },
+			}
 		},
 		animation: {
 			"caret-blink": "caret-blink 1.25s ease-out infinite",
 			"spin": "spin 1s infinite",
-			pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite', 
+			pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+			flip3D: 'flip3D 3s linear infinite',
+			flip: 'flip 0.1s ease-in-out infinite',
+			bounce: 'bounce 0.6s ease infinite',
 		},
 		// gridTemplateColumns: {
 		// 	'custom': 'minmax(0, 6fr) minmax(0, 3fr) minmax(0, 3fr)',
