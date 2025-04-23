@@ -14,6 +14,8 @@ import { toast } from "@/presentation/hooks/useToast"
 import { useCurrentPath } from "@/presentation/hooks/useCurrentPath"
 import { displayName } from '@/presentation/utils/stringHelper'
 import { useAppStore } from "@/infraestructure/stores/appStore"
+import { Splash } from "@/presentation/components/splash"
+import { useEffect, useState } from "react"
 
 export type THeaderType = 'basic' | 'empty' | 'default' | 'detail' | 'workshop' | 'scan'
 
@@ -32,6 +34,7 @@ export default function AppLayout({
   showSearchBar = false,
   type,
 }: AppLayoutProps) {
+  const [showSplash, setShowSplash] = useState(true)
   const router = useRouter()
   const { user, isLoggedIn, token, clearUser, authModal, setAuthModal, setUser, setToken } = useAuthStore()
   const { breakpoint } = useAppStore()
@@ -122,9 +125,12 @@ export default function AppLayout({
     handleNavigate,
     handleSignOut,
   })
-  
+
   return (
     <>
+      {/* {breakpoint.device === 'mobile' && (
+        <Splash />
+      )} */}
       <section className="flex min-h-screen h-auto w-full flex-col bg-background">
         <div className="sticky top-0 z-20 bg-background">
           {header ?? (

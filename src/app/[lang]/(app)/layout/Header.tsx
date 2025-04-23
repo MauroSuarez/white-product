@@ -6,6 +6,8 @@ import { TUserRol } from "@/core/domain/entities/UserRol"
 import { BrandLogo } from '@/presentation/components/brand-logo'
 import { SearchBox } from '@/presentation/components/searchbox'
 import { SkeletonButton } from '@/presentation/components/skeleton/button';
+import Link from 'next/link';
+import { useAppStore } from '@/infraestructure/stores/appStore';
 
 export type HeaderItemProps<T> = {
   id: string
@@ -31,11 +33,12 @@ export function Header<T>({
   isLoading = false,
 }: HeaderProps<T>) {
   const { isSmall } = usePositionScroll()
+  const { config } = useAppStore()
   
   const handleOnSearch = (searchQuery: string) => {
     handleSearch && handleSearch(searchQuery.trim())
   };
-
+  console.log(config.mainLink, 'LINK')
   const heightHeaderBar = isSmall ? 'h-16' : 'h-28'
   const containerButtons = 'w-full'
   return (
@@ -45,10 +48,12 @@ export function Header<T>({
       <div className="mx-10 items-center flex w-full">
 
         <div className="flex justify-start w-auto">
-          <BrandLogo
-            variant={isSmall ? 'secondary' : 'primary'}
-            onClick={() => {}}
-          />
+          <Link href={config.mainLink}>
+            <BrandLogo
+              variant={isSmall ? 'secondary' : 'primary'}
+              onClick={() => {}}
+            />
+          </Link>
         </div>
 
         {showSearchBar && (

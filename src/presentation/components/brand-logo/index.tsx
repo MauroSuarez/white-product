@@ -25,17 +25,6 @@ const BrandLogo = ({
         <div className="text-primary justify-center flex w-full">
           <BrandOutlineAppIcon height={65} width={65} />
         </div>
-        {/* <div className="flex space-x-1">
-        {['M', 'e', 's', 's', 'a', 'g', 'e'].map((letter, index) => (
-          <span 
-            key={index}
-            className="inline-block animate-[bounce_0.6s_ease_infinite]"
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            {letter}
-          </span>
-        ))}
-      </div> */}
         <Typography className={cn(`w-auto text-primary hidden md:block lg:block`, classNameBrand)}>{APPLICATION.appName}</Typography>
       </>
     ),

@@ -89,7 +89,7 @@ export const useAppStore = create<AppState>()(
     {
       name: 'app-storage', // nombre para el localStorage
       partialize: (state) => ({
-        config: state.config,
+        // config: state.config,
       }) // Solo persiste estos campos
     }
   )

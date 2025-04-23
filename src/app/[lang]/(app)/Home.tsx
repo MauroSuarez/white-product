@@ -54,6 +54,12 @@ export default function Home() {
     console.log(data, 'FORM')
   }
 
+  /*
+  {breakpoint.device === 'mobile' && showSplash ? (
+        <Splash showSplash={showSplash} />
+      ) : (
+       */
+
   return (
     <AppLayout subHeader={<Filters />} showSearchBar type="default">
       <section className="w-full py-8 px-10 h-screen">
@@ -62,7 +68,7 @@ export default function Home() {
           {[...new Array(7)].map((column, index) => (
             <Card key={`card-freewheel-${index}`} className="overflow-hidden rounded-lg border-0">
               <div className="relative">
-                <Link href={'/es/workshop/1'}>
+                <Link href={'/es/workshop/1/gomeria-el-corneta'}>
                   <img
                     src="/images/workshop.jpg"
                     alt="Taller mecánico"
