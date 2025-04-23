@@ -1,0 +1,37 @@
+
+import { LottieAnimation } from "@/presentation/components/lottie-animation"
+import { Typography } from "@/presentation/ds/typography"
+import animationWorkshop from '@/presentation/assets/lotties/Animation-WorkShop.json'
+
+const AboutUsWorkShop = () => {
+  return (
+    <div className="flex flex-col h-screen md:flex-row gap-6">
+      <div className="w-full h-[70%] md:w-1/2 bg-background p-6 flex items-center justify-center">
+        <div className="flex-wrap w-4/5 flex h-auto">
+          <Typography variant={'p'} className="text-left w-full font-semibold">
+            Paso 1
+          </Typography>
+          <Typography variant={'h1'} className="text-left py-2 border-0 w-full leading-8">
+            Contanos acerca de
+          </Typography>
+          <Typography variant={'h1'} className="text-left border-0 w-full leading-8">
+            tu FreeWheel (taller, gomería, lavadero, etc.)
+          </Typography>
+          <Typography variant={'p'} className="text-left mt-4 border-0 w-full leading-8">
+            FreeWheels es fácil. Con nuestra plataforma, puedes gestionar historial de vehículos, reservas, horarios y mucho más de manera sencilla y eficiente. ¡Empieza hoy mismo!
+          </Typography>
+        </div>
+      </div>
+
+      <div className="w-full h-full md:w-1/2 p-6">
+        <LottieAnimation
+          animationData={animationWorkshop}
+          className="w-full h-full"
+          loop={false}
+        />
+      </div>
+    </div>
+  )
+}
+
+export { AboutUsWorkShop }

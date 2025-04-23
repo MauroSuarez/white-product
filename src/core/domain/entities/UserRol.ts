@@ -1,0 +1,1 @@
+export type TUserRol = 'GUEST' | 'FREEWHEELS' | 'WORKSHOP'
