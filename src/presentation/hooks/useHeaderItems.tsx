@@ -1,11 +1,10 @@
-import { HeaderItemProps } from "@/app/[lang]/(app)/layout/Header"
+import { HeaderItemProps, THeaderType } from "@/app/[lang]/(app)/layout/Header"
 import { Button } from "../ds/button"
 import { Dot } from "../components/dot"
 import { Bell, ScanSearch, Wrench } from "lucide-react"
 import { TUserRol } from "@/core/domain/entities/UserRol"
 import { TUsers } from "@/core/domain/entities/User"
 import { useCurrentPath } from "./useCurrentPath"
-import { THeaderType } from "@/app/[lang]/(app)/AppLayout"
 import { Typography } from "../ds/typography"
 import { Icon } from "../ds/icon"
 import { useMemo } from "react"
@@ -52,7 +51,7 @@ export function useHeaderItems({
     return USER_ROLE.GUEST
   }, [user])
   
-  console.log(user, userRol, 'A VER')
+  // console.log(user, userRol, 'A VER')
   
   const handleChangeTheme = () => theme == "dark" ? setTheme("light") : setTheme("dark")
 

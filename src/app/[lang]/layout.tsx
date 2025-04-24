@@ -22,6 +22,8 @@ import { Roboto } from 'next/font/google'
 const roboto = Roboto({
   weight: '400',
   subsets: ['latin'],
+  display: 'swap', // Mejora la renderización
+  variable: '--font-roboto', // Opcional: para usarla como variable CSS
 })
 
 export const metadata: Metadata = {
@@ -37,10 +39,10 @@ export default function RootLayout({
   params: { lang: 'es'| 'en' }
 }>) {
   return (
-    <html lang={lang}>
+    <html lang={lang} className={roboto.variable}>
       <body
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        className={`${roboto.className} antialiased`}
+        className='antialiased'
       >
         <ClientCacheProvider>
           <AppProvider>

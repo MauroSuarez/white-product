@@ -8,6 +8,8 @@ import { SkeletonButton } from '@/presentation/components/skeleton/button';
 import Link from 'next/link';
 import { useAppStore } from '@/infraestructure/stores/appStore';
 
+export type THeaderType = 'basic' | 'empty' | 'default' | 'detail' | 'workshop' | 'scan'
+
 export type HeaderItemProps<T> = {
   id: string
   visible?: boolean
@@ -21,6 +23,7 @@ export type HeaderProps<T> = {
   showSearchBar?: boolean
   handleSearch?: (searchQuery: string) => void
   isLoading?: boolean
+  type: THeaderType
 }
 
 export function Header<T>({
@@ -28,6 +31,7 @@ export function Header<T>({
   showSearchBar = true,
   handleSearch,
   isLoading = false,
+  type = 'default',
 }: HeaderProps<T>) {
   const { isSmall } = usePositionScroll()
   const { config } = useAppStore()

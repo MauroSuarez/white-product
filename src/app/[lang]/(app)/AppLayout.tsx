@@ -1,5 +1,5 @@
 import { Footer } from "./layout/Footer"
-import { Header } from "./layout/Header"
+import { Header, THeaderType } from "./layout/Header"
 import { useHeaderItems } from "@/presentation/hooks/useHeaderItems"
 import { useRouter } from "next/navigation"
 import { TAuthModal, useAuthStore } from "@/infraestructure/stores/authStore"
@@ -15,14 +15,12 @@ import { displayName } from '@/presentation/utils/stringHelper'
 import { useAppStore } from "@/infraestructure/stores/appStore"
 import { Splash } from "@/presentation/components/splash"
 
-export type THeaderType = 'basic' | 'empty' | 'default' | 'detail' | 'workshop' | 'scan'
-
 interface AppLayoutProps {
   children: React.ReactNode
   header?: React.ReactNode
   subHeader?: React.ReactNode
   showSearchBar?: boolean
-  type?: THeaderType
+  type: THeaderType
 }
 
 export default function AppLayout({
@@ -30,7 +28,7 @@ export default function AppLayout({
   header,
   subHeader,
   showSearchBar = false,
-  type,
+  type = 'default',
 }: AppLayoutProps) {
   const router = useRouter()
   const { user, clearUser, authModal, setAuthModal, setUser, setToken } = useAuthStore()
@@ -132,6 +130,7 @@ export default function AppLayout({
               showSearchBar={showSearchBar}
               headerItems={itemsHeader}
               isLoading={false}
+              type={type}
             />
           )}
           {subHeader}
