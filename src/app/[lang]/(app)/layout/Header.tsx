@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { usePositionScroll } from '@/presentation/hooks/usePositionScroll'
-import { TUserRol } from "@/core/domain/entities/UserRol"
 import { BrandLogo } from '@/presentation/components/brand-logo'
 import { SearchBox } from '@/presentation/components/searchbox'
 import { SkeletonButton } from '@/presentation/components/skeleton/button';
@@ -18,7 +17,6 @@ export type HeaderItemProps<T> = {
 }
 
 export type HeaderProps<T> = {
-  userRol: TUserRol
   headerItems?: HeaderItemProps<T>[]
   showSearchBar?: boolean
   handleSearch?: (searchQuery: string) => void
@@ -26,7 +24,6 @@ export type HeaderProps<T> = {
 }
 
 export function Header<T>({
-  userRol,
   headerItems = [],
   showSearchBar = true,
   handleSearch,
@@ -38,7 +35,7 @@ export function Header<T>({
   const handleOnSearch = (searchQuery: string) => {
     handleSearch && handleSearch(searchQuery.trim())
   };
-  console.log(config.mainLink, 'LINK')
+
   const heightHeaderBar = isSmall ? 'h-16' : 'h-28'
   const containerButtons = 'w-full'
   return (

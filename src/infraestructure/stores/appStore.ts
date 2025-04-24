@@ -20,8 +20,8 @@ interface AppState {
   breakpoint: ScreenSize
   setBreakpoint: (size: ScreenSize) => void
   // isMobile: boolean
-  // sidebarOpen: boolean
-  // toggleSidebar: () => void
+  showSplash: boolean
+  setShowSplash: (show: boolean) => void
   
   // Manejo de errores
   errors: AppError[]
@@ -47,9 +47,8 @@ export const useAppStore = create<AppState>()(
       setBreakpoint: (size: ScreenSize) => set({
         breakpoint: size
       }),
-      // Sidebar state
-      // sidebarOpen: false,
-      // toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+      showSplash: true,
+      setShowSplash: (show) => set((state) => ({ showSplash: show })),
       
       // Manejo de errores
       errors: [],
@@ -89,6 +88,7 @@ export const useAppStore = create<AppState>()(
     {
       name: 'app-storage', // nombre para el localStorage
       partialize: (state) => ({
+        setSplash: state.showSplash,
         // config: state.config,
       }) // Solo persiste estos campos
     }

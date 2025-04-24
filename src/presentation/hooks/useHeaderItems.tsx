@@ -14,38 +14,46 @@ import { DropDown as DropdownMenu } from "@/presentation/components/dropdown-men
 import { DropdownMenuItem, DropdownMenuSeparator } from "@/presentation/ds/dropdown-menu"
 import { CustomAvatar } from "../components/custom-avatar"
 import { TAuthModal, TAuthModalType } from "@/infraestructure/stores/authStore"
+import { BrandOutlineAppIcon } from "../components/svg/BrandOutlineApp"
 
 type TItems = {
   label?: string,
   path?: string
 }
 
+enum USER_ROLE {
+  'GUEST' = 'GUEST',       // 0
+  'FREEWHEELS' = 'FREEWHEELS',  // 1
+  'WORKSHOP' = 'WORKSHOP'     // 2
+}
+
 type useHeaderItemsProps = {
   type?: THeaderType
   user?: TUsers | null
-  userRol: TUserRol
   handleAuthModal: (modalAuth: TAuthModal) => void
   handleNavigate: (path?: string) => void
   handleSignOut: () => void
 }
 
-// type DropDownMenu = {
-//   [key in THeaderType]: {
-//     [key in TUserRol]: Array<HeaderItemProps<TItems>>
-//   }
-// }
-
 export function useHeaderItems({
   type = 'basic',
   user,
-  userRol = 'GUEST',
   handleNavigate,
   handleSignOut,
   handleAuthModal,
 }: useHeaderItemsProps): { itemsHeader: Array<HeaderItemProps<TItems>> } {
   const { pathname } = useCurrentPath()
   const { theme, setTheme } = useTheme()
-
+  
+  const userRol = useMemo(() => {
+    if (!user) return USER_ROLE.GUEST
+    if (user?.id_rol === 2) return USER_ROLE.FREEWHEELS
+    if (user?.id_rol === 3) return USER_ROLE.WORKSHOP
+    return USER_ROLE.GUEST
+  }, [user])
+  
+  console.log(user, userRol, 'A VER')
+  
   const handleChangeTheme = () => theme == "dark" ? setTheme("light") : setTheme("dark")
 
   const menu = useMemo(() => {
@@ -61,7 +69,7 @@ export function useHeaderItems({
         id: 'account',
         label: 'Cuenta',
         path: '/account',
-        visible: userRol !== 'GUEST',
+        visible: true, // userRol !== 'GUEST',
         format: ({ label, path }) => (
           <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
             {label}
@@ -72,7 +80,7 @@ export function useHeaderItems({
         id: 'profile',
         label: 'Perfil',
         path: '/profile',
-        visible: userRol !== 'GUEST',
+        visible: true, // userRol !== 'GUEST',
         format: ({ label, path }) => (
           <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
             {label}
@@ -141,7 +149,7 @@ export function useHeaderItems({
       {
         id: 'signout',
         label: 'Cerrar sesión',
-        visible: userRol !== 'GUEST',
+        visible: true, // userRol !== 'GUEST',
         format: ({ label }) => (
           <DropdownMenuItem onClick={handleSignOut}>
             {label}
@@ -205,14 +213,15 @@ export function useHeaderItems({
       ...boothItem,
     ]
 
-    if (userRol === 'GUEST') {
-      return arrMenuGuest
-    } else if(userRol === 'AUTHENTICATED') {
-      return arrMenuAuthenticate
-    } else {
-      return arrMenuAdmin
-    }
-  }, [user, userRol, theme, type])
+    // if (userRol === 'GUEST') {
+    //   return arrMenuGuest
+    // } else if(userRol === 'AUTHENTICATED') {
+    //   return arrMenuAuthenticate
+    // } else {
+    //   return arrMenuAdmin
+    // }
+    return []
+  }, [user, theme, type])
 
   const headersType: { [key in THeaderType]: Array<HeaderItemProps<TItems>> } = useMemo(() => {
     const modePanelAdmin: Array<HeaderItemProps<TItems>> = [{
@@ -223,6 +232,7 @@ export function useHeaderItems({
         <Button onClick={() => handleNavigate && handleNavigate(path)} variant='outline' className='relative hidden md:flex h-10 min-w-[100px]'>
           {label}
           <Wrench className='h-6 w-6 ml-2' />
+          {/* <BrandOutlineAppIcon width={30} height={50} /> */}
           <Dot />
         </Button>
       ),
@@ -276,7 +286,7 @@ export function useHeaderItems({
             <div className="rounded-full px-2 border border-gray-300 items-center h-12 flex justify-center cursor-pointer">
               <div className="flex justify-center space-x-2 items-center">
                 <Icon name="HamburgerMenuIcon" className="h-5 w-5 text-foreground" />
-                <CustomAvatar user={user as User} />
+                <CustomAvatar user={user as TUsers} />
               </div>
             </div>
           </DropdownMenu>
@@ -296,7 +306,7 @@ export function useHeaderItems({
               {label}
             </Button>
           ),
-          visible: userRol === 'GUEST',
+          visible: true, // userRol === 'GUEST',
         },
         ...goScan,
         {
@@ -309,9 +319,9 @@ export function useHeaderItems({
               <Dot />
             </Button>
           ),
-          visible: userRol !== 'GUEST',
+          visible: true, // userRol !== 'GUEST',
         },
-        ...(userRol === 'AUTHENTICATED' ? [...modeFreewheel] : userRol === 'FREEWHEELS' ? [...modePanelAdmin] : [...goSetup]),
+        // ...(userRol === 'AUTHENTICATED' ? [...modeFreewheel] : userRol === 'FREEWHEELS' ? [...modePanelAdmin] : [...goSetup]),
         ...dropDownMenu
       ],
       'basic': [
@@ -330,7 +340,10 @@ export function useHeaderItems({
           label: 'Empezar',
           path: '/freewheels/onboarding',
           format: ({ label, path }) => (
-            <Button onClick={() => userRol === 'GUEST' ? handleAuthModal && handleAuthModal({ open: true, type: 'signin' }) : handleNavigate && handleNavigate(path)} className='hidden md:flex h-10 min-w-[100px]'>
+            <Button
+              // onClick={() => userRol === 'GUEST' ? handleAuthModal && handleAuthModal({ open: true, type: 'signin' }) : handleNavigate && handleNavigate(path)}
+              className='hidden md:flex h-10 min-w-[100px]'
+            >
               {label}
               <Icon name='PlusIcon' className="h-6 w-6 ml-2 text-background" />
             </Button>
@@ -411,7 +424,7 @@ export function useHeaderItems({
         ...dropDownMenu
       ]
     }
-  }, [user, userRol, theme, type])
+  }, [user, theme, type])
 
   return  { itemsHeader: headersType[type] }
 }

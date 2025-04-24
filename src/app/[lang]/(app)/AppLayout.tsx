@@ -1,4 +1,4 @@
-import { useRolUser } from "@/presentation/hooks/useRolUser"
+import { useEffect } from "react"
 import { Footer } from "./layout/Footer"
 import { Header } from "./layout/Header"
 import { useHeaderItems } from "@/presentation/hooks/useHeaderItems"
@@ -15,7 +15,6 @@ import { useCurrentPath } from "@/presentation/hooks/useCurrentPath"
 import { displayName } from '@/presentation/utils/stringHelper'
 import { useAppStore } from "@/infraestructure/stores/appStore"
 import { Splash } from "@/presentation/components/splash"
-import { useEffect, useState } from "react"
 
 export type THeaderType = 'basic' | 'empty' | 'default' | 'detail' | 'workshop' | 'scan'
 
@@ -34,11 +33,9 @@ export default function AppLayout({
   showSearchBar = false,
   type,
 }: AppLayoutProps) {
-  const [showSplash, setShowSplash] = useState(true)
   const router = useRouter()
-  const { user, isLoggedIn, token, clearUser, authModal, setAuthModal, setUser, setToken } = useAuthStore()
-  const { breakpoint } = useAppStore()
-  const { userRol } = useRolUser(user, isLoggedIn)
+  const { user, clearUser, authModal, setAuthModal, setUser, setToken } = useAuthStore()
+  const { breakpoint, showSplash, setShowSplash } = useAppStore()
   const { pathname } = useCurrentPath()
   const signInMutation = useCustomMutation(signInWithMailUseCase, ['signin'], { enabled: false })
   const signOutMutation = useCustomMutation(fetchSignOut, ['signOut'], { enabled: false })
@@ -113,14 +110,24 @@ export default function AppLayout({
 
   const handleAuthModal = (modalAuth: TAuthModal) => {
     setAuthModal(modalAuth)
-  } 
+  }
+  
+  const timerOffSplash = () => {
+    setTimeout(() => {
+      setShowSplash(false)
+    }, 3000)
+  }
+
+  useEffect(() => {
+    breakpoint.device === 'mobile' && showSplash
+      timerOffSplash()
+  }, [showSplash])
 
   const handleSearch = (searchQuery: string) => handleNavigate(`/search?q=${encodeURIComponent(searchQuery)}`)
 
   const { itemsHeader } = useHeaderItems({
     type,
     user: user?.user,
-    userRol,
     handleAuthModal,
     handleNavigate,
     handleSignOut,
@@ -128,24 +135,24 @@ export default function AppLayout({
 
   return (
     <>
-      {/* {breakpoint.device === 'mobile' && (
+      {breakpoint.device === 'mobile' && showSplash ? (
         <Splash />
-      )} */}
-      <section className="flex min-h-screen h-auto w-full flex-col bg-background">
-        <div className="sticky top-0 z-20 bg-background">
-          {header ?? (
-            <Header
-              showSearchBar={showSearchBar}
-              userRol={userRol}
-              headerItems={itemsHeader}
-              isLoading={false}
-            />
-          )}
-          {subHeader}
-        </div>
-        {children}
-        <Footer />
-      </section>
+      ) : (
+        <section className="flex min-h-screen h-auto w-full flex-col bg-background">
+          <div className="sticky top-0 z-20 bg-background">
+            {header ?? (
+              <Header
+                showSearchBar={showSearchBar}
+                headerItems={itemsHeader}
+                isLoading={false}
+              />
+            )}
+            {subHeader}
+          </div>
+          {children}
+          <Footer />
+        </section>
+      )}
       <CustomModal
         isOpen={authModal.open}
         onClose={() => setAuthModal({ ...authModal, open: false })}
