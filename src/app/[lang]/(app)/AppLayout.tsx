@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { Footer } from "./layout/Footer"
 import { Header } from "./layout/Header"
 import { useHeaderItems } from "@/presentation/hooks/useHeaderItems"
@@ -35,7 +34,7 @@ export default function AppLayout({
 }: AppLayoutProps) {
   const router = useRouter()
   const { user, clearUser, authModal, setAuthModal, setUser, setToken } = useAuthStore()
-  const { breakpoint, showSplash, setShowSplash } = useAppStore()
+  const { breakpoint } = useAppStore()
   const { pathname } = useCurrentPath()
   const signInMutation = useCustomMutation(signInWithMailUseCase, ['signin'], { enabled: false })
   const signOutMutation = useCustomMutation(fetchSignOut, ['signOut'], { enabled: false })
@@ -111,17 +110,6 @@ export default function AppLayout({
   const handleAuthModal = (modalAuth: TAuthModal) => {
     setAuthModal(modalAuth)
   }
-  
-  const timerOffSplash = () => {
-    setTimeout(() => {
-      setShowSplash(false)
-    }, 3000)
-  }
-
-  useEffect(() => {
-    breakpoint.device === 'mobile' && showSplash
-      timerOffSplash()
-  }, [showSplash])
 
   const handleSearch = (searchQuery: string) => handleNavigate(`/search?q=${encodeURIComponent(searchQuery)}`)
 
@@ -135,24 +123,23 @@ export default function AppLayout({
 
   return (
     <>
-      {breakpoint.device === 'mobile' && showSplash ? (
-        <Splash />
-      ) : (
-        <section className="flex min-h-screen h-auto w-full flex-col bg-background">
-          <div className="sticky top-0 z-20 bg-background">
-            {header ?? (
-              <Header
-                showSearchBar={showSearchBar}
-                headerItems={itemsHeader}
-                isLoading={false}
-              />
-            )}
-            {subHeader}
-          </div>
-          {children}
-          <Footer />
-        </section>
-      )}
+      {breakpoint.device === 'mobile' && pathname === '/es' && <Splash />}
+
+      <section className="flex min-h-screen h-auto w-full flex-col bg-background">
+        <div className="sticky top-0 z-20 bg-background">
+          {header ?? (
+            <Header
+              showSearchBar={showSearchBar}
+              headerItems={itemsHeader}
+              isLoading={false}
+            />
+          )}
+          {subHeader}
+        </div>
+        {children}
+        <Footer />
+      </section>
+
       <CustomModal
         isOpen={authModal.open}
         onClose={() => setAuthModal({ ...authModal, open: false })}

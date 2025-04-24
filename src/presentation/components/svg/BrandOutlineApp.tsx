@@ -8,6 +8,7 @@ const BrandOutlineAppIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
       height={props.height}
       fill="currentColor"
       viewBox="100 100 250 250"
+      // transform="matrix(-1,0,0,1,0,0)"
       // className="blur-[2px]"
       // className="animate-[customBounce_0.5s_infinite]"
       {...props}

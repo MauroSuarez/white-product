@@ -11,6 +11,7 @@ export default function Onboarding() {
 
   return (
     <FadeIn
+      mode="wait"
       initial={{ y: 100, opacity: 0 }} // Empieza 100px abajo y transparente
       animate={{ y: 0, opacity: 1 }}   // Termina en su posición normal
       exit={{ y: -100, opacity: 0 }}   // Al salir, se mueve hacia arriba
