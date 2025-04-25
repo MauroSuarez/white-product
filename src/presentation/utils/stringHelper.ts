@@ -21,3 +21,14 @@ export const capitalizeString = (str: string) => {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ')
 }
+
+export function sanitizeWorkshopName(name: string): string {
+  return name
+    .toLowerCase() // Convertir a minúsculas
+    .normalize('NFD') // Separar acentos y caracteres base
+    .replace(/[\u0300-\u036f]/g, '') // Eliminar diacríticos
+    .replace(/[^a-z0-9\s-]/g, '') // Eliminar caracteres no alfanuméricos (excepto espacios y guiones)
+    .trim() // Eliminar espacios al inicio y final
+    .replace(/\s+/g, '-') // Reemplazar espacios con guiones
+    .replace(/-+/g, '-'); // Eliminar múltiples guiones consecutivos
+}

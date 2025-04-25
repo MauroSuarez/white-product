@@ -9,10 +9,8 @@ import { Bed, Images, LocateIcon, Medal, MessageCircle, Settings, Star } from 'l
 import Link from 'next/link'
 import { CustomAvatar } from '@/presentation/components/custom-avatar'
 import { TUsers } from '@/core/domain/entities/User'
-import { BrandOutlineAppIcon } from '@/presentation/components/svg/BrandOutlineApp'
-import { Map } from '@/presentation/components/map'
+import { Map, Marker } from '@/presentation/components/map'
 import { ReviewCard } from './ReviewCard'
-import { WackyBrandpIcon } from '@/presentation/components/svg/BrandWacky'
 import { Wacky } from '@/presentation/components/wacky'
 
 /*
@@ -26,16 +24,17 @@ import { Wacky } from '@/presentation/components/wacky'
 export default function WorkshopName() {
   const center: [number, number] = [-34.600625, -58.563671]
 
-  const markers: { lat: number; lng: number; tooltip: JSX.Element | string; iconName: "pin"; iconSize?: number }[] = [
+  const markers: Marker[] = [
     {
       lat: -34.600625,
       lng: -58.563671,
       tooltip: (
         <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
-          <h3 style={{ color: 'blue' }}>Tooltip con React</h3>
-          <p>Este es un tooltip hecho con un componente de React.</p>
+          <h3 style={{ color: '#2c3e50', fontWeight: 'bold', fontSize: 14, }}>Gomeria el corneta</h3>
+          <p style={{ color: '#2c3e50', fontWeight: 'normal', fontSize: 12, }}>Av. San Martin 4585, Caseros.</p>
         </div>
       ),
+      tooltipPermanent: true,
       iconName: 'pin',
       iconSize: 28
     },
@@ -424,7 +423,17 @@ export default function WorkshopName() {
               <h2 className="text-2xl font-bold text-left w-full">Ubicación</h2>
             </div>
             <div className="rounded-[2rem] h-auto w-full">
-              {/* <Map center={center} zoom={13} markers={markers} styleContainer={{ height: '600px', width: '100%' }} /> */}
+              <Map
+                center={center}
+                zoom={13}
+                markers={markers}
+                circle={{
+                  lat: center[0],
+                  lng: center[1],
+                  raidus: 1200
+                }}
+                styleContainer={{ height: '600px', width: '100%' }}
+              />
             </div>
           </div>
         </div>

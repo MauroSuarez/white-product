@@ -4,7 +4,6 @@ import { Typography } from "@/presentation/ds/typography";
 import { Map } from '@/presentation/components/map'
 import AppLayout from "../AppLayout";
 import { MapPin } from "lucide-react";
-import { BrandAppIcon } from "@/presentation/components/svg/BrandApp";
 
 export default function FreeWheel() {
     const center: [number, number] = [-34.600625, -58.563671]

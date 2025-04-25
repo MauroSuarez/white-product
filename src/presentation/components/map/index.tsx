@@ -7,10 +7,10 @@ import 'leaflet/dist/leaflet.css'
 import { MapPin } from 'lucide-react'
 
 // Definir el tipo para los marcadores
-interface Marker {
+export interface Marker {
   lat: number
   lng: number
-  tooltip: React.ReactNode | string
+  tooltip?: React.ReactNode | string
   tooltipPermanent?: boolean // Nueva prop: determina si el tooltip es permanente
   popup?: React.ReactNode | string // Nueva prop: contenido del popup
   popupPermanent?: boolean // Nueva prop: determina si el popup es permanente
@@ -19,11 +19,18 @@ interface Marker {
   iconSize?: number // Nueva prop: tamaño del icono
 }
 
+export interface Circle {
+  lat: number
+  lng: number
+  raidus: number
+}
+
 // Definir las props del componente
 interface MapWithMarkersProps {
   center: [number, number]
   zoom: number
   markers: Marker[]
+  circle?: Circle
   styleContainer: {
     height: string
     width: string
@@ -75,8 +82,9 @@ const createLucideIcon = (svg: string, color: string = '#FF0000', size: number =
   return new L.Icon({
     iconUrl: svgUrl,
     iconSize: [size, size],
-    iconAnchor: [size / 2, size],
-    popupAnchor: [0, -size / 2]
+    iconAnchor: [size / 2, size], // Punto de anclaje en la parte inferior central del icono
+    popupAnchor: [0, -size / 2],
+    tooltipAnchor: [0, -size / 2 - 10] // Añade esto para ajustar la posición del tooltip
   })
 }
 
@@ -86,7 +94,8 @@ const Map: React.FC<MapWithMarkersProps> = ({
   markers, 
   styleContainer,
   tooltipOptions = {},
-  popupOptions = {}
+  popupOptions = {},
+  circle = { lat: 0, lng: 0, raidus: 0 }
 }) => {
   const mapRef = useRef<L.Map | null>(null)
   const tooltipRefs = useRef<{ [key: string]: L.Tooltip }>({})
@@ -107,6 +116,11 @@ const Map: React.FC<MapWithMarkersProps> = ({
       attribution: '© Google Maps',
     }).addTo(mapRef.current)
 
+
+    if (circle.lat && circle.lng) {
+      L.circle([circle.lat, circle.lng], { radius: circle.raidus }).addTo(mapRef.current!)
+    }
+
     // Agregar marcadores con tooltips y popups
     markers.forEach((marker) => {
       const { lat, lng, tooltip, tooltipPermanent, popup, popupPermanent, iconName, iconColor, iconSize } = marker
@@ -123,7 +137,9 @@ const Map: React.FC<MapWithMarkersProps> = ({
         const tooltipInstance = leafletMarker.bindTooltip(tooltipContainer, {
           permanent: tooltipPermanent || false,
           direction: 'top',
-          ...tooltipOptions // Opciones adicionales
+          offset: L.point(0, -10), // Ajusta este valor según necesites
+          className: 'custom-tooltip', // Añade una clase para estilos personalizados
+          ...tooltipOptions
         }).getTooltip()!
 
         tooltipRefs.current[`${lat}-${lng}`] = tooltipInstance

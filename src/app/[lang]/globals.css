@@ -624,6 +624,18 @@ body {
   transition: all 0.3s ease;
 }
 
+.custom-tooltip {
+  /*
+  margin-top: -60px !important;
+  margin-left: -80px !important;
+  */
+  /* text-align: center; */
+}
+
+.custom-tooltip::before {
+  display: none; /* Oculta la flecha predeterminada si es necesario */
+}
+
 @layer base {
   * {
     @apply border-border;
