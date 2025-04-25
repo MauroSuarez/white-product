@@ -14,6 +14,7 @@ import { DropdownMenuItem, DropdownMenuSeparator } from "@/presentation/ds/dropd
 import { CustomAvatar } from "../components/custom-avatar"
 import { TAuthModal, TAuthModalType } from "@/infraestructure/stores/authStore"
 import { BrandOutlineAppIcon } from "../components/svg/BrandOutlineApp"
+import { Wacky } from "../components/wacky"
 
 type TItems = {
   label?: string,
@@ -231,7 +232,6 @@ export function useHeaderItems({
         <Button onClick={() => handleNavigate && handleNavigate(path)} variant='outline' className='relative hidden md:flex h-10 min-w-[100px]'>
           {label}
           <Wrench className='h-6 w-6 ml-2' />
-          {/* <BrandOutlineAppIcon width={30} height={50} /> */}
           <Dot />
         </Button>
       ),
@@ -244,7 +244,7 @@ export function useHeaderItems({
       format: ({ label, path }) => (
         <Button onClick={() => handleNavigate && handleNavigate(path)} variant='outline' className='relative hidden md:flex h-10 min-w-[100px]'>
           {label}
-          <Wrench className='h-6 w-6 ml-2' />
+          <Wacky width={50} height={20} color='#2c3e50' animated={false} />
           <Dot />
         </Button>
       ),

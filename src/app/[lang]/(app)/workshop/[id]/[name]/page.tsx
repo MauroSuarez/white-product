@@ -5,12 +5,15 @@ import Image from 'next/image'
 import AppLayout from "../../../AppLayout"
 import { Icon } from '@/presentation/ds/icon'
 import { Button } from '@/presentation/ds/button'
-import { Bed, Images, LocateIcon, Medal, Settings, Star } from 'lucide-react'
+import { Bed, Images, LocateIcon, Medal, MessageCircle, Settings, Star } from 'lucide-react'
 import Link from 'next/link'
 import { CustomAvatar } from '@/presentation/components/custom-avatar'
 import { TUsers } from '@/core/domain/entities/User'
 import { BrandOutlineAppIcon } from '@/presentation/components/svg/BrandOutlineApp'
 import { Map } from '@/presentation/components/map'
+import { ReviewCard } from './ReviewCard'
+import { WackyBrandpIcon } from '@/presentation/components/svg/BrandWacky'
+import { Wacky } from '@/presentation/components/wacky'
 
 /*
 🥇 Oro: #FFD700
@@ -147,16 +150,42 @@ export default function WorkshopName() {
     "Configuración de seguridad",
     "Preferencias de idioma",
     "Opciones de accesibilidad",
-    "Configuración de correo",
+    "Configuración de correo",  
     "Gestión de dispositivos",
     "Preferencias de pago"
+  ]
+
+  const mockReviews = [
+    {
+      id: "1",
+      name: "María González",
+      avatarUrl: "/avatars/1.jpg",
+      rating: 5,
+      comment: "Excelente servicio, muy profesionales. Volveré a contratarlos sin duda.",
+      date: "2023-05-15",
+    },
+    {
+      id: "2",
+      name: "Carlos Pérez",
+      rating: 4,
+      comment: "Buen trabajo, aunque hubo un pequeño retraso en la entrega. Por lo demás todo perfecto.",
+      date: "2023-04-22",
+    },
+    {
+      id: "3",
+      name: "Ana Rodríguez",
+      avatarUrl: "/avatars/3.jpg",
+      rating: 5,
+      comment: "Increíble atención al cliente y resultados de alta calidad. Superaron mis expectativas.",
+      date: "2023-03-10",
+    },
   ]
 
   // src="/images/workshop.jpg"
   // src="/images/workshop-place.jpg"
   return (
     <AppLayout showSearchBar type="detail">
-      <div className='flex w-full px-10 space-y-4 flex-col'>
+      <div className='flex w-full px-10 space-y-4 flex-col pb-10'>
 
         <div className="flex justify-between items-center mt-12">
           <h1 className="text-xl font-bold text-gray-800">Título del Componente</h1>
@@ -387,18 +416,42 @@ export default function WorkshopName() {
         {/* Pre-footer de 800px */}
         <div 
           ref={preFooterRef}
-          className="h-[800px] flex-col flex items-center justify-center gap-2 divide-y divide-gray-200"
+          className="h-[800px] w-full flex-col gap-2 flex items-center justify-center divide-y divide-gray-200"
         >
-          <div className='flex justify-start items-center flex-nowrap'>
-            <LocateIcon className='mr-4' /> <h2 className="text-2xl font-bold mb-4 text-left w-full">Ubicación</h2>
+          <div className='flex justify-start items-center w-full flex-col gap-2'>
+            <div className='flex justify-center items-center flex-nowrap w-full'>
+              <LocateIcon className='mr-2' />
+              <h2 className="text-2xl font-bold text-left w-full">Ubicación</h2>
+            </div>
             <div className="rounded-[2rem] h-auto w-full">
-              <Map center={center} zoom={13} markers={markers} styleContainer={{ height: '600px', width: '100%' }} />
+              {/* <Map center={center} zoom={13} markers={markers} styleContainer={{ height: '600px', width: '100%' }} /> */}
             </div>
           </div>
-          <div className='flex justify-start items-center flex-nowrap'>
-            <Star className='mr-4' /> <h2 className="text-2xl">Calificaciones</h2>
+        </div>
+
+        <div className='flex justify-start items-center w-full flex-col gap-2 border-t border-gray-200 mt-4'>
+          <div className='flex justify-center items-center flex-nowrap w-full mt-4'>
+            <Star className='mr-2' />
+            <h2 className="text-2xl font-bold text-left w-full">Calificaciones</h2>
+          </div>
+          <div className="rounded-[2rem] h-auto w-full">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {mockReviews.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </div>
+          </div>
+          <div className='h-10 w-full py-4 flex justify-start items-center mt-4'>
+            <Button variant='outline' className='py-5 border border-gray-200 right-4 bg-white text-gray-800 hover:bg-gray-100'>
+              <MessageCircle className='mr-4' /> Mostrar todo 48 evaluaciones
+            </Button>
           </div>
         </div>
+
+        <div className='flex justify-center items-center w-full mt-4'>
+          <Wacky height={100} />
+        </div>
+
       </div>
     </AppLayout>
   )
