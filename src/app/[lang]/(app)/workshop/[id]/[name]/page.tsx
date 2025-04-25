@@ -5,11 +5,12 @@ import Image from 'next/image'
 import AppLayout from "../../../AppLayout"
 import { Icon } from '@/presentation/ds/icon'
 import { Button } from '@/presentation/ds/button'
-import { Bed, Images, Medal, Settings, Star } from 'lucide-react'
+import { Bed, Images, LocateIcon, Medal, Settings, Star } from 'lucide-react'
 import Link from 'next/link'
 import { CustomAvatar } from '@/presentation/components/custom-avatar'
 import { TUsers } from '@/core/domain/entities/User'
 import { BrandOutlineAppIcon } from '@/presentation/components/svg/BrandOutlineApp'
+import { Map } from '@/presentation/components/map'
 
 /*
 🥇 Oro: #FFD700
@@ -20,6 +21,23 @@ import { BrandOutlineAppIcon } from '@/presentation/components/svg/BrandOutlineA
 */
 
 export default function WorkshopName() {
+  const center: [number, number] = [-34.600625, -58.563671]
+
+  const markers: { lat: number; lng: number; tooltip: JSX.Element | string; iconName: "pin"; iconSize?: number }[] = [
+    {
+      lat: -34.600625,
+      lng: -58.563671,
+      tooltip: (
+        <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
+          <h3 style={{ color: 'blue' }}>Tooltip con React</h3>
+          <p>Este es un tooltip hecho con un componente de React.</p>
+        </div>
+      ),
+      iconName: 'pin',
+      iconSize: 28
+    },
+  ]
+
   const [formPosition, setFormPosition] = useState<React.CSSProperties>({
     position: "relative",
     top: "auto",
@@ -369,10 +387,17 @@ export default function WorkshopName() {
         {/* Pre-footer de 800px */}
         <div 
           ref={preFooterRef}
-          className="h-[800px] flex-col flex items-center justify-center"
+          className="h-[800px] flex-col flex items-center justify-center gap-2 divide-y divide-gray-200"
         >
-          <h2 className="text-2xl">Mapa</h2>
-          <h2 className="text-2xl">Calificaciones</h2>
+          <div className='flex justify-start items-center flex-nowrap'>
+            <LocateIcon className='mr-4' /> <h2 className="text-2xl font-bold mb-4 text-left w-full">Ubicación</h2>
+            <div className="rounded-[2rem] h-auto w-full">
+              <Map center={center} zoom={13} markers={markers} styleContainer={{ height: '600px', width: '100%' }} />
+            </div>
+          </div>
+          <div className='flex justify-start items-center flex-nowrap'>
+            <Star className='mr-4' /> <h2 className="text-2xl">Calificaciones</h2>
+          </div>
         </div>
       </div>
     </AppLayout>
