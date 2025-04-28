@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { CraneIcon } from '../svg/Crane'
-import { deliveryHouseIcon } from '../svg/deliveryHouse'
+import { DeliveryHouseIcon } from '../svg/DeliveryHouse'
 import { Hours24Icon } from '../svg/Hours24'
-import { ServiceHouseIcon } from '../svg/serviceHouse'
+import { ServiceHouseIcon } from '../svg/ServiceHouse'
 
 type IconComponent = React.FC<React.SVGProps<SVGSVGElement>>
 
@@ -13,7 +13,7 @@ type IconDictionary = {
 
 const icons: IconDictionary = {
   'crane': CraneIcon,
-  'deliveryHouse': deliveryHouseIcon,
+  'deliveryHouse': DeliveryHouseIcon,
   'hours24': Hours24Icon,
   'serviceHouse': ServiceHouseIcon
 }

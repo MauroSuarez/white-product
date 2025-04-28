@@ -1,7 +1,7 @@
 import React, { SVGAttributes } from "react"
 import { GlobalSvg } from "."
 
-const deliveryHouseIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
+const DeliveryHouseIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
   return (
     <GlobalSvg
       width={props.width}
@@ -32,4 +32,4 @@ const deliveryHouseIcon: React.FC<SVGAttributes<SVGSVGElement>> = (props) => {
   )
 }
 
-export { deliveryHouseIcon }
+export { DeliveryHouseIcon }
