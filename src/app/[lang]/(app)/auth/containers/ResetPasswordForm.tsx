@@ -65,7 +65,7 @@ const ResetPasswordForm = ({
             <Button isLoading={isLoading} disabled={isLoading || isCountDown} type="submit" className="w-full py-6">
               Enviar
             </Button>
-            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signin' })}>
+            <Button type="button" variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signin' })}>
               Volver
             </Button>
           </>

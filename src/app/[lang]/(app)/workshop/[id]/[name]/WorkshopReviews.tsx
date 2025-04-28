@@ -35,7 +35,7 @@ export function WorkshopReviews() {
   ]
   return (
     <>
-      <div className='flex justify-start items-center w-full flex-col gap-2 border-t border-gray-200 mt-4'>
+      <section id="reviews" className='flex justify-start items-center w-full flex-col gap-2 border-t border-gray-200 mt-4'>
         <div className='flex justify-center items-center flex-nowrap w-full mt-4'>
           <Star className='mr-2' />
           <h2 className="text-2xl font-bold text-left w-full">Calificaciones</h2>
@@ -52,7 +52,7 @@ export function WorkshopReviews() {
             <MessageCircle className='mr-4' /> Mostrar todo 48 evaluaciones
           </Button>
         </div>
-      </div>
+      </section>
       <CustomSheet
         isOpen={openModalReviews}
         isOpenChange={() => setOpenModalReviews(false)}

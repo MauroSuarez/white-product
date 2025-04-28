@@ -5,6 +5,7 @@ import L from 'leaflet'
 import ReactDOM from 'react-dom'
 import 'leaflet/dist/leaflet.css'
 import { MapPin } from 'lucide-react'
+import { cn } from '@/presentation/utils/uiHelpers'
 
 // Definir el tipo para los marcadores
 export interface Marker {
@@ -35,6 +36,7 @@ interface MapWithMarkersProps {
     height: string
     width: string
   }
+  classNameContainer?: string
   tooltipOptions?: L.TooltipOptions // Opciones adicionales para tooltips
   popupOptions?: L.PopupOptions // Opciones adicionales para popups
 }
@@ -95,7 +97,8 @@ const Map: React.FC<MapWithMarkersProps> = ({
   styleContainer,
   tooltipOptions = {},
   popupOptions = {},
-  circle = { lat: 0, lng: 0, raidus: 0 }
+  circle = { lat: 0, lng: 0, raidus: 0 },
+  classNameContainer,
 }) => {
   const mapRef = useRef<L.Map | null>(null)
   const tooltipRefs = useRef<{ [key: string]: L.Tooltip }>({})
@@ -178,7 +181,7 @@ const Map: React.FC<MapWithMarkersProps> = ({
     }
   }, [center, zoom, markers, tooltipOptions, popupOptions])
 
-  return <div id="map" style={{ ...styleContainer, zIndex: 10 }} />
+  return <div id="map" style={{ ...styleContainer, zIndex: 10 }} className={cn(`${classNameContainer}`)} />
 }
 
 export { Map }

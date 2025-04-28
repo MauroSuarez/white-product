@@ -40,6 +40,7 @@ export function WorkshopMap() {
               raidus: 1200
             }}
             styleContainer={{ height: '600px', width: '100%' }}
+            classNameContainer='rounded-[1rem]'
           />
         </div>
       </div>

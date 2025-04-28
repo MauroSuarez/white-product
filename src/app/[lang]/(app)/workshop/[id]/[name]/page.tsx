@@ -12,6 +12,7 @@ import { WorkshopDescription } from './WorkshopDescription'
 import { WorkshopMembership } from './WorkshopMembership'
 import { StickyCard } from './StickyCard'
 import { WorkshopSharedFav } from './WorkshopSharedFav'
+import { WorkshopUserView } from "./WorkshopUserView"
 
 export default function WorkshopName() {
   // src="/images/workshop.jpg"
@@ -47,10 +48,9 @@ export default function WorkshopName() {
           </div>
 
           {/* Columna derecha (formulario) */}
-          <div id="columnSticky" className="relative w-[30%]">
-            <div className="w-full flex border border-red-500 h-22">
-              aca iria el hot view
-            </div>
+          <div id="columnSticky" className="relative w-[30%] flex flex-col gap-4">
+            <WorkshopUserView />
+
             <StickyCard />
           </div>
         </section>

@@ -1,3 +1,5 @@
+import { Button } from "@/presentation/ds/button"
+import { Typography } from "@/presentation/ds/typography"
 import { useEffect, useState } from "react"
 
 export function StickyCard() {
@@ -16,7 +18,7 @@ export function StickyCard() {
       const columnsTop = columns.offsetTop
       const columnsHeight = columns.offsetHeight
       const scrollY = window.scrollY
-      const headerOffset = 90 // altura de tu header fixed (ajusta si necesitas)
+      const headerOffset = 90
       const columnStickyWidth = columnSticky?.offsetWidth
       
       if(columnStickyWidth)
@@ -53,18 +55,23 @@ export function StickyCard() {
         width: columnCardWidth
       }}
     >
-      <div className="p-6 bg-white rounded-xl shadow-lg">
-        <h2 className="text-xl font-bold mb-4">Formulario</h2>
+      <div className="p-6 bg-white rounded-xl shadow-lg flex flex-col gap-2">
+        <h2 className="text-xl font-bold mb-4">Contactar</h2>
         <form>
           <input
             type="text"
             placeholder="Tu nombre"
             className="w-full mb-4 p-2 border rounded"
           />
-          <button className="w-full bg-blue-500 text-white p-2 rounded">
+          <Button variant={'default'} className="w-full py-6 rounded-lg text-lg">
             Enviar
-          </button>
+          </Button>
         </form>
+        <div className="text-center py-4">
+          <Typography variant={'muted'}>
+            No vamos a cobrarte ningún cargo
+          </Typography>
+        </div>
       </div>
     </div>
   )

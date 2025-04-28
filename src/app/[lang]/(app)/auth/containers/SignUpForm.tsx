@@ -71,7 +71,7 @@ const FormSignUp = ({
             <Button isLoading={isLoading} disabled={isLoading} type="submit" className="w-full py-6">
               Registrame
             </Button>
-            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signin' })}>
+            <Button type="button" variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signin' })}>
               Ya tengo cuenta, iniciar sesión
             </Button>
           </>

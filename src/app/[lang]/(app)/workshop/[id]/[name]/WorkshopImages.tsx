@@ -9,6 +9,7 @@ import { Icon } from '@/presentation/ds/icon'
 
 export function WorkshopImages() {
   const [openModalPhotos, setOpenModalPhotos] = useState(false)
+  // TODO!: agregar un handle click, y enviar el número de imagen que toco, para posicionarlo en el sheet
   return (
     <>
       <section 
@@ -18,7 +19,7 @@ export function WorkshopImages() {
           {/* Contenedor grid interno */}
           <div className="w-full h-full grid grid-cols-3 grid-rows-3 gap-2">
             {/* Imagen grande (izquierda) - ocupa 2 columnas y 3 filas */}
-            <div className="relative row-span-3 col-span-2">
+            <div className="relative row-span-3 col-span-2 cursor-pointer" onClick={() => setOpenModalPhotos(!openModalPhotos)}>
               <Image
                 src="/images/workshop.jpg"
                 alt="Imagen principal"
@@ -29,7 +30,7 @@ export function WorkshopImages() {
             </div>
             
             {/* Tres imágenes pequeñas (derecha) */}
-            <div className="relative">
+            <div className="relative cursor-pointer" onClick={() => setOpenModalPhotos(!openModalPhotos)}>
               <Image
                 src="/images/workshop-place.jpg"
                 alt="Imagen 2"
@@ -38,7 +39,7 @@ export function WorkshopImages() {
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
             </div>
-            <div className="relative">
+            <div className="relative cursor-pointer" onClick={() => setOpenModalPhotos(!openModalPhotos)}>
               <Image
                 src="/images/workshop.jpg"
                 alt="Imagen 3"
@@ -47,7 +48,7 @@ export function WorkshopImages() {
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
             </div>
-            <div className="relative">
+            <div className="relative cursor-pointer" onClick={() => setOpenModalPhotos(!openModalPhotos)}>
               <Image
                 src="/images/workshop.jpg"
                 alt="Imagen 4"

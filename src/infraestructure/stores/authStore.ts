@@ -17,6 +17,7 @@ export type AuthState = {
   user: IUser | null
   token: string | null
   isLoggedIn: boolean
+  redirect?: string
   authModal: TAuthModal
   setAuthModal: (authModal: TAuthModal) => void
   setUser: (user: IUser) => void

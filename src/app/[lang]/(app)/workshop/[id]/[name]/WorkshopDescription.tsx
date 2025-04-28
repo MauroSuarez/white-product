@@ -23,7 +23,7 @@ export function WorkshopDescription() {
         
         <Link 
           href="#reviews" 
-          className="text-sm text-blue-600 hover:text-blue-800 hover:underline ml-2"
+          className="text-sm text-gray-600 hover:text-gray-800 hover:underline ml-2"
         >
           114 evaluaciones
         </Link>

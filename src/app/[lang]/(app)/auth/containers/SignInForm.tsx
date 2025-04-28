@@ -35,14 +35,14 @@ const FormSignIn = ({ handleSubmit, handleTypeForm, isLoading = false }: FormSig
                 classNameContainer="flex flex-row items-center space-x-3 space-y-0"
                 className="h-6 w-6"
               />
-              <Button variant={'link'} className="text-foreground p-0" onClick={() => handleTypeForm({ open: true, type: 'reset' })}>
+              <Button type="button" variant={'link'} className="text-foreground p-0" onClick={() => handleTypeForm({ open: true, type: 'reset' })}>
                 Olvide mi contraseña?
               </Button>
             </div>
             <Button isLoading={isLoading} disabled={isLoading} type="submit" variant={'gradient'} className="w-full py-6">
               Ingresar
             </Button>
-            <Button variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signup' })}>
+            <Button type="button" variant={'link'} className="text-foreground p-0 text-center w-full" onClick={() => handleTypeForm({ open: true, type: 'signup' })}>
               ¿No tenes cuenta?, Registrarme
             </Button>
           </>
