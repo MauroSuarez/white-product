@@ -5,6 +5,7 @@ import { ChevronLeft, MessageCircle, Star } from "lucide-react"
 import { ReviewCard } from "./ReviewCard"
 import { Button } from "@/presentation/ds/button"
 import { CustomSheet } from "@/presentation/components/custom-sheet"
+import { ResumeReviews } from "./ResumeReviews"
 
 export function WorkshopReviews() {
   const [openModalReviews, setOpenModalReviews] = useState(false)
@@ -38,8 +39,11 @@ export function WorkshopReviews() {
       <section id="reviews" className='flex justify-start items-center w-full flex-col gap-2 border-t border-gray-200 mt-4'>
         <div className='flex justify-center items-center flex-nowrap w-full mt-4'>
           <Star className='mr-2' />
-          <h2 className="text-2xl font-bold text-left w-full">Calificaciones</h2>
+          <h2 className="text-2xl font-bold text-left w-full">4.95 · 3 Calificaciones</h2>
         </div>
+
+        <ResumeReviews />
+
         <div className="rounded-[2rem] h-auto w-full">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {mockReviews.map((review) => (
