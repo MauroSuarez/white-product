@@ -55,7 +55,7 @@ export function StickyCard() {
         width: columnCardWidth
       }}
     >
-      <div className="p-6 bg-white rounded-xl shadow-lg flex flex-col gap-2">
+      <div className="p-6 bg-background rounded-xl shadow-lg flex flex-col gap-2">
         <h2 className="text-xl font-bold mb-4">Contactar</h2>
         <form>
           <input

@@ -2,7 +2,6 @@ import { HeaderItemProps, THeaderType } from "@/app/[lang]/(app)/layout/Header"
 import { Button } from "../ds/button"
 import { Dot } from "../components/dot"
 import { Bell, ScanSearch, Wrench } from "lucide-react"
-import { TUserRol } from "@/core/domain/entities/UserRol"
 import { TUsers } from "@/core/domain/entities/User"
 import { useCurrentPath } from "./useCurrentPath"
 import { Typography } from "../ds/typography"
@@ -12,8 +11,7 @@ import { useTheme } from "next-themes"
 import { DropDown as DropdownMenu } from "@/presentation/components/dropdown-menu"
 import { DropdownMenuItem, DropdownMenuSeparator } from "@/presentation/ds/dropdown-menu"
 import { CustomAvatar } from "../components/custom-avatar"
-import { TAuthModal, TAuthModalType } from "@/infraestructure/stores/authStore"
-import { BrandOutlineAppIcon } from "../components/svg/BrandOutlineApp"
+import { TAuthModal } from "@/infraestructure/stores/authStore"
 import { Wacky } from "../components/wacky"
 
 type TItems = {
@@ -23,8 +21,7 @@ type TItems = {
 
 enum USER_ROLE {
   'GUEST' = 'GUEST',       // 0
-  'FREEWHEELS' = 'FREEWHEELS',  // 1
-  'WORKSHOP' = 'WORKSHOP'     // 2
+  'AUTHENTICATED' = 'AUTHENTICATED',  // 1
 }
 
 type useHeaderItemsProps = {
@@ -47,16 +44,13 @@ export function useHeaderItems({
   
   const userRol = useMemo(() => {
     if (!user) return USER_ROLE.GUEST
-    if (user?.id_rol === 2) return USER_ROLE.FREEWHEELS
-    if (user?.id_rol === 3) return USER_ROLE.WORKSHOP
+    if (user?.id_rol === 2 || user?.id_rol === 3) return USER_ROLE.AUTHENTICATED
     return USER_ROLE.GUEST
   }, [user])
-  
-  // console.log(user, userRol, 'A VER')
-  
+ 
   const handleChangeTheme = () => theme == "dark" ? setTheme("light") : setTheme("dark")
 
-  const menu = useMemo(() => {
+  const dropdownItemsmenu = useMemo(() => {
     const separator: Array<HeaderItemProps<TItems>> = [
       {
         id: 'separator',
@@ -69,7 +63,7 @@ export function useHeaderItems({
         id: 'account',
         label: 'Cuenta',
         path: '/account',
-        visible: true, // userRol !== 'GUEST',
+        visible: userRol !== 'GUEST',
         format: ({ label, path }) => (
           <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
             {label}
@@ -79,8 +73,8 @@ export function useHeaderItems({
       {
         id: 'profile',
         label: 'Perfil',
-        path: '/profile',
-        visible: true, // userRol !== 'GUEST',
+        path: '/account/profile',
+        visible: userRol !== 'GUEST',
         format: ({ label, path }) => (
           <DropdownMenuItem onClick={() => handleNavigate && handleNavigate(path)}>
             {label}
@@ -149,16 +143,13 @@ export function useHeaderItems({
       {
         id: 'signout',
         label: 'Cerrar sesión',
-        visible: true, // userRol !== 'GUEST',
+        visible: userRol !== 'GUEST',
         format: ({ label }) => (
           <DropdownMenuItem onClick={handleSignOut}>
             {label}
           </DropdownMenuItem>
         )
       },
-    ]
-    const arrMenuAdmin: Array<HeaderItemProps<TItems>> = [
-      ...boothItem
     ]
     
     const arrMenuAuthenticate: Array<HeaderItemProps<TItems>> = [
@@ -213,14 +204,13 @@ export function useHeaderItems({
       ...boothItem,
     ]
 
-    // if (userRol === 'GUEST') {
-    //   return arrMenuGuest
-    // } else if(userRol === 'AUTHENTICATED') {
-    //   return arrMenuAuthenticate
-    // } else {
-    //   return arrMenuAdmin
-    // }
-    return []
+    if (userRol === USER_ROLE.GUEST) {
+      return arrMenuGuest
+    } else if(userRol === USER_ROLE.AUTHENTICATED) {
+      return arrMenuAuthenticate
+    } else {
+      return arrMenuGuest
+    }
   }, [user, theme, type])
 
   const headersType: { [key in THeaderType]: Array<HeaderItemProps<TItems>> } = useMemo(() => {
@@ -235,7 +225,7 @@ export function useHeaderItems({
           <Dot />
         </Button>
       ),
-      visible: true,
+      visible: userRol !== 'GUEST',
     }]
     const modeFreewheel: Array<HeaderItemProps<TItems>> = [{
       id: 'setup',
@@ -281,7 +271,7 @@ export function useHeaderItems({
         id: 'drop-down-menu',
         visible: true,
         format: () => (
-          <DropdownMenu items={menu}>
+          <DropdownMenu items={dropdownItemsmenu}>
             <div className="rounded-full px-2 border border-gray-300 items-center h-12 flex justify-center cursor-pointer">
               <div className="flex justify-center space-x-2 items-center">
                 <Icon name="HamburgerMenuIcon" className="h-5 w-5 text-foreground" />
@@ -305,7 +295,7 @@ export function useHeaderItems({
               {label}
             </Button>
           ),
-          visible: true, // userRol === 'GUEST',
+          visible: userRol === 'GUEST',
         },
         ...goScan,
         {
@@ -318,9 +308,10 @@ export function useHeaderItems({
               <Dot />
             </Button>
           ),
-          visible: true, // userRol !== 'GUEST',
+          visible: userRol !== 'GUEST',
         },
-        // ...(userRol === 'AUTHENTICATED' ? [...modeFreewheel] : userRol === 'FREEWHEELS' ? [...modePanelAdmin] : [...goSetup]),
+        // (userRol === 'AUTHENTICATED' ? [...modeFreewheel] : userRol === 'FREEWHEELS' ? [...modePanelAdmin] : [...goSetup]),
+        (userRol === 'AUTHENTICATED' ? [...modeFreewheel] : [...goSetup]),
         ...dropDownMenu
       ],
       'basic': [
@@ -340,7 +331,7 @@ export function useHeaderItems({
           path: '/freewheels/onboarding',
           format: ({ label, path }) => (
             <Button
-              // onClick={() => userRol === 'GUEST' ? handleAuthModal && handleAuthModal({ open: true, type: 'signin' }) : handleNavigate && handleNavigate(path)}
+              onClick={() => userRol === 'GUEST' ? handleAuthModal && handleAuthModal({ open: true, type: 'signin' }) : handleNavigate && handleNavigate(path)}
               className='hidden md:flex h-10 min-w-[100px]'
             >
               {label}

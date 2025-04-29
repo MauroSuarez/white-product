@@ -1,11 +1,10 @@
 import { Metadata } from 'next'
-import WorkshopDetail from './WorkshopDetail'
 
 export const metadata: Metadata = {
-  title: 'Workshop | FreeWheels',
+  title: 'Mi perfil | FreeWheels',
   description: '', // description to be added for SEO
 };
 
 export default async function App() {
-  return <WorkshopDetail />
+  return <div>Perfil</div>
 }

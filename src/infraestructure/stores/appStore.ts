@@ -1,3 +1,4 @@
+import { THeaderType } from '@/app/[lang]/(app)/layout/Header'
 import { ScreenSize } from '@/presentation/hooks/useBreakpointDevice'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
@@ -13,6 +14,7 @@ type AppConfig = {
   mainIcon: string | React.ReactNode
   mainLink: string
   appName: string
+  headerType: THeaderType
 }
 
 interface AppState {
@@ -79,7 +81,8 @@ export const useAppStore = create<AppState>()(
       config: {
         mainIcon: '', // Puede ser un string o ReactNode
         mainLink: '/',
-        appName: 'FreeWheels'
+        appName: 'FreeWheels',
+        headerType: 'default'
       },
       updateConfig: (newConfig) => set((state) => ({
         config: { ...state.config, ...newConfig }
@@ -89,7 +92,7 @@ export const useAppStore = create<AppState>()(
       name: 'app-storage', // nombre para el localStorage
       partialize: (state) => ({
         setSplash: state.showSplash,
-        // config: state.config,
+        config: state.config,
       }) // Solo persiste estos campos
     }
   )

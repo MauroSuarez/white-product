@@ -14,6 +14,7 @@ import { useCurrentPath } from "@/presentation/hooks/useCurrentPath"
 import { displayName } from '@/presentation/utils/stringHelper'
 import { useAppStore } from "@/infraestructure/stores/appStore"
 import { Splash } from "@/presentation/components/splash"
+import { useAuthInterceptor } from "@/presentation/hooks/useAuthInterceptor"
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -30,6 +31,7 @@ export default function AppLayout({
   showSearchBar = false,
   type = 'default',
 }: AppLayoutProps) {
+  const { session } = useAuthInterceptor()
   const router = useRouter()
   const { user, clearUser, authModal, setAuthModal, setUser, setToken } = useAuthStore()
   const { breakpoint } = useAppStore()
@@ -42,6 +44,8 @@ export default function AppLayout({
   const isLoadingFech = signInMutation.isPending || signOutMutation.isPending || resetPasswordMutation.isPending || signUpMutationUseCase.isPending
   const isSuccessFetch = signInMutation.isSuccess || signOutMutation.isSuccess || resetPasswordMutation.isSuccess || signUpMutationUseCase.isSuccess
   const isErrorFetch = signInMutation.isError || signOutMutation.isError || resetPasswordMutation.isError || signUpMutationUseCase.isError
+
+  // console.log(session, 'A VER AUTH INTERCEPTOR')
 
   const handleNavigate = (path?: string) => router.push(`/es/${path}`)
 
