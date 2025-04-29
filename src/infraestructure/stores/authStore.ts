@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { TUsers, TAuth } from '@/core/domain/entities/User'
+// import { setCookie, deleteCookie, getCookie } from 'cookies-next'
 
 export type TAuthModalType = 'signin' | 'signup' | 'reset'
 export type TAuthModal = {
@@ -23,6 +24,7 @@ export type AuthState = {
   setUser: (user: IUser) => void
   setToken: (token: string) => void
   clearUser: () => void
+  // initialize: () => void
 }
 
 export const useAuthStore = create(
@@ -33,9 +35,23 @@ export const useAuthStore = create(
       isLoggedIn: false,
       authModal: { open: false, type: 'signin' },
       setAuthModal: (authModal) => set({ authModal }),
-      setUser: (user) => set({ user, isLoggedIn: true }),
-      setToken: (token) => set({ token }),
-      clearUser: () => set({ user: null, token: null, isLoggedIn: false }),
+      setUser: (user) => {
+        set({ user, isLoggedIn: true })
+      },
+      setToken: (token) => {
+        // setCookie('auth-token', token, { maxAge: 60 * 60 * 24 })
+        set({ token })
+      },
+      clearUser: () => {
+        // deleteCookie('auth-token')
+        set({ user: null, token: null, isLoggedIn: false })
+      },
+      initialize: () => {
+        // const token = getCookie('auth-token')
+        // if (token) {
+        //   set({ isLoggedIn: true, token })
+        // }
+      }
     }),
     {
       name: 'auth-storage',

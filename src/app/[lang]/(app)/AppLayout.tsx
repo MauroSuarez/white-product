@@ -45,8 +45,6 @@ export default function AppLayout({
   const isSuccessFetch = signInMutation.isSuccess || signOutMutation.isSuccess || resetPasswordMutation.isSuccess || signUpMutationUseCase.isSuccess
   const isErrorFetch = signInMutation.isError || signOutMutation.isError || resetPasswordMutation.isError || signUpMutationUseCase.isError
 
-  // console.log(session, 'A VER AUTH INTERCEPTOR')
-
   const handleNavigate = (path?: string) => router.push(`/es/${path}`)
 
   const verifyGoNavigate = () => {

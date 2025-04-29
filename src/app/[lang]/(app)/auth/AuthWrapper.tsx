@@ -39,8 +39,9 @@ const AuthWrapper = <T extends ElementType | typeof Link = 'button'>({
         open: true,
         type: 'signin'
       })
+    } else {
+      onClick?.()
     }
-    onClick?.()
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

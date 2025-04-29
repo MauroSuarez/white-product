@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useBreackpointDevice } from '../hooks/useBreakpointDevice'
 import { useAppStore } from '@/infraestructure/stores/appStore'
+import { useAuthPrivateRoute } from '../hooks/useAuthPrivateRoute'
 
 interface AppContextProps {
   isInitialized: boolean
@@ -18,6 +19,8 @@ function AppProvider({ children }: AppProviderProps): JSX.Element {
   const [isInitialized, setIsInitialized] = useState(false)
   const { setLoading, addError, updateConfig, setBreakpoint } = useAppStore()
   const breakpoints = useBreackpointDevice()
+
+  useAuthPrivateRoute()
 
   const initializeApp = () => {
     setLoading(true, 'Inicializando aplicación...')

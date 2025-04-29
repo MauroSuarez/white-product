@@ -48,7 +48,7 @@ export function Header<T>({
     >
       <div className="mx-10 items-center flex w-full">
 
-        <div className="flex justify-start w-auto">
+        <div className="flex justify-start w-auto mr-4">
           <Link href={config.mainLink}>
             <BrandLogo
               variant={isSmall ? 'secondary' : 'primary'}
