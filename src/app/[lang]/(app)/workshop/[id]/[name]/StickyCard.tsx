@@ -45,7 +45,7 @@ export function StickyCard() {
       id="card"
       className={`transition-all duration-300 ${
         state === "fixed"
-          ? "fixed top-20"
+          ? "fixed top-20 rounded-lg border border-gray-200"
           : state === "bottom"
           ? "absolute bottom-0"
           : ""
@@ -63,7 +63,7 @@ export function StickyCard() {
             placeholder="Tu nombre"
             className="w-full mb-4 p-2 border rounded"
           />
-          <Button variant={'default'} className="w-full py-6 rounded-lg text-lg">
+          <Button variant={'gradient'} className="w-full py-6 rounded-lg text-lg">
             Enviar
           </Button>
         </form>
