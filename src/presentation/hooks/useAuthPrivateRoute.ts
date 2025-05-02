@@ -10,7 +10,7 @@ const PREFIX = '/es'
 // Definición de rutas privadas
 const PRIVATE_ROUTES = [
   '/dashboard',
-  '/account/profile',
+  // '/account/profile',
   '/account/settings',
   '/freewheels/onboarding',
   // Agrega más rutas según necesites

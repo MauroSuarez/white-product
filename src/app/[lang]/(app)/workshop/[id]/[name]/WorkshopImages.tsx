@@ -6,6 +6,7 @@ import { ChevronLeft, Images } from 'lucide-react'
 import { Button } from '@/presentation/ds/button'
 import { CustomSheet } from '@/presentation/components/custom-sheet'
 import { Icon } from '@/presentation/ds/icon'
+import { WorkshopSharedFav } from './WorkshopSharedFav'
 
 export function WorkshopImages() {
   const [openModalPhotos, setOpenModalPhotos] = useState(false)
@@ -78,14 +79,7 @@ export function WorkshopImages() {
               onClick={() => setOpenModalPhotos(false)}
             />
             <div className="flex space-x-4">
-              <button className="flex items-center text-gray-600 hover:text-blue-500 transition-colors">
-                <Icon name="Share1Icon" className="mr-1" />
-                <span className='underline'>Compartir</span>
-              </button>
-              <button className="flex items-center text-gray-600 hover:text-blue-500 transition-colors">
-                <Icon name="HeartIcon" className="mr-1" />
-                <span className='underline'>Guardar</span>
-              </button>
+              <WorkshopSharedFav />
             </div>
           </div>
         )}

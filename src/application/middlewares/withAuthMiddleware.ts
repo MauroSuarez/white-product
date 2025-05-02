@@ -24,7 +24,7 @@ export const withAuthMiddleware: MiddlewareFactory = (next) => {
       pathname.startsWith(route)
     )
 
-    console.log(isProtectedRoute , isLoggedIn , user , token, 'A VEr')
+    // console.log(isProtectedRoute , isLoggedIn , user , token, 'A VEr')
 
      // Si la ruta está protegida y el usuario no está autenticado
     if (isProtectedRoute && !isLoggedIn && !user && !token) {

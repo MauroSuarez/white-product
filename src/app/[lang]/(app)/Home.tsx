@@ -1,126 +1,133 @@
 'use client'
 
-import Link from "next/link"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/presentation/ds/card"
-import { Icon } from "@/presentation/ds/icon"
 import { Filters } from "./Filters"
-import { Map } from '@/presentation/components/map'
-import { ScrollArea } from '@/presentation/ds/scroll-area'
-import { Separator } from '@/presentation/ds/separator'
 import { useViewTypeStore } from "@/infraestructure/stores/viewTypeStore"
 import { useAuthStore } from "@/infraestructure/stores/authStore"
 import AppLayout from './AppLayout'
+import { CardView } from "./CardView"
+import { MapView } from "./MapView"
+import { useEffect } from "react"
 
-const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`
-)
+
+const workshops = [
+  {
+    id: 1,
+    image: '/images/workshop.jpg',
+    name: 'Garage',
+    description: 'Garage por hora, día y mes',
+    rating: 2.3,
+    countReviews: 123,
+    isFavorite: false,
+    hasPromotions: false,
+    category: 'Garage',
+    category_icon: 'garage',
+    created_at: '2025-05-01 13:18:34.004009+00',
+  },
+  {
+    id: 2,
+    image: '/images/workshop-1.jpg',
+    name: 'Mecanica integral',
+    description: 'Mecanica liviana y pesada',
+    rating: 5.3,
+    countReviews: 23,
+    isFavorite: true,
+    hasPromotions: false,
+    category: 'Taller mecánico',
+    category_icon: 'carRepair',
+    created_at: '2025-02-21 13:18:34.004009+00',
+  },
+  {
+    id: 3,
+    image: '/images/workshop-6.jpg',
+    name: 'Lavadero espumita',
+    description: 'Estamos lavando, los mejores servicios, llueve truene o salga el sol',
+    rating: 5.0,
+    countReviews: 12,
+    isFavorite: false,
+    hasPromotions: false,
+    category: 'Lavadero',
+    category_icon: 'carwash',
+    created_at: '2025-02-21 13:18:34.004009+00',
+  },
+  {
+    id: 4,
+    image: '/images/workshop-3.jpg',
+    name: 'Chapa y pintura "El Chapa"',
+    description: 'Chapa porque estamos locos con los precios',
+    rating: 5.3,
+    countReviews: 23,
+    isFavorite: false,
+    hasPromotions: false,
+    category: 'Chapa y pintura',
+    category_icon: 'carPaint',
+    
+  },
+  {
+    id: 4,
+    image: '/images/workshop-4.jpg',
+    name: 'Lubricentro lubri +',
+    description: 'Lubricentro, contamos con los mejores productos para tu auto',
+    rating: 2.3,
+    countReviews: 4,
+    isFavorite: true,
+    hasPromotions: false,
+    category: 'Lubricentro',
+    category_icon: 'carOil',
+    created_at: '2025-02-21 13:18:34.004009+00',
+  },
+  {
+    id: 5,
+    image: '/images/workshop-5.jpg',
+    name: 'Gomeria el corneta',
+    description: 'Si sos corneta te cambiamos la rueda igual',
+    rating: 3.8,
+    countReviews: 10,
+    isFavorite: true,
+    hasPromotions: true,
+    category: 'Gomería',
+    category_icon: 'carTire',
+    created_at: '2025-05-01 13:18:34.004009+00',
+  },
+  {
+    id: 5,
+    image: '/images/workshop-2.jpg',
+    name: 'Cerrajeria "la llave maestra"',
+    description: 'Si perdiste la llave, no llames a Abel Pinto, llamanos a nosotros',
+    rating: 3.8,
+    countReviews: 10,
+    isFavorite: true,
+    hasPromotions: true,
+    category: 'Cerrajería del automotor',
+    category_icon: 'carKey',
+    created_at: '2025-05-01 13:18:34.004009+00',
+  },
+  {
+    id: 5,
+    image: '/images/workshop-7.jpg',
+    name: 'Seguridad vial, el vigilante',
+    description: 'Tenemos todos los productos para que puedas circular con tranquilidad',
+    rating: 3.8,
+    countReviews: 10,
+    isFavorite: true,
+    hasPromotions: true,
+    category: 'Seguridad vial',
+    category_icon: 'roadSafety',
+    created_at: '2025-02-21 13:18:34.004009+00',
+  },
+]
 
 export default function Home() {
-  const { user, isLoggedIn, authModal } = useAuthStore()
-  const viewType = useViewTypeStore((state) => state.viewType)
-  const center: [number, number] = [-34.600625, -58.563671]
+  const { viewType, setViewType } = useViewTypeStore()
 
-  // TODO, agregar un wrapper para la revisión del logueo
-  const handleAddFavorite = () => {
-    if(!user) {
-      console.log("no estoy logueado")
-      // setIsAuthModal(true)
-    }else {
-      console.log("si estoy logueado")
-    }
-  }
-
-  const markers = [
-    {
-      lat: -34.600625,
-      lng: -58.563671,
-      tooltip: (
-        <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
-          <h3 style={{ color: 'blue' }}>Tooltip con React</h3>
-          <p>Este es un tooltip hecho con un componente de React.</p>
-        </div>
-      ),
-    },
-  ]
-
-  const handleSubmit = (data: any) => {
-    console.log(data, 'FORM')
-  }
-
-  /*
-  {breakpoint.device === 'mobile' && showSplash ? (
-        <Splash showSplash={showSplash} />
-      ) : (
-       */
+  useEffect(() => setViewType('map'), [])
 
   return (
     <AppLayout subHeader={<Filters />} showSearchBar type="default">
       <section className="w-full py-8 px-10 h-screen">
         {viewType === 'grid' ? (
-        <div className="grid grid-cols-1 gap-0 lg:grid-cols-4 lg:gap-4 md:grid-cols-4 md:gap-4 sm:grid-cols-2 sm:gap-4">
-          {[...new Array(7)].map((column, index) => (
-            <Card key={`card-freewheel-${index}`} className="overflow-hidden rounded-lg border-0">
-              <div className="relative">
-                <Link href={'/es/workshop/1/gomeria-el-corneta'}>
-                  <img
-                    src="/images/workshop.jpg"
-                    alt="Taller mecánico"
-                    className="w-full h-48 object-cover"
-                  />
-                </Link>
-                <div onClick={handleAddFavorite} className="absolute cursor-pointer top-2 right-2 bg-background rounded-full p-2 shadow-md">
-                  <Icon name='HeartIcon' className="w-4 h-4 text-foreground" />
-                </div>
-              </div>
-              
-              <Link href={'/es/workshop/1'}>
-                <CardContent className="px-0">
-                  <CardHeader className="py-6 px-0">
-                    <CardTitle className="text-xl font-semibold">Taller Mecánico XYZ</CardTitle>
-                    <CardDescription className="text-gray-600">
-                      Servicios de mecánica general, electricidad y mantenimiento.
-                    </CardDescription>
-                  </CardHeader>
-                  
-                  <CardFooter className="flex items-center space-x-1 py-2 px-0">
-                    <Icon name='StarIcon' className="h-5 w-5 text-yellow-400" />
-                    <span className="text-sm font-medium">4.8</span>
-                    <span className="text-sm text-gray-500">(128 reseñas)</span>
-                  </CardFooter>
-                </CardContent>
-              </Link>
-            </Card>
-          ))}
-        </div>
+          <CardView workshops={workshops} />
         ) : (
-          <div className="grid grid-cols-4 gap-4 h-full">
-            <div className="col-span-1">
-              <ScrollArea className="h-48 w-full rounded-md border">
-                <div className="p-4">
-                  <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
-                  {tags.map((tag) => (
-                    <>
-                      <div key={tag} className="text-sm">
-                        {tag}
-                      </div>
-                      <Separator className="my-2" />
-                    </>
-                  ))}
-                </div>
-              </ScrollArea>
-            </div>
-
-            <div className="col-span-3 rounded-sm">
-              <Map center={center} zoom={13} markers={markers} styleContainer={{ height: '100%', width: '100%' }} />
-            </div>
-          </div>
+          <MapView workshops={workshops} />
         )}
       </section>
     </AppLayout>

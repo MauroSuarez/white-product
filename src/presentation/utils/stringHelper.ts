@@ -32,3 +32,41 @@ export function sanitizeWorkshopName(name: string): string {
     .replace(/\s+/g, '-') // Reemplazar espacios con guiones
     .replace(/-+/g, '-'); // Eliminar múltiples guiones consecutivos
 }
+
+export function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text
+  return text.substring(0, maxLength) + '...'
+}
+
+interface Coordinate {
+  lat: number
+  lng: number
+}
+
+export function getFormattedDistance(coord1: Coordinate, coord2: Coordinate): string {
+  const earthRadiusKm = 6371
+  
+  const toRadians = (degrees: number) => degrees * (Math.PI / 180)
+  
+  const latDiff = toRadians(coord2.lat - coord1.lat)
+  const lngDiff = toRadians(coord2.lng - coord1.lng)
+  
+  const a = 
+    Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+    Math.cos(toRadians(coord1.lat)) * Math.cos(toRadians(coord2.lat)) *
+    Math.sin(lngDiff / 2) * Math.sin(lngDiff / 2)
+  
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  const distanceKm = earthRadiusKm * c
+  const distanceMeters = distanceKm * 1000
+
+  // Formatear el resultado
+  if (distanceKm < 1) {
+    return `${Math.round(distanceMeters)} metros`
+  } else {
+    // Mostrar un decimal si es menor a 10 km
+    return distanceKm < 10 
+      ? `${distanceKm.toFixed(1)} km` 
+      : `${Math.round(distanceKm)} km`
+  }
+}

@@ -67,3 +67,17 @@ export function getDescriptionBetweenDates(givenTime: string | number): string {
   
   return getTime()
 }
+
+export function compareDates(date: string, days: number): string {
+  const currentDate = new Date()
+  const compareDate = new Date(date)
+  
+  // Calcular diferencia en milisegundos
+  const difMs = currentDate.getTime() - compareDate.getTime()
+  
+  // Convertir milisegundos a días
+  const difDays = difMs / (1000 * 60 * 60 * 24)
+  
+  // Devolver true si la diferencia es menor o igual a los días propuestos
+  return difDays <= days ? 'Nuevo en freewheels' : ''
+}

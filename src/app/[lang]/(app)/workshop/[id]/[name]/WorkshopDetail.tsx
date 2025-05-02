@@ -21,9 +21,14 @@ export default function WorkshopDetail() {
     <AppLayout showSearchBar type="detail">
       <div className='flex w-full px-10 space-y-4 flex-col pb-10'>
 
-        <WorkshopSharedFav />
+        <div className="flex justify-between items-center mt-12">
+          <h1 className="text-xl font-bold text-gray-800">Título del Componente</h1>
+          <div className="flex space-x-4">
+            <WorkshopSharedFav />
+          </div>
+        </div>
 
-        {/* Sección inicial de 500px */}
+        {/* Sección inicial de images */}
         <WorkshopImages />
 
         {/* Layout principal */}
@@ -55,7 +60,7 @@ export default function WorkshopDetail() {
           </div>
         </section>
 
-        {/* Pre-footer de 800px */}
+        {/* Pre-footer */}
         <section id="prefooter">
           <WorkshopMap />
 

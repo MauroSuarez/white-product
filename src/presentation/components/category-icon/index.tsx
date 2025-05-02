@@ -45,12 +45,12 @@ const icons: IconDictionary = {
   'vtv': VTVIcon,
 }
 
-export const CategoryIcon: React.FC<{ iconName: string }> = ({ iconName }) => {
+export const CategoryIcon: React.FC<{ iconName: string, width?: number, height?: number }> = ({ iconName, width = 30, height = 30 }) => {
   const ComponentIcon = icons[iconName]
 
   if (!ComponentIcon) {
     return null
   }
 
-  return <ComponentIcon width={30} height={30}  />
+  return <ComponentIcon width={width} height={height}  />
 }
