@@ -1,11 +1,14 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { SVGAttributes, useEffect, useRef } from 'react'
+import ReactDOMServer from 'react-dom/server'
 import L from 'leaflet'
 import ReactDOM from 'react-dom'
 import 'leaflet/dist/leaflet.css'
 import { MapPin } from 'lucide-react'
 import { cn } from '@/presentation/utils/uiHelpers'
+import { CarOilIcon } from '../svg/CarOil'
+import { renderCustomMarker } from './renderCustomMarker'
 
 // Definir el tipo para los marcadores
 export interface Marker {
@@ -18,6 +21,7 @@ export interface Marker {
   iconName?: keyof typeof LucideIcons
   iconColor?: string // Nueva prop: color del icono
   iconSize?: number // Nueva prop: tamaño del icono
+  iconComponent?: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 export interface Circle {
@@ -50,7 +54,7 @@ const svgString = `
 
 const LucideIcons: { [key: string]: string } = {
   camera: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>`,
-  pin: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`
+  pin: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
 }
 
 // const LucideIcons = {
@@ -90,6 +94,41 @@ const createLucideIcon = (svg: string, color: string = '#FF0000', size: number =
   })
 }
 
+const createCustomIcon = (
+  icon: React.ReactElement,
+  size: number = 32
+): L.Icon => {
+  const iconUrl = renderCustomMarker(icon, size)
+
+  return new L.Icon({
+    iconUrl,
+    iconSize: [size + 20, size + 30],
+    iconAnchor: [(size + 20) / 2, size + 30],
+    popupAnchor: [0, -(size + 10)],
+    tooltipAnchor: [0, -(size + 10)],
+  })
+}
+
+const createComponentIcon = (
+  Component: React.FC<React.SVGProps<SVGSVGElement>>,
+  color = '#FF0000',
+  size = 24
+): L.Icon => {
+  const svgMarkup = ReactDOMServer.renderToStaticMarkup(
+    <Component width={size} height={size} stroke={'none'} />
+  )
+
+  const svgUrl = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svgMarkup)}`
+
+  return new L.Icon({
+    iconUrl: svgUrl,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size],
+    popupAnchor: [0, -size / 2],
+    tooltipAnchor: [0, -size / 2 - 10],
+  })
+}
+
 const Map: React.FC<MapWithMarkersProps> = ({ 
   center, 
   zoom, 
@@ -105,73 +144,93 @@ const Map: React.FC<MapWithMarkersProps> = ({
   const popupRefs = useRef<{ [key: string]: L.Popup }>({})
 
   useEffect(() => {
-    // Inicializar el mapa
-    mapRef.current = L.map('map').setView(center, zoom)
+    // const initMap = async () => {
+      const L = require('leaflet')
+      // Inicializar el mapa
+      mapRef.current = L.map('map').setView(center, zoom)
 
-    // const customIcon = L.icon({
-    //   iconUrl: `data:image/svg+xml;base64,${btoa(svgString)}`,
-    //   iconSize: [32, 32],
-    //   iconAnchor: [16, 32],
-    // })
+      // const customIcon = L.icon({
+      //   iconUrl: `data:image/svg+xml;base64,${btoa(svgString)}`,
+      //   iconSize: [32, 32],
+      //   iconAnchor: [16, 32],
+      // })
 
-    L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-      attribution: '© Google Maps',
-    }).addTo(mapRef.current)
+      L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        attribution: '© Google Maps',
+      }).addTo(mapRef.current)
 
 
-    if (circle.lat && circle.lng) {
-      L.circle([circle.lat, circle.lng], { radius: circle.raidus }).addTo(mapRef.current!)
-    }
-
-    // Agregar marcadores con tooltips y popups
-    markers.forEach((marker) => {
-      const { lat, lng, tooltip, tooltipPermanent, popup, popupPermanent, iconName, iconColor, iconSize } = marker
-      const svgIcon = LucideIcons[iconName || 'pin']
-      const markerIcon = createLucideIcon(svgIcon, iconColor, iconSize)
-      
-      const leafletMarker = L.marker([lat, lng], { icon: markerIcon }).addTo(mapRef.current!)
-
-      // Configurar tooltip si existe
-      if (tooltip) {
-        const tooltipContainer = document.createElement('div')
-        ReactDOM.render(<>{tooltip}</>, tooltipContainer)
-        
-        const tooltipInstance = leafletMarker.bindTooltip(tooltipContainer, {
-          permanent: tooltipPermanent || false,
-          direction: 'top',
-          offset: L.point(0, -10), // Ajusta este valor según necesites
-          className: 'custom-tooltip', // Añade una clase para estilos personalizados
-          ...tooltipOptions
-        }).getTooltip()!
-
-        tooltipRefs.current[`${lat}-${lng}`] = tooltipInstance
-
-        // Abrir tooltip si es permanente
-        if (tooltipPermanent) {
-          leafletMarker.openTooltip()
-        }
+      if (circle.lat && circle.lng) {
+        L.circle([circle.lat, circle.lng], { radius: circle.raidus }).addTo(mapRef.current!)
       }
 
-      // Configurar popup si existe
-      if (popup) {
-        const popupContainer = document.createElement('div')
-        ReactDOM.render(<>{popup}</>, popupContainer)
+      // Agregar marcadores con tooltips y popups
+      markers.forEach((marker) => {
+        const { lat, lng, tooltip, tooltipPermanent, popup, popupPermanent, iconName, iconComponent, iconColor, iconSize } = marker
         
-        const popupInstance = leafletMarker.bindPopup(popupContainer, {
-          autoClose: !popupPermanent,
-          closeOnClick: !popupPermanent,
-          ...popupOptions // Opciones adicionales
-        }).getPopup()!
-
-        popupRefs.current[`${lat}-${lng}`] = popupInstance
-
-        // Abrir popup si es permanente
-        if (popupPermanent) {
-          leafletMarker.openPopup()
+        let markerIcon: L.Icon
+        if (iconComponent) {
+          markerIcon = createComponentIcon(iconComponent, iconColor, iconSize)
+        } else {
+          const svgIcon = LucideIcons[iconName || 'pin']
+          markerIcon = createLucideIcon(svgIcon, iconColor, iconSize)
         }
-      }
-    })
+
+        const leafletMarker = L.marker([lat, lng], { icon: markerIcon }).addTo(mapRef.current!)
+        // const customIcon = createCustomIcon(<CarOilIcon width={24} height={24} />, 32)
+
+        // const leafletMarker = L.marker([lat, lng], { icon: customIcon }).addTo(mapRef.current!)
+
+
+        // const svgIcon = LucideIcons[iconName || 'pin']
+        // const markerIcon = createLucideIcon(svgIcon, iconColor, iconSize)
+        
+        // const leafletMarker = L.marker([lat, lng], { icon: markerIcon }).addTo(mapRef.current!)
+
+        // Configurar tooltip si existe
+        if (tooltip) {
+          const tooltipContainer = document.createElement('div')
+          ReactDOM.render(<>{tooltip}</>, tooltipContainer)
+          
+          const tooltipInstance = leafletMarker.bindTooltip(tooltipContainer, {
+            permanent: tooltipPermanent || false,
+            direction: 'top',
+            offset: L.point(0, -10), // Ajusta este valor según necesites
+            className: 'custom-tooltip', // Añade una clase para estilos personalizados
+            ...tooltipOptions
+          }).getTooltip()!
+
+          tooltipRefs.current[`${lat}-${lng}`] = tooltipInstance
+
+          // Abrir tooltip si es permanente
+          if (tooltipPermanent) {
+            leafletMarker.openTooltip()
+          }
+        }
+
+        // Configurar popup si existe
+        if (popup) {
+          const popupContainer = document.createElement('div')
+          ReactDOM.render(<>{popup}</>, popupContainer)
+          
+          const popupInstance = leafletMarker.bindPopup(popupContainer, {
+            autoClose: !popupPermanent,
+            closeOnClick: !popupPermanent,
+            ...popupOptions // Opciones adicionales
+          }).getPopup()!
+
+          popupRefs.current[`${lat}-${lng}`] = popupInstance
+
+          // Abrir popup si es permanente
+          if (popupPermanent) {
+            leafletMarker.openPopup()
+          }
+        }
+      })
+    // }
+
+    // initMap()
 
     return () => {
       if (mapRef.current) {

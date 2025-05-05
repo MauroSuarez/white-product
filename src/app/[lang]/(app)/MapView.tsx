@@ -4,7 +4,6 @@ import { Typography } from "@/presentation/ds/typography"
 import { Badge } from "@/presentation/ds/badge"
 import { CategoryIcon } from "@/presentation/components/category-icon"
 import { Icon } from "@/presentation/ds/icon"
-import { Separator } from '@/presentation/ds/separator'
 import { AuthWrapper } from './auth/AuthWrapper'
 import { CustomTooltip } from '@/presentation/components/custom-tooltip'
 import { Clock, MapPin } from 'lucide-react'
@@ -15,7 +14,6 @@ type CardViewProps = {
   workshops?: Array<any>
 }
 
-
 export function MapView({
   addFavorite,
   workshops = [],
@@ -25,7 +23,7 @@ export function MapView({
   const markers = [
     {
       lat: -34.600625,
-      
+      lng: -58.563671,
       tooltip: (
         <div style={{ background: 'white', padding: '10px', borderRadius: '5px' }}>
           <h3 style={{ color: 'blue' }}>Tooltip con React</h3>
@@ -99,13 +97,13 @@ export function MapView({
       </div>
 
       <div className="col-span-3 rounded-sm">
-        {/* <Map
+        <Map
           center={center}
           zoom={13}
           markers={markers}
           styleContainer={{ height: '100%', width: '100%' }}
           classNameContainer='rounded-[1rem]'
-        /> */}
+        />
       </div>
     </div>
   )
